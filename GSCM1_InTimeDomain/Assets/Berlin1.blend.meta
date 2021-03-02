@@ -1,0 +1,2515 @@
+fileFormatVersion: 2
+guid: 370824966d86c091e9d17d4565ac7cf3
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: AdvertisingColumn170
+    100002: AdvertisingColumn202
+    100004: AdvertisingColumn48
+    100006: AdvertisingColumn6
+    100008: Bench9
+    100010: //RootNode
+    100012: Building Atelierhaus
+    100014: Building Synagoge Charlottenburg
+    100016: Building247
+    100018: Building248
+    100020: Building249
+    100022: Building250
+    100024: Building253
+    100026: Building254
+    100028: Building255
+    100030: Building256
+    100032: Building257
+    100034: Building258
+    100036: Building259
+    100038: Building260
+    100040: Building262
+    100042: Building263
+    100044: Building264
+    100046: Building266
+    100048: Building267
+    100050: Building268
+    100052: Building269
+    100054: Building270
+    100056: Building271
+    100058: Building272
+    100060: Building273
+    100062: Building274
+    100064: Building275
+    100066: Building276
+    100068: Building277
+    100070: Building278
+    100072: Building279
+    100074: Building280
+    100076: Building281
+    100078: Building282
+    100080: Building283
+    100082: Building284
+    100084: Building285
+    100086: Building286
+    100088: Building287
+    100090: Building288
+    100092: Building289
+    100094: Building290
+    100096: Building291
+    100098: Building292
+    100100: Building293
+    100102: Building294
+    100104: Building295
+    100106: Building296
+    100108: Building297
+    100110: Building298
+    100112: Building299
+    100114: Building300
+    100116: Building301
+    100118: Building302
+    100120: Building303
+    100122: Building304
+    100124: Building305
+    100126: Building306
+    100128: Building307
+    100130: Building308
+    100132: Building309
+    100134: Building310
+    100136: Building311
+    100138: Building312
+    100140: Building313
+    100142: Building314
+    100144: Building315
+    100146: Building316
+    100148: Building317
+    100150: Building318
+    100152: Building319
+    100154: Building320
+    100156: Building321
+    100158: Building322
+    100160: Building323
+    100162: Building324
+    100164: Building325
+    100166: Building326
+    100168: Building327
+    100170: Building328
+    100172: Building329
+    100174: Building330
+    100176: Building331
+    100178: Building332
+    100180: Building333
+    100182: Building334
+    100184: Building335
+    100186: Building336
+    100188: Building337
+    100190: Building338
+    100192: Building339
+    100194: Building340
+    100196: Building341
+    100198: Building342
+    100200: Building343
+    100202: Building344
+    100204: Building347
+    100206: Building348
+    100208: Building349
+    100210: Building350
+    100212: Building351
+    100214: Building352
+    100216: Building353
+    100218: Building354
+    100220: Building355
+    100222: Building356
+    100224: Building357
+    100226: Building358
+    100228: Building359
+    100230: Building360
+    100232: Building361
+    100234: Building362
+    100236: Building363
+    100238: Building364
+    100240: Building365
+    100242: Building366
+    100244: Building367
+    100246: Building368
+    100248: Building369
+    100250: Building370
+    100252: Building371
+    100254: Building372
+    100256: Building373
+    100258: Building374
+    100260: Building375
+    100262: Building376
+    100264: Building378
+    100266: Building379
+    100268: Building380
+    100270: Building381
+    100272: Building382
+    100274: Building384
+    100276: Building385
+    100278: Building386
+    100280: Building387
+    100282: Building388
+    100284: Building389
+    100286: Building390
+    100288: Building391
+    100290: Building392
+    100292: Building393
+    100294: Building394
+    100296: Building395
+    100298: Building396
+    100300: Building397
+    100302: Building398
+    100304: Building399
+    100306: Building400
+    100308: Building401
+    100310: Building402
+    100312: Building403
+    100314: Building404
+    100316: Building405
+    100318: Building406
+    100320: Building407
+    100322: Building408
+    100324: Building409
+    100326: Building411
+    100328: Building412
+    100330: Building413
+    100332: Building414
+    100334: Building415
+    100336: Building416
+    100338: Building417
+    100340: BuildingEntrance A-Trane
+    100342: BuildingEntrance10
+    100344: BuildingEntrance103
+    100346: BuildingEntrance104
+    100348: BuildingEntrance105
+    100350: BuildingEntrance106
+    100352: BuildingEntrance11
+    100354: BuildingEntrance114
+    100356: BuildingEntrance124
+    100358: BuildingEntrance127
+    100360: BuildingEntrance128
+    100362: BuildingEntrance129
+    100364: BuildingEntrance130
+    100366: BuildingEntrance131
+    100368: BuildingEntrance132
+    100370: BuildingEntrance133
+    100372: BuildingEntrance141
+    100374: BuildingEntrance149
+    100376: BuildingEntrance2
+    100378: BuildingEntrance207
+    100380: "BusStop Schl\xFCterstra\xDFe"
+    100382: Camera
+    100384: FireHydrant13
+    100386: Light
+    100388: Phone7
+    100390: Phone8
+    100392: PoleFence208
+    100394: PoleFence209
+    100396: PoleFence210
+    100398: PostBox123
+    100400: PostBox135
+    100402: "Road Bleibtreustra\xDFe"
+    100404: "Road Bleibtreustra\xDFe.000"
+    100406: "Road Bleibtreustra\xDFe.001"
+    100408: "Road Bleibtreustra\xDFe.002"
+    100410: "Road Grolmanstra\xDFe"
+    100412: "Road Grolmanstra\xDFe.000"
+    100414: "Road Grolmanstra\xDFe.001"
+    100416: "Road Grolmanstra\xDFe.002"
+    100418: "Road Grolmanstra\xDFe.003"
+    100420: "Road Grolmanstra\xDFe.004"
+    100422: "Road Grolmanstra\xDFe.005"
+    100424: "Road Grolmanstra\xDFe.007"
+    100426: "Road Grolmanstra\xDFe.008"
+    100428: "Road Kantstra\xDFe"
+    100430: "Road Kantstra\xDFe.000"
+    100432: "Road Kantstra\xDFe.001"
+    100434: "Road Kantstra\xDFe.002"
+    100436: "Road Kantstra\xDFe.007"
+    100438: "Road Kantstra\xDFe.008"
+    100440: "Road Kantstra\xDFe.009"
+    100442: "Road Kantstra\xDFe.010"
+    100444: "Road Kantstra\xDFe.011"
+    100446: "Road Kantstra\xDFe.012"
+    100448: "Road Kantstra\xDFe.013"
+    100450: "Road Kantstra\xDFe.014"
+    100452: "Road Kantstra\xDFe.015"
+    100454: "Road Kantstra\xDFe.016"
+    100456: "Road Kantstra\xDFe.017"
+    100458: "Road Kantstra\xDFe.018"
+    100460: "Road Kantstra\xDFe.019"
+    100462: "Road Kantstra\xDFe.020"
+    100464: "Road Kantstra\xDFe.021"
+    100466: "Road Kantstra\xDFe.022"
+    100468: "Road Kantstra\xDFe.023"
+    100470: "Road Kantstra\xDFe.024"
+    100472: "Road Kantstra\xDFe.025"
+    100474: "Road Pestalozzistra\xDFe"
+    100476: "Road Pestalozzistra\xDFe.000"
+    100478: "Road Pestalozzistra\xDFe.001"
+    100480: "Road Pestalozzistra\xDFe.002"
+    100482: "Road Pestalozzistra\xDFe.003"
+    100484: "Road Pestalozzistra\xDFe.004"
+    100486: "Road Pestalozzistra\xDFe.005"
+    100488: "Road Pestalozzistra\xDFe.006"
+    100490: "Road Pestalozzistra\xDFe.007"
+    100492: "Road Pestalozzistra\xDFe.008"
+    100494: "Road Schl\xFCterstra\xDFe"
+    100496: "Road Schl\xFCterstra\xDFe.000"
+    100498: "Road Schl\xFCterstra\xDFe.002"
+    100500: "Road Schl\xFCterstra\xDFe.003"
+    100502: "Road Schl\xFCterstra\xDFe.004"
+    100504: "Road Schl\xFCterstra\xDFe.005"
+    100506: "Road Schl\xFCterstra\xDFe.006"
+    100508: "Road Schl\xFCterstra\xDFe.007"
+    100510: "Road Wielandstra\xDFe"
+    100512: "Road Wielandstra\xDFe.000"
+    100514: "Road Wielandstra\xDFe.001"
+    100516: "Road Wielandstra\xDFe.002"
+    100518: "Road Wielandstra\xDFe.003"
+    100520: Road211
+    100522: Road212
+    100524: Road213
+    100526: Road214
+    100528: Road217
+    100530: Road218
+    100532: Road219
+    100534: Road220
+    100536: Road221
+    100538: Road222
+    100540: Road223
+    100542: Road224
+    100544: Road225
+    100546: Road226
+    100548: Road227
+    100550: Road228
+    100552: Road229
+    100554: Road230
+    100556: Road231
+    100558: Road232
+    100560: Road233
+    100562: Road234
+    100564: Road235
+    100566: Road237
+    100568: Road238
+    100570: Road239
+    100572: Road240
+    100574: Road241
+    100576: Road242
+    100578: Road243
+    100580: Road244
+    100582: Road245
+    100584: Road246
+    100586: RoadConnector101
+    100588: RoadConnector173
+    100590: RoadConnector18
+    100592: RoadCrossingAtConnector100
+    100594: RoadCrossingAtConnector118
+    100596: RoadCrossingAtConnector150
+    100598: RoadCrossingAtConnector177
+    100600: RoadCrossingAtConnector189
+    100602: RoadCrossingAtConnector204
+    100604: RoadCrossingAtConnector206
+    100606: RoadJunction107
+    100608: RoadJunction12
+    100610: RoadJunction145
+    100612: RoadJunction151
+    100614: RoadJunction152
+    100616: RoadJunction153
+    100618: RoadJunction154
+    100620: RoadJunction155
+    100622: RoadJunction156
+    100624: RoadJunction161
+    100626: RoadJunction162
+    100628: RoadJunction164
+    100630: RoadJunction167
+    100632: RoadJunction168
+    100634: RoadJunction171
+    100636: RoadJunction175
+    100638: RoadJunction203
+    100640: RoadJunction4
+    100642: RoadJunction46
+    100644: RoadJunction50
+    100646: StreetLamp178
+    100648: StreetLamp182
+    100650: StreetLamp184
+    100652: StreetLamp186
+    100654: StreetLamp187
+    100656: StreetLamp188
+    100658: StreetLamp190
+    100660: StreetLamp192
+    100662: StreetLamp193
+    100664: StreetLamp196
+    100666: StreetLamp198
+    100668: StreetLamp201
+    100670: StreetLamp21
+    100672: StreetLamp37
+    100674: StreetLamp55
+    100676: StreetLamp67
+    100678: StreetLamp77
+    100680: StreetLamp88
+    100682: StreetLamp95
+    100684: SurfaceArea265
+    100686: SurfaceArea377
+    100688: SurfaceArea410
+    100690: SurfaceArea418
+    100692: SurfaceArea419
+    100694: SurfaceArea420
+    100696: SurfaceArea421
+    100698: SurfaceParking261
+    100700: Tree0
+    100702: Tree1
+    100704: Tree108
+    100706: Tree109
+    100708: Tree110
+    100710: Tree111
+    100712: Tree112
+    100714: Tree113
+    100716: Tree115
+    100718: Tree116
+    100720: Tree117
+    100722: Tree119
+    100724: Tree120
+    100726: Tree121
+    100728: Tree122
+    100730: Tree125
+    100732: Tree126
+    100734: Tree134
+    100736: Tree136
+    100738: Tree138
+    100740: Tree139
+    100742: Tree14
+    100744: Tree140
+    100746: Tree142
+    100748: Tree143
+    100750: Tree144
+    100752: Tree146
+    100754: Tree147
+    100756: Tree148
+    100758: Tree15
+    100760: Tree157
+    100762: Tree158
+    100764: Tree159
+    100766: Tree16
+    100768: Tree160
+    100770: Tree163
+    100772: Tree165
+    100774: Tree166
+    100776: Tree169
+    100778: Tree17
+    100780: Tree172
+    100782: Tree174
+    100784: Tree176
+    100786: Tree179
+    100788: Tree180
+    100790: Tree181
+    100792: Tree183
+    100794: Tree185
+    100796: Tree19
+    100798: Tree191
+    100800: Tree194
+    100802: Tree195
+    100804: Tree197
+    100806: Tree199
+    100808: Tree20
+    100810: Tree200
+    100812: Tree205
+    100814: Tree22
+    100816: Tree23
+    100818: Tree24
+    100820: Tree25
+    100822: Tree26
+    100824: Tree27
+    100826: Tree28
+    100828: Tree29
+    100830: Tree3
+    100832: Tree30
+    100834: Tree31
+    100836: Tree32
+    100838: Tree33
+    100840: Tree34
+    100842: Tree35
+    100844: Tree36
+    100846: Tree38
+    100848: Tree39
+    100850: Tree40
+    100852: Tree41
+    100854: Tree42
+    100856: Tree43
+    100858: Tree44
+    100860: Tree45
+    100862: Tree47
+    100864: Tree49
+    100866: Tree5
+    100868: Tree51
+    100870: Tree52
+    100872: Tree53
+    100874: Tree54
+    100876: Tree56
+    100878: Tree57
+    100880: Tree58
+    100882: Tree59
+    100884: Tree60
+    100886: Tree61
+    100888: Tree62
+    100890: Tree63
+    100892: Tree64
+    100894: Tree65
+    100896: Tree66
+    100898: Tree68
+    100900: Tree69
+    100902: Tree70
+    100904: Tree71
+    100906: Tree72
+    100908: Tree73
+    100910: Tree74
+    100912: Tree75
+    100914: Tree76
+    100916: Tree78
+    100918: Tree79
+    100920: Tree80
+    100922: Tree81
+    100924: Tree82
+    100926: Tree83
+    100928: Tree84
+    100930: Tree85
+    100932: Tree86
+    100934: Tree87
+    100936: Tree89
+    100938: Tree90
+    100940: Tree91
+    100942: Tree92
+    100944: Tree93
+    100946: Tree94
+    100948: Tree96
+    100950: Tree97
+    100952: Tree98
+    100954: Tree99
+    100956: Wall215
+    100958: Wall216
+    100960: Wall236
+    400000: AdvertisingColumn170
+    400002: AdvertisingColumn202
+    400004: AdvertisingColumn48
+    400006: AdvertisingColumn6
+    400008: Bench9
+    400010: //RootNode
+    400012: Building Atelierhaus
+    400014: Building Synagoge Charlottenburg
+    400016: Building247
+    400018: Building248
+    400020: Building249
+    400022: Building250
+    400024: Building253
+    400026: Building254
+    400028: Building255
+    400030: Building256
+    400032: Building257
+    400034: Building258
+    400036: Building259
+    400038: Building260
+    400040: Building262
+    400042: Building263
+    400044: Building264
+    400046: Building266
+    400048: Building267
+    400050: Building268
+    400052: Building269
+    400054: Building270
+    400056: Building271
+    400058: Building272
+    400060: Building273
+    400062: Building274
+    400064: Building275
+    400066: Building276
+    400068: Building277
+    400070: Building278
+    400072: Building279
+    400074: Building280
+    400076: Building281
+    400078: Building282
+    400080: Building283
+    400082: Building284
+    400084: Building285
+    400086: Building286
+    400088: Building287
+    400090: Building288
+    400092: Building289
+    400094: Building290
+    400096: Building291
+    400098: Building292
+    400100: Building293
+    400102: Building294
+    400104: Building295
+    400106: Building296
+    400108: Building297
+    400110: Building298
+    400112: Building299
+    400114: Building300
+    400116: Building301
+    400118: Building302
+    400120: Building303
+    400122: Building304
+    400124: Building305
+    400126: Building306
+    400128: Building307
+    400130: Building308
+    400132: Building309
+    400134: Building310
+    400136: Building311
+    400138: Building312
+    400140: Building313
+    400142: Building314
+    400144: Building315
+    400146: Building316
+    400148: Building317
+    400150: Building318
+    400152: Building319
+    400154: Building320
+    400156: Building321
+    400158: Building322
+    400160: Building323
+    400162: Building324
+    400164: Building325
+    400166: Building326
+    400168: Building327
+    400170: Building328
+    400172: Building329
+    400174: Building330
+    400176: Building331
+    400178: Building332
+    400180: Building333
+    400182: Building334
+    400184: Building335
+    400186: Building336
+    400188: Building337
+    400190: Building338
+    400192: Building339
+    400194: Building340
+    400196: Building341
+    400198: Building342
+    400200: Building343
+    400202: Building344
+    400204: Building347
+    400206: Building348
+    400208: Building349
+    400210: Building350
+    400212: Building351
+    400214: Building352
+    400216: Building353
+    400218: Building354
+    400220: Building355
+    400222: Building356
+    400224: Building357
+    400226: Building358
+    400228: Building359
+    400230: Building360
+    400232: Building361
+    400234: Building362
+    400236: Building363
+    400238: Building364
+    400240: Building365
+    400242: Building366
+    400244: Building367
+    400246: Building368
+    400248: Building369
+    400250: Building370
+    400252: Building371
+    400254: Building372
+    400256: Building373
+    400258: Building374
+    400260: Building375
+    400262: Building376
+    400264: Building378
+    400266: Building379
+    400268: Building380
+    400270: Building381
+    400272: Building382
+    400274: Building384
+    400276: Building385
+    400278: Building386
+    400280: Building387
+    400282: Building388
+    400284: Building389
+    400286: Building390
+    400288: Building391
+    400290: Building392
+    400292: Building393
+    400294: Building394
+    400296: Building395
+    400298: Building396
+    400300: Building397
+    400302: Building398
+    400304: Building399
+    400306: Building400
+    400308: Building401
+    400310: Building402
+    400312: Building403
+    400314: Building404
+    400316: Building405
+    400318: Building406
+    400320: Building407
+    400322: Building408
+    400324: Building409
+    400326: Building411
+    400328: Building412
+    400330: Building413
+    400332: Building414
+    400334: Building415
+    400336: Building416
+    400338: Building417
+    400340: BuildingEntrance A-Trane
+    400342: BuildingEntrance10
+    400344: BuildingEntrance103
+    400346: BuildingEntrance104
+    400348: BuildingEntrance105
+    400350: BuildingEntrance106
+    400352: BuildingEntrance11
+    400354: BuildingEntrance114
+    400356: BuildingEntrance124
+    400358: BuildingEntrance127
+    400360: BuildingEntrance128
+    400362: BuildingEntrance129
+    400364: BuildingEntrance130
+    400366: BuildingEntrance131
+    400368: BuildingEntrance132
+    400370: BuildingEntrance133
+    400372: BuildingEntrance141
+    400374: BuildingEntrance149
+    400376: BuildingEntrance2
+    400378: BuildingEntrance207
+    400380: "BusStop Schl\xFCterstra\xDFe"
+    400382: Camera
+    400384: FireHydrant13
+    400386: Light
+    400388: Phone7
+    400390: Phone8
+    400392: PoleFence208
+    400394: PoleFence209
+    400396: PoleFence210
+    400398: PostBox123
+    400400: PostBox135
+    400402: "Road Bleibtreustra\xDFe"
+    400404: "Road Bleibtreustra\xDFe.000"
+    400406: "Road Bleibtreustra\xDFe.001"
+    400408: "Road Bleibtreustra\xDFe.002"
+    400410: "Road Grolmanstra\xDFe"
+    400412: "Road Grolmanstra\xDFe.000"
+    400414: "Road Grolmanstra\xDFe.001"
+    400416: "Road Grolmanstra\xDFe.002"
+    400418: "Road Grolmanstra\xDFe.003"
+    400420: "Road Grolmanstra\xDFe.004"
+    400422: "Road Grolmanstra\xDFe.005"
+    400424: "Road Grolmanstra\xDFe.007"
+    400426: "Road Grolmanstra\xDFe.008"
+    400428: "Road Kantstra\xDFe"
+    400430: "Road Kantstra\xDFe.000"
+    400432: "Road Kantstra\xDFe.001"
+    400434: "Road Kantstra\xDFe.002"
+    400436: "Road Kantstra\xDFe.007"
+    400438: "Road Kantstra\xDFe.008"
+    400440: "Road Kantstra\xDFe.009"
+    400442: "Road Kantstra\xDFe.010"
+    400444: "Road Kantstra\xDFe.011"
+    400446: "Road Kantstra\xDFe.012"
+    400448: "Road Kantstra\xDFe.013"
+    400450: "Road Kantstra\xDFe.014"
+    400452: "Road Kantstra\xDFe.015"
+    400454: "Road Kantstra\xDFe.016"
+    400456: "Road Kantstra\xDFe.017"
+    400458: "Road Kantstra\xDFe.018"
+    400460: "Road Kantstra\xDFe.019"
+    400462: "Road Kantstra\xDFe.020"
+    400464: "Road Kantstra\xDFe.021"
+    400466: "Road Kantstra\xDFe.022"
+    400468: "Road Kantstra\xDFe.023"
+    400470: "Road Kantstra\xDFe.024"
+    400472: "Road Kantstra\xDFe.025"
+    400474: "Road Pestalozzistra\xDFe"
+    400476: "Road Pestalozzistra\xDFe.000"
+    400478: "Road Pestalozzistra\xDFe.001"
+    400480: "Road Pestalozzistra\xDFe.002"
+    400482: "Road Pestalozzistra\xDFe.003"
+    400484: "Road Pestalozzistra\xDFe.004"
+    400486: "Road Pestalozzistra\xDFe.005"
+    400488: "Road Pestalozzistra\xDFe.006"
+    400490: "Road Pestalozzistra\xDFe.007"
+    400492: "Road Pestalozzistra\xDFe.008"
+    400494: "Road Schl\xFCterstra\xDFe"
+    400496: "Road Schl\xFCterstra\xDFe.000"
+    400498: "Road Schl\xFCterstra\xDFe.002"
+    400500: "Road Schl\xFCterstra\xDFe.003"
+    400502: "Road Schl\xFCterstra\xDFe.004"
+    400504: "Road Schl\xFCterstra\xDFe.005"
+    400506: "Road Schl\xFCterstra\xDFe.006"
+    400508: "Road Schl\xFCterstra\xDFe.007"
+    400510: "Road Wielandstra\xDFe"
+    400512: "Road Wielandstra\xDFe.000"
+    400514: "Road Wielandstra\xDFe.001"
+    400516: "Road Wielandstra\xDFe.002"
+    400518: "Road Wielandstra\xDFe.003"
+    400520: Road211
+    400522: Road212
+    400524: Road213
+    400526: Road214
+    400528: Road217
+    400530: Road218
+    400532: Road219
+    400534: Road220
+    400536: Road221
+    400538: Road222
+    400540: Road223
+    400542: Road224
+    400544: Road225
+    400546: Road226
+    400548: Road227
+    400550: Road228
+    400552: Road229
+    400554: Road230
+    400556: Road231
+    400558: Road232
+    400560: Road233
+    400562: Road234
+    400564: Road235
+    400566: Road237
+    400568: Road238
+    400570: Road239
+    400572: Road240
+    400574: Road241
+    400576: Road242
+    400578: Road243
+    400580: Road244
+    400582: Road245
+    400584: Road246
+    400586: RoadConnector101
+    400588: RoadConnector173
+    400590: RoadConnector18
+    400592: RoadCrossingAtConnector100
+    400594: RoadCrossingAtConnector118
+    400596: RoadCrossingAtConnector150
+    400598: RoadCrossingAtConnector177
+    400600: RoadCrossingAtConnector189
+    400602: RoadCrossingAtConnector204
+    400604: RoadCrossingAtConnector206
+    400606: RoadJunction107
+    400608: RoadJunction12
+    400610: RoadJunction145
+    400612: RoadJunction151
+    400614: RoadJunction152
+    400616: RoadJunction153
+    400618: RoadJunction154
+    400620: RoadJunction155
+    400622: RoadJunction156
+    400624: RoadJunction161
+    400626: RoadJunction162
+    400628: RoadJunction164
+    400630: RoadJunction167
+    400632: RoadJunction168
+    400634: RoadJunction171
+    400636: RoadJunction175
+    400638: RoadJunction203
+    400640: RoadJunction4
+    400642: RoadJunction46
+    400644: RoadJunction50
+    400646: StreetLamp178
+    400648: StreetLamp182
+    400650: StreetLamp184
+    400652: StreetLamp186
+    400654: StreetLamp187
+    400656: StreetLamp188
+    400658: StreetLamp190
+    400660: StreetLamp192
+    400662: StreetLamp193
+    400664: StreetLamp196
+    400666: StreetLamp198
+    400668: StreetLamp201
+    400670: StreetLamp21
+    400672: StreetLamp37
+    400674: StreetLamp55
+    400676: StreetLamp67
+    400678: StreetLamp77
+    400680: StreetLamp88
+    400682: StreetLamp95
+    400684: SurfaceArea265
+    400686: SurfaceArea377
+    400688: SurfaceArea410
+    400690: SurfaceArea418
+    400692: SurfaceArea419
+    400694: SurfaceArea420
+    400696: SurfaceArea421
+    400698: SurfaceParking261
+    400700: Tree0
+    400702: Tree1
+    400704: Tree108
+    400706: Tree109
+    400708: Tree110
+    400710: Tree111
+    400712: Tree112
+    400714: Tree113
+    400716: Tree115
+    400718: Tree116
+    400720: Tree117
+    400722: Tree119
+    400724: Tree120
+    400726: Tree121
+    400728: Tree122
+    400730: Tree125
+    400732: Tree126
+    400734: Tree134
+    400736: Tree136
+    400738: Tree138
+    400740: Tree139
+    400742: Tree14
+    400744: Tree140
+    400746: Tree142
+    400748: Tree143
+    400750: Tree144
+    400752: Tree146
+    400754: Tree147
+    400756: Tree148
+    400758: Tree15
+    400760: Tree157
+    400762: Tree158
+    400764: Tree159
+    400766: Tree16
+    400768: Tree160
+    400770: Tree163
+    400772: Tree165
+    400774: Tree166
+    400776: Tree169
+    400778: Tree17
+    400780: Tree172
+    400782: Tree174
+    400784: Tree176
+    400786: Tree179
+    400788: Tree180
+    400790: Tree181
+    400792: Tree183
+    400794: Tree185
+    400796: Tree19
+    400798: Tree191
+    400800: Tree194
+    400802: Tree195
+    400804: Tree197
+    400806: Tree199
+    400808: Tree20
+    400810: Tree200
+    400812: Tree205
+    400814: Tree22
+    400816: Tree23
+    400818: Tree24
+    400820: Tree25
+    400822: Tree26
+    400824: Tree27
+    400826: Tree28
+    400828: Tree29
+    400830: Tree3
+    400832: Tree30
+    400834: Tree31
+    400836: Tree32
+    400838: Tree33
+    400840: Tree34
+    400842: Tree35
+    400844: Tree36
+    400846: Tree38
+    400848: Tree39
+    400850: Tree40
+    400852: Tree41
+    400854: Tree42
+    400856: Tree43
+    400858: Tree44
+    400860: Tree45
+    400862: Tree47
+    400864: Tree49
+    400866: Tree5
+    400868: Tree51
+    400870: Tree52
+    400872: Tree53
+    400874: Tree54
+    400876: Tree56
+    400878: Tree57
+    400880: Tree58
+    400882: Tree59
+    400884: Tree60
+    400886: Tree61
+    400888: Tree62
+    400890: Tree63
+    400892: Tree64
+    400894: Tree65
+    400896: Tree66
+    400898: Tree68
+    400900: Tree69
+    400902: Tree70
+    400904: Tree71
+    400906: Tree72
+    400908: Tree73
+    400910: Tree74
+    400912: Tree75
+    400914: Tree76
+    400916: Tree78
+    400918: Tree79
+    400920: Tree80
+    400922: Tree81
+    400924: Tree82
+    400926: Tree83
+    400928: Tree84
+    400930: Tree85
+    400932: Tree86
+    400934: Tree87
+    400936: Tree89
+    400938: Tree90
+    400940: Tree91
+    400942: Tree92
+    400944: Tree93
+    400946: Tree94
+    400948: Tree96
+    400950: Tree97
+    400952: Tree98
+    400954: Tree99
+    400956: Wall215
+    400958: Wall216
+    400960: Wall236
+    2000000: Camera
+    2100000: MAT_0_0
+    2100002: MAT_1_0
+    2100004: ENTRANCE_DEFAULT_0
+    2100006: ASPHALT_0
+    2100008: MAT_2_0
+    2100010: MAT_3_0
+    2100012: GLASS_0
+    2100014: TELEKOM_MANGENTA_0
+    2100016: STEEL_0
+    2100018: WOOD_0
+    2100020: MAT_4_0
+    2100022: FIREHYDRANT_0
+    2100024: MAT_5_0
+    2100026: COBBLESTONE_0
+    2100028: KERB_0
+    2100030: BUS_STOP_SIGN_0
+    2100032: POSTBOX_DEUTSCHEPOST_0
+    2100034: ROAD_MARKING_DASHED_0
+    2100036: WALL_DEFAULT_0
+    2100038: RED_ROAD_MARKING_0
+    2100040: BUILDING_DEFAULT_0
+    2100042: ROOF_DEFAULT_0
+    2100044: CONCRETE_0
+    2100046: GRASS_0
+    2100048: EARTH_0
+    2100050: TERRAIN_DEFAULT_0
+    2300000: AdvertisingColumn170
+    2300002: AdvertisingColumn202
+    2300004: AdvertisingColumn48
+    2300006: AdvertisingColumn6
+    2300008: Bench9
+    2300010: Building Atelierhaus
+    2300012: Building Synagoge Charlottenburg
+    2300014: Building247
+    2300016: Building248
+    2300018: Building249
+    2300020: Building250
+    2300022: Building253
+    2300024: Building254
+    2300026: Building255
+    2300028: Building256
+    2300030: Building257
+    2300032: Building258
+    2300034: Building259
+    2300036: Building260
+    2300038: Building262
+    2300040: Building263
+    2300042: Building264
+    2300044: Building266
+    2300046: Building267
+    2300048: Building268
+    2300050: Building269
+    2300052: Building270
+    2300054: Building271
+    2300056: Building272
+    2300058: Building273
+    2300060: Building274
+    2300062: Building275
+    2300064: Building276
+    2300066: Building277
+    2300068: Building278
+    2300070: Building279
+    2300072: Building280
+    2300074: Building281
+    2300076: Building282
+    2300078: Building283
+    2300080: Building284
+    2300082: Building285
+    2300084: Building286
+    2300086: Building287
+    2300088: Building288
+    2300090: Building289
+    2300092: Building290
+    2300094: Building291
+    2300096: Building292
+    2300098: Building293
+    2300100: Building294
+    2300102: Building295
+    2300104: Building296
+    2300106: Building297
+    2300108: Building298
+    2300110: Building299
+    2300112: Building300
+    2300114: Building301
+    2300116: Building302
+    2300118: Building303
+    2300120: Building304
+    2300122: Building305
+    2300124: Building306
+    2300126: Building307
+    2300128: Building308
+    2300130: Building309
+    2300132: Building310
+    2300134: Building311
+    2300136: Building312
+    2300138: Building313
+    2300140: Building314
+    2300142: Building315
+    2300144: Building316
+    2300146: Building317
+    2300148: Building318
+    2300150: Building319
+    2300152: Building320
+    2300154: Building321
+    2300156: Building322
+    2300158: Building323
+    2300160: Building324
+    2300162: Building325
+    2300164: Building326
+    2300166: Building327
+    2300168: Building328
+    2300170: Building329
+    2300172: Building330
+    2300174: Building331
+    2300176: Building332
+    2300178: Building333
+    2300180: Building334
+    2300182: Building335
+    2300184: Building336
+    2300186: Building337
+    2300188: Building338
+    2300190: Building339
+    2300192: Building340
+    2300194: Building341
+    2300196: Building342
+    2300198: Building343
+    2300200: Building344
+    2300202: Building347
+    2300204: Building348
+    2300206: Building349
+    2300208: Building350
+    2300210: Building351
+    2300212: Building352
+    2300214: Building353
+    2300216: Building354
+    2300218: Building355
+    2300220: Building356
+    2300222: Building357
+    2300224: Building358
+    2300226: Building359
+    2300228: Building360
+    2300230: Building361
+    2300232: Building362
+    2300234: Building363
+    2300236: Building364
+    2300238: Building365
+    2300240: Building366
+    2300242: Building367
+    2300244: Building368
+    2300246: Building369
+    2300248: Building370
+    2300250: Building371
+    2300252: Building372
+    2300254: Building373
+    2300256: Building374
+    2300258: Building375
+    2300260: Building376
+    2300262: Building378
+    2300264: Building379
+    2300266: Building380
+    2300268: Building381
+    2300270: Building382
+    2300272: Building384
+    2300274: Building385
+    2300276: Building386
+    2300278: Building387
+    2300280: Building388
+    2300282: Building389
+    2300284: Building390
+    2300286: Building391
+    2300288: Building392
+    2300290: Building393
+    2300292: Building394
+    2300294: Building395
+    2300296: Building396
+    2300298: Building397
+    2300300: Building398
+    2300302: Building399
+    2300304: Building400
+    2300306: Building401
+    2300308: Building402
+    2300310: Building403
+    2300312: Building404
+    2300314: Building405
+    2300316: Building406
+    2300318: Building407
+    2300320: Building408
+    2300322: Building409
+    2300324: Building411
+    2300326: Building412
+    2300328: Building413
+    2300330: Building414
+    2300332: Building415
+    2300334: Building416
+    2300336: Building417
+    2300338: BuildingEntrance A-Trane
+    2300340: BuildingEntrance10
+    2300342: BuildingEntrance103
+    2300344: BuildingEntrance104
+    2300346: BuildingEntrance105
+    2300348: BuildingEntrance106
+    2300350: BuildingEntrance11
+    2300352: BuildingEntrance114
+    2300354: BuildingEntrance124
+    2300356: BuildingEntrance127
+    2300358: BuildingEntrance128
+    2300360: BuildingEntrance129
+    2300362: BuildingEntrance130
+    2300364: BuildingEntrance131
+    2300366: BuildingEntrance132
+    2300368: BuildingEntrance133
+    2300370: BuildingEntrance141
+    2300372: BuildingEntrance149
+    2300374: BuildingEntrance2
+    2300376: BuildingEntrance207
+    2300378: "BusStop Schl\xFCterstra\xDFe"
+    2300380: FireHydrant13
+    2300382: Phone7
+    2300384: Phone8
+    2300386: PoleFence208
+    2300388: PoleFence209
+    2300390: PoleFence210
+    2300392: PostBox123
+    2300394: PostBox135
+    2300396: "Road Bleibtreustra\xDFe"
+    2300398: "Road Bleibtreustra\xDFe.000"
+    2300400: "Road Bleibtreustra\xDFe.001"
+    2300402: "Road Bleibtreustra\xDFe.002"
+    2300404: "Road Grolmanstra\xDFe"
+    2300406: "Road Grolmanstra\xDFe.000"
+    2300408: "Road Grolmanstra\xDFe.001"
+    2300410: "Road Grolmanstra\xDFe.002"
+    2300412: "Road Grolmanstra\xDFe.003"
+    2300414: "Road Grolmanstra\xDFe.004"
+    2300416: "Road Grolmanstra\xDFe.005"
+    2300418: "Road Grolmanstra\xDFe.007"
+    2300420: "Road Grolmanstra\xDFe.008"
+    2300422: "Road Kantstra\xDFe"
+    2300424: "Road Kantstra\xDFe.000"
+    2300426: "Road Kantstra\xDFe.001"
+    2300428: "Road Kantstra\xDFe.002"
+    2300430: "Road Kantstra\xDFe.007"
+    2300432: "Road Kantstra\xDFe.008"
+    2300434: "Road Kantstra\xDFe.009"
+    2300436: "Road Kantstra\xDFe.010"
+    2300438: "Road Kantstra\xDFe.011"
+    2300440: "Road Kantstra\xDFe.012"
+    2300442: "Road Kantstra\xDFe.013"
+    2300444: "Road Kantstra\xDFe.014"
+    2300446: "Road Kantstra\xDFe.015"
+    2300448: "Road Kantstra\xDFe.016"
+    2300450: "Road Kantstra\xDFe.017"
+    2300452: "Road Kantstra\xDFe.018"
+    2300454: "Road Kantstra\xDFe.019"
+    2300456: "Road Kantstra\xDFe.020"
+    2300458: "Road Kantstra\xDFe.021"
+    2300460: "Road Kantstra\xDFe.022"
+    2300462: "Road Kantstra\xDFe.023"
+    2300464: "Road Kantstra\xDFe.024"
+    2300466: "Road Kantstra\xDFe.025"
+    2300468: "Road Pestalozzistra\xDFe"
+    2300470: "Road Pestalozzistra\xDFe.000"
+    2300472: "Road Pestalozzistra\xDFe.001"
+    2300474: "Road Pestalozzistra\xDFe.002"
+    2300476: "Road Pestalozzistra\xDFe.003"
+    2300478: "Road Pestalozzistra\xDFe.004"
+    2300480: "Road Pestalozzistra\xDFe.005"
+    2300482: "Road Pestalozzistra\xDFe.006"
+    2300484: "Road Pestalozzistra\xDFe.007"
+    2300486: "Road Pestalozzistra\xDFe.008"
+    2300488: "Road Schl\xFCterstra\xDFe"
+    2300490: "Road Schl\xFCterstra\xDFe.000"
+    2300492: "Road Schl\xFCterstra\xDFe.002"
+    2300494: "Road Schl\xFCterstra\xDFe.003"
+    2300496: "Road Schl\xFCterstra\xDFe.004"
+    2300498: "Road Schl\xFCterstra\xDFe.005"
+    2300500: "Road Schl\xFCterstra\xDFe.006"
+    2300502: "Road Schl\xFCterstra\xDFe.007"
+    2300504: "Road Wielandstra\xDFe"
+    2300506: "Road Wielandstra\xDFe.000"
+    2300508: "Road Wielandstra\xDFe.001"
+    2300510: "Road Wielandstra\xDFe.002"
+    2300512: "Road Wielandstra\xDFe.003"
+    2300514: Road211
+    2300516: Road212
+    2300518: Road213
+    2300520: Road214
+    2300522: Road217
+    2300524: Road218
+    2300526: Road219
+    2300528: Road220
+    2300530: Road221
+    2300532: Road222
+    2300534: Road223
+    2300536: Road224
+    2300538: Road225
+    2300540: Road226
+    2300542: Road227
+    2300544: Road228
+    2300546: Road229
+    2300548: Road230
+    2300550: Road231
+    2300552: Road232
+    2300554: Road233
+    2300556: Road234
+    2300558: Road235
+    2300560: Road237
+    2300562: Road238
+    2300564: Road239
+    2300566: Road240
+    2300568: Road241
+    2300570: Road242
+    2300572: Road243
+    2300574: Road244
+    2300576: Road245
+    2300578: Road246
+    2300580: RoadConnector101
+    2300582: RoadConnector173
+    2300584: RoadConnector18
+    2300586: RoadCrossingAtConnector100
+    2300588: RoadCrossingAtConnector118
+    2300590: RoadCrossingAtConnector150
+    2300592: RoadCrossingAtConnector177
+    2300594: RoadCrossingAtConnector189
+    2300596: RoadCrossingAtConnector204
+    2300598: RoadCrossingAtConnector206
+    2300600: RoadJunction107
+    2300602: RoadJunction12
+    2300604: RoadJunction145
+    2300606: RoadJunction151
+    2300608: RoadJunction152
+    2300610: RoadJunction153
+    2300612: RoadJunction154
+    2300614: RoadJunction155
+    2300616: RoadJunction156
+    2300618: RoadJunction161
+    2300620: RoadJunction162
+    2300622: RoadJunction164
+    2300624: RoadJunction167
+    2300626: RoadJunction168
+    2300628: RoadJunction171
+    2300630: RoadJunction175
+    2300632: RoadJunction203
+    2300634: RoadJunction4
+    2300636: RoadJunction46
+    2300638: RoadJunction50
+    2300640: StreetLamp178
+    2300642: StreetLamp182
+    2300644: StreetLamp184
+    2300646: StreetLamp186
+    2300648: StreetLamp187
+    2300650: StreetLamp188
+    2300652: StreetLamp190
+    2300654: StreetLamp192
+    2300656: StreetLamp193
+    2300658: StreetLamp196
+    2300660: StreetLamp198
+    2300662: StreetLamp201
+    2300664: StreetLamp21
+    2300666: StreetLamp37
+    2300668: StreetLamp55
+    2300670: StreetLamp67
+    2300672: StreetLamp77
+    2300674: StreetLamp88
+    2300676: StreetLamp95
+    2300678: SurfaceArea265
+    2300680: SurfaceArea377
+    2300682: SurfaceArea410
+    2300684: SurfaceArea418
+    2300686: SurfaceArea419
+    2300688: SurfaceArea420
+    2300690: SurfaceArea421
+    2300692: SurfaceParking261
+    2300694: Tree0
+    2300696: Tree1
+    2300698: Tree108
+    2300700: Tree109
+    2300702: Tree110
+    2300704: Tree111
+    2300706: Tree112
+    2300708: Tree113
+    2300710: Tree115
+    2300712: Tree116
+    2300714: Tree117
+    2300716: Tree119
+    2300718: Tree120
+    2300720: Tree121
+    2300722: Tree122
+    2300724: Tree125
+    2300726: Tree126
+    2300728: Tree134
+    2300730: Tree136
+    2300732: Tree138
+    2300734: Tree139
+    2300736: Tree14
+    2300738: Tree140
+    2300740: Tree142
+    2300742: Tree143
+    2300744: Tree144
+    2300746: Tree146
+    2300748: Tree147
+    2300750: Tree148
+    2300752: Tree15
+    2300754: Tree157
+    2300756: Tree158
+    2300758: Tree159
+    2300760: Tree16
+    2300762: Tree160
+    2300764: Tree163
+    2300766: Tree165
+    2300768: Tree166
+    2300770: Tree169
+    2300772: Tree17
+    2300774: Tree172
+    2300776: Tree174
+    2300778: Tree176
+    2300780: Tree179
+    2300782: Tree180
+    2300784: Tree181
+    2300786: Tree183
+    2300788: Tree185
+    2300790: Tree19
+    2300792: Tree191
+    2300794: Tree194
+    2300796: Tree195
+    2300798: Tree197
+    2300800: Tree199
+    2300802: Tree20
+    2300804: Tree200
+    2300806: Tree205
+    2300808: Tree22
+    2300810: Tree23
+    2300812: Tree24
+    2300814: Tree25
+    2300816: Tree26
+    2300818: Tree27
+    2300820: Tree28
+    2300822: Tree29
+    2300824: Tree3
+    2300826: Tree30
+    2300828: Tree31
+    2300830: Tree32
+    2300832: Tree33
+    2300834: Tree34
+    2300836: Tree35
+    2300838: Tree36
+    2300840: Tree38
+    2300842: Tree39
+    2300844: Tree40
+    2300846: Tree41
+    2300848: Tree42
+    2300850: Tree43
+    2300852: Tree44
+    2300854: Tree45
+    2300856: Tree47
+    2300858: Tree49
+    2300860: Tree5
+    2300862: Tree51
+    2300864: Tree52
+    2300866: Tree53
+    2300868: Tree54
+    2300870: Tree56
+    2300872: Tree57
+    2300874: Tree58
+    2300876: Tree59
+    2300878: Tree60
+    2300880: Tree61
+    2300882: Tree62
+    2300884: Tree63
+    2300886: Tree64
+    2300888: Tree65
+    2300890: Tree66
+    2300892: Tree68
+    2300894: Tree69
+    2300896: Tree70
+    2300898: Tree71
+    2300900: Tree72
+    2300902: Tree73
+    2300904: Tree74
+    2300906: Tree75
+    2300908: Tree76
+    2300910: Tree78
+    2300912: Tree79
+    2300914: Tree80
+    2300916: Tree81
+    2300918: Tree82
+    2300920: Tree83
+    2300922: Tree84
+    2300924: Tree85
+    2300926: Tree86
+    2300928: Tree87
+    2300930: Tree89
+    2300932: Tree90
+    2300934: Tree91
+    2300936: Tree92
+    2300938: Tree93
+    2300940: Tree94
+    2300942: Tree96
+    2300944: Tree97
+    2300946: Tree98
+    2300948: Tree99
+    2300950: Wall215
+    2300952: Wall216
+    2300954: Wall236
+    3300000: AdvertisingColumn170
+    3300002: AdvertisingColumn202
+    3300004: AdvertisingColumn48
+    3300006: AdvertisingColumn6
+    3300008: Bench9
+    3300010: Building Atelierhaus
+    3300012: Building Synagoge Charlottenburg
+    3300014: Building247
+    3300016: Building248
+    3300018: Building249
+    3300020: Building250
+    3300022: Building253
+    3300024: Building254
+    3300026: Building255
+    3300028: Building256
+    3300030: Building257
+    3300032: Building258
+    3300034: Building259
+    3300036: Building260
+    3300038: Building262
+    3300040: Building263
+    3300042: Building264
+    3300044: Building266
+    3300046: Building267
+    3300048: Building268
+    3300050: Building269
+    3300052: Building270
+    3300054: Building271
+    3300056: Building272
+    3300058: Building273
+    3300060: Building274
+    3300062: Building275
+    3300064: Building276
+    3300066: Building277
+    3300068: Building278
+    3300070: Building279
+    3300072: Building280
+    3300074: Building281
+    3300076: Building282
+    3300078: Building283
+    3300080: Building284
+    3300082: Building285
+    3300084: Building286
+    3300086: Building287
+    3300088: Building288
+    3300090: Building289
+    3300092: Building290
+    3300094: Building291
+    3300096: Building292
+    3300098: Building293
+    3300100: Building294
+    3300102: Building295
+    3300104: Building296
+    3300106: Building297
+    3300108: Building298
+    3300110: Building299
+    3300112: Building300
+    3300114: Building301
+    3300116: Building302
+    3300118: Building303
+    3300120: Building304
+    3300122: Building305
+    3300124: Building306
+    3300126: Building307
+    3300128: Building308
+    3300130: Building309
+    3300132: Building310
+    3300134: Building311
+    3300136: Building312
+    3300138: Building313
+    3300140: Building314
+    3300142: Building315
+    3300144: Building316
+    3300146: Building317
+    3300148: Building318
+    3300150: Building319
+    3300152: Building320
+    3300154: Building321
+    3300156: Building322
+    3300158: Building323
+    3300160: Building324
+    3300162: Building325
+    3300164: Building326
+    3300166: Building327
+    3300168: Building328
+    3300170: Building329
+    3300172: Building330
+    3300174: Building331
+    3300176: Building332
+    3300178: Building333
+    3300180: Building334
+    3300182: Building335
+    3300184: Building336
+    3300186: Building337
+    3300188: Building338
+    3300190: Building339
+    3300192: Building340
+    3300194: Building341
+    3300196: Building342
+    3300198: Building343
+    3300200: Building344
+    3300202: Building347
+    3300204: Building348
+    3300206: Building349
+    3300208: Building350
+    3300210: Building351
+    3300212: Building352
+    3300214: Building353
+    3300216: Building354
+    3300218: Building355
+    3300220: Building356
+    3300222: Building357
+    3300224: Building358
+    3300226: Building359
+    3300228: Building360
+    3300230: Building361
+    3300232: Building362
+    3300234: Building363
+    3300236: Building364
+    3300238: Building365
+    3300240: Building366
+    3300242: Building367
+    3300244: Building368
+    3300246: Building369
+    3300248: Building370
+    3300250: Building371
+    3300252: Building372
+    3300254: Building373
+    3300256: Building374
+    3300258: Building375
+    3300260: Building376
+    3300262: Building378
+    3300264: Building379
+    3300266: Building380
+    3300268: Building381
+    3300270: Building382
+    3300272: Building384
+    3300274: Building385
+    3300276: Building386
+    3300278: Building387
+    3300280: Building388
+    3300282: Building389
+    3300284: Building390
+    3300286: Building391
+    3300288: Building392
+    3300290: Building393
+    3300292: Building394
+    3300294: Building395
+    3300296: Building396
+    3300298: Building397
+    3300300: Building398
+    3300302: Building399
+    3300304: Building400
+    3300306: Building401
+    3300308: Building402
+    3300310: Building403
+    3300312: Building404
+    3300314: Building405
+    3300316: Building406
+    3300318: Building407
+    3300320: Building408
+    3300322: Building409
+    3300324: Building411
+    3300326: Building412
+    3300328: Building413
+    3300330: Building414
+    3300332: Building415
+    3300334: Building416
+    3300336: Building417
+    3300338: BuildingEntrance A-Trane
+    3300340: BuildingEntrance10
+    3300342: BuildingEntrance103
+    3300344: BuildingEntrance104
+    3300346: BuildingEntrance105
+    3300348: BuildingEntrance106
+    3300350: BuildingEntrance11
+    3300352: BuildingEntrance114
+    3300354: BuildingEntrance124
+    3300356: BuildingEntrance127
+    3300358: BuildingEntrance128
+    3300360: BuildingEntrance129
+    3300362: BuildingEntrance130
+    3300364: BuildingEntrance131
+    3300366: BuildingEntrance132
+    3300368: BuildingEntrance133
+    3300370: BuildingEntrance141
+    3300372: BuildingEntrance149
+    3300374: BuildingEntrance2
+    3300376: BuildingEntrance207
+    3300378: "BusStop Schl\xFCterstra\xDFe"
+    3300380: FireHydrant13
+    3300382: Phone7
+    3300384: Phone8
+    3300386: PoleFence208
+    3300388: PoleFence209
+    3300390: PoleFence210
+    3300392: PostBox123
+    3300394: PostBox135
+    3300396: "Road Bleibtreustra\xDFe"
+    3300398: "Road Bleibtreustra\xDFe.000"
+    3300400: "Road Bleibtreustra\xDFe.001"
+    3300402: "Road Bleibtreustra\xDFe.002"
+    3300404: "Road Grolmanstra\xDFe"
+    3300406: "Road Grolmanstra\xDFe.000"
+    3300408: "Road Grolmanstra\xDFe.001"
+    3300410: "Road Grolmanstra\xDFe.002"
+    3300412: "Road Grolmanstra\xDFe.003"
+    3300414: "Road Grolmanstra\xDFe.004"
+    3300416: "Road Grolmanstra\xDFe.005"
+    3300418: "Road Grolmanstra\xDFe.007"
+    3300420: "Road Grolmanstra\xDFe.008"
+    3300422: "Road Kantstra\xDFe"
+    3300424: "Road Kantstra\xDFe.000"
+    3300426: "Road Kantstra\xDFe.001"
+    3300428: "Road Kantstra\xDFe.002"
+    3300430: "Road Kantstra\xDFe.007"
+    3300432: "Road Kantstra\xDFe.008"
+    3300434: "Road Kantstra\xDFe.009"
+    3300436: "Road Kantstra\xDFe.010"
+    3300438: "Road Kantstra\xDFe.011"
+    3300440: "Road Kantstra\xDFe.012"
+    3300442: "Road Kantstra\xDFe.013"
+    3300444: "Road Kantstra\xDFe.014"
+    3300446: "Road Kantstra\xDFe.015"
+    3300448: "Road Kantstra\xDFe.016"
+    3300450: "Road Kantstra\xDFe.017"
+    3300452: "Road Kantstra\xDFe.018"
+    3300454: "Road Kantstra\xDFe.019"
+    3300456: "Road Kantstra\xDFe.020"
+    3300458: "Road Kantstra\xDFe.021"
+    3300460: "Road Kantstra\xDFe.022"
+    3300462: "Road Kantstra\xDFe.023"
+    3300464: "Road Kantstra\xDFe.024"
+    3300466: "Road Kantstra\xDFe.025"
+    3300468: "Road Pestalozzistra\xDFe"
+    3300470: "Road Pestalozzistra\xDFe.000"
+    3300472: "Road Pestalozzistra\xDFe.001"
+    3300474: "Road Pestalozzistra\xDFe.002"
+    3300476: "Road Pestalozzistra\xDFe.003"
+    3300478: "Road Pestalozzistra\xDFe.004"
+    3300480: "Road Pestalozzistra\xDFe.005"
+    3300482: "Road Pestalozzistra\xDFe.006"
+    3300484: "Road Pestalozzistra\xDFe.007"
+    3300486: "Road Pestalozzistra\xDFe.008"
+    3300488: "Road Schl\xFCterstra\xDFe"
+    3300490: "Road Schl\xFCterstra\xDFe.000"
+    3300492: "Road Schl\xFCterstra\xDFe.002"
+    3300494: "Road Schl\xFCterstra\xDFe.003"
+    3300496: "Road Schl\xFCterstra\xDFe.004"
+    3300498: "Road Schl\xFCterstra\xDFe.005"
+    3300500: "Road Schl\xFCterstra\xDFe.006"
+    3300502: "Road Schl\xFCterstra\xDFe.007"
+    3300504: "Road Wielandstra\xDFe"
+    3300506: "Road Wielandstra\xDFe.000"
+    3300508: "Road Wielandstra\xDFe.001"
+    3300510: "Road Wielandstra\xDFe.002"
+    3300512: "Road Wielandstra\xDFe.003"
+    3300514: Road211
+    3300516: Road212
+    3300518: Road213
+    3300520: Road214
+    3300522: Road217
+    3300524: Road218
+    3300526: Road219
+    3300528: Road220
+    3300530: Road221
+    3300532: Road222
+    3300534: Road223
+    3300536: Road224
+    3300538: Road225
+    3300540: Road226
+    3300542: Road227
+    3300544: Road228
+    3300546: Road229
+    3300548: Road230
+    3300550: Road231
+    3300552: Road232
+    3300554: Road233
+    3300556: Road234
+    3300558: Road235
+    3300560: Road237
+    3300562: Road238
+    3300564: Road239
+    3300566: Road240
+    3300568: Road241
+    3300570: Road242
+    3300572: Road243
+    3300574: Road244
+    3300576: Road245
+    3300578: Road246
+    3300580: RoadConnector101
+    3300582: RoadConnector173
+    3300584: RoadConnector18
+    3300586: RoadCrossingAtConnector100
+    3300588: RoadCrossingAtConnector118
+    3300590: RoadCrossingAtConnector150
+    3300592: RoadCrossingAtConnector177
+    3300594: RoadCrossingAtConnector189
+    3300596: RoadCrossingAtConnector204
+    3300598: RoadCrossingAtConnector206
+    3300600: RoadJunction107
+    3300602: RoadJunction12
+    3300604: RoadJunction145
+    3300606: RoadJunction151
+    3300608: RoadJunction152
+    3300610: RoadJunction153
+    3300612: RoadJunction154
+    3300614: RoadJunction155
+    3300616: RoadJunction156
+    3300618: RoadJunction161
+    3300620: RoadJunction162
+    3300622: RoadJunction164
+    3300624: RoadJunction167
+    3300626: RoadJunction168
+    3300628: RoadJunction171
+    3300630: RoadJunction175
+    3300632: RoadJunction203
+    3300634: RoadJunction4
+    3300636: RoadJunction46
+    3300638: RoadJunction50
+    3300640: StreetLamp178
+    3300642: StreetLamp182
+    3300644: StreetLamp184
+    3300646: StreetLamp186
+    3300648: StreetLamp187
+    3300650: StreetLamp188
+    3300652: StreetLamp190
+    3300654: StreetLamp192
+    3300656: StreetLamp193
+    3300658: StreetLamp196
+    3300660: StreetLamp198
+    3300662: StreetLamp201
+    3300664: StreetLamp21
+    3300666: StreetLamp37
+    3300668: StreetLamp55
+    3300670: StreetLamp67
+    3300672: StreetLamp77
+    3300674: StreetLamp88
+    3300676: StreetLamp95
+    3300678: SurfaceArea265
+    3300680: SurfaceArea377
+    3300682: SurfaceArea410
+    3300684: SurfaceArea418
+    3300686: SurfaceArea419
+    3300688: SurfaceArea420
+    3300690: SurfaceArea421
+    3300692: SurfaceParking261
+    3300694: Tree0
+    3300696: Tree1
+    3300698: Tree108
+    3300700: Tree109
+    3300702: Tree110
+    3300704: Tree111
+    3300706: Tree112
+    3300708: Tree113
+    3300710: Tree115
+    3300712: Tree116
+    3300714: Tree117
+    3300716: Tree119
+    3300718: Tree120
+    3300720: Tree121
+    3300722: Tree122
+    3300724: Tree125
+    3300726: Tree126
+    3300728: Tree134
+    3300730: Tree136
+    3300732: Tree138
+    3300734: Tree139
+    3300736: Tree14
+    3300738: Tree140
+    3300740: Tree142
+    3300742: Tree143
+    3300744: Tree144
+    3300746: Tree146
+    3300748: Tree147
+    3300750: Tree148
+    3300752: Tree15
+    3300754: Tree157
+    3300756: Tree158
+    3300758: Tree159
+    3300760: Tree16
+    3300762: Tree160
+    3300764: Tree163
+    3300766: Tree165
+    3300768: Tree166
+    3300770: Tree169
+    3300772: Tree17
+    3300774: Tree172
+    3300776: Tree174
+    3300778: Tree176
+    3300780: Tree179
+    3300782: Tree180
+    3300784: Tree181
+    3300786: Tree183
+    3300788: Tree185
+    3300790: Tree19
+    3300792: Tree191
+    3300794: Tree194
+    3300796: Tree195
+    3300798: Tree197
+    3300800: Tree199
+    3300802: Tree20
+    3300804: Tree200
+    3300806: Tree205
+    3300808: Tree22
+    3300810: Tree23
+    3300812: Tree24
+    3300814: Tree25
+    3300816: Tree26
+    3300818: Tree27
+    3300820: Tree28
+    3300822: Tree29
+    3300824: Tree3
+    3300826: Tree30
+    3300828: Tree31
+    3300830: Tree32
+    3300832: Tree33
+    3300834: Tree34
+    3300836: Tree35
+    3300838: Tree36
+    3300840: Tree38
+    3300842: Tree39
+    3300844: Tree40
+    3300846: Tree41
+    3300848: Tree42
+    3300850: Tree43
+    3300852: Tree44
+    3300854: Tree45
+    3300856: Tree47
+    3300858: Tree49
+    3300860: Tree5
+    3300862: Tree51
+    3300864: Tree52
+    3300866: Tree53
+    3300868: Tree54
+    3300870: Tree56
+    3300872: Tree57
+    3300874: Tree58
+    3300876: Tree59
+    3300878: Tree60
+    3300880: Tree61
+    3300882: Tree62
+    3300884: Tree63
+    3300886: Tree64
+    3300888: Tree65
+    3300890: Tree66
+    3300892: Tree68
+    3300894: Tree69
+    3300896: Tree70
+    3300898: Tree71
+    3300900: Tree72
+    3300902: Tree73
+    3300904: Tree74
+    3300906: Tree75
+    3300908: Tree76
+    3300910: Tree78
+    3300912: Tree79
+    3300914: Tree80
+    3300916: Tree81
+    3300918: Tree82
+    3300920: Tree83
+    3300922: Tree84
+    3300924: Tree85
+    3300926: Tree86
+    3300928: Tree87
+    3300930: Tree89
+    3300932: Tree90
+    3300934: Tree91
+    3300936: Tree92
+    3300938: Tree93
+    3300940: Tree94
+    3300942: Tree96
+    3300944: Tree97
+    3300946: Tree98
+    3300948: Tree99
+    3300950: Wall215
+    3300952: Wall216
+    3300954: Wall236
+    4300000: Tree0
+    4300002: Tree1
+    4300004: BuildingEntrance2
+    4300006: Tree3
+    4300008: RoadJunction4
+    4300010: Tree5
+    4300012: AdvertisingColumn6
+    4300014: Phone7
+    4300016: Phone8
+    4300018: Bench9
+    4300020: BuildingEntrance10
+    4300022: BuildingEntrance11
+    4300024: RoadJunction12
+    4300026: FireHydrant13
+    4300028: Tree14
+    4300030: Tree15
+    4300032: Tree16
+    4300034: Tree17
+    4300036: RoadConnector18
+    4300038: Tree19
+    4300040: Tree20
+    4300042: StreetLamp21
+    4300044: Tree22
+    4300046: Tree23
+    4300048: Tree24
+    4300050: Tree25
+    4300052: Tree26
+    4300054: Tree27
+    4300056: Tree28
+    4300058: Tree29
+    4300060: Tree30
+    4300062: Tree31
+    4300064: Tree32
+    4300066: Tree33
+    4300068: Tree34
+    4300070: Tree35
+    4300072: Tree36
+    4300074: StreetLamp37
+    4300076: Tree38
+    4300078: Tree39
+    4300080: Tree40
+    4300082: Tree41
+    4300084: Tree42
+    4300086: Tree43
+    4300088: Tree44
+    4300090: Tree45
+    4300092: RoadJunction46
+    4300094: Tree47
+    4300096: AdvertisingColumn48
+    4300098: Tree49
+    4300100: RoadJunction50
+    4300102: Tree51
+    4300104: Tree52
+    4300106: Tree53
+    4300108: Tree54
+    4300110: StreetLamp55
+    4300112: Tree56
+    4300114: Tree57
+    4300116: Tree58
+    4300118: Tree59
+    4300120: Tree60
+    4300122: "BusStop Schl\xFCterstra\xDFe"
+    4300124: Tree61
+    4300126: Tree62
+    4300128: Tree63
+    4300130: Tree64
+    4300132: Tree65
+    4300134: Tree66
+    4300136: StreetLamp67
+    4300138: Tree68
+    4300140: Tree69
+    4300142: Tree70
+    4300144: Tree71
+    4300146: Tree72
+    4300148: Tree73
+    4300150: Tree74
+    4300152: Tree75
+    4300154: Tree76
+    4300156: StreetLamp77
+    4300158: Tree78
+    4300160: Tree79
+    4300162: Tree80
+    4300164: Tree81
+    4300166: Tree82
+    4300168: Tree83
+    4300170: Tree84
+    4300172: Tree85
+    4300174: Tree86
+    4300176: Tree87
+    4300178: StreetLamp88
+    4300180: Tree89
+    4300182: Tree90
+    4300184: Tree91
+    4300186: Tree92
+    4300188: Tree93
+    4300190: Tree94
+    4300192: StreetLamp95
+    4300194: Tree96
+    4300196: Tree97
+    4300198: Tree98
+    4300200: Tree99
+    4300202: RoadCrossingAtConnector100
+    4300204: RoadConnector101
+    4300206: BuildingEntrance103
+    4300208: BuildingEntrance104
+    4300210: BuildingEntrance105
+    4300212: BuildingEntrance106
+    4300214: RoadJunction107
+    4300216: Tree108
+    4300218: Tree109
+    4300220: Tree110
+    4300222: Tree111
+    4300224: Tree112
+    4300226: Tree113
+    4300228: BuildingEntrance114
+    4300230: Tree115
+    4300232: Tree116
+    4300234: Tree117
+    4300236: RoadCrossingAtConnector118
+    4300238: Tree119
+    4300240: Tree120
+    4300242: Tree121
+    4300244: Tree122
+    4300246: PostBox123
+    4300248: BuildingEntrance A-Trane
+    4300250: BuildingEntrance124
+    4300252: Tree125
+    4300254: Tree126
+    4300256: BuildingEntrance127
+    4300258: BuildingEntrance128
+    4300260: BuildingEntrance129
+    4300262: BuildingEntrance130
+    4300264: BuildingEntrance131
+    4300266: BuildingEntrance132
+    4300268: BuildingEntrance133
+    4300270: Tree134
+    4300272: PostBox135
+    4300274: Tree136
+    4300276: Tree138
+    4300278: Tree139
+    4300280: Tree140
+    4300282: BuildingEntrance141
+    4300284: Tree142
+    4300286: Tree143
+    4300288: Tree144
+    4300290: RoadJunction145
+    4300292: Tree146
+    4300294: Tree147
+    4300296: Tree148
+    4300298: BuildingEntrance149
+    4300300: RoadCrossingAtConnector150
+    4300302: RoadJunction151
+    4300304: RoadJunction152
+    4300306: RoadJunction153
+    4300308: RoadJunction154
+    4300310: RoadJunction155
+    4300312: RoadJunction156
+    4300314: Tree157
+    4300316: Tree158
+    4300318: Tree159
+    4300320: Tree160
+    4300322: RoadJunction161
+    4300324: RoadJunction162
+    4300326: Tree163
+    4300328: RoadJunction164
+    4300330: Tree165
+    4300332: Tree166
+    4300334: RoadJunction167
+    4300336: RoadJunction168
+    4300338: Tree169
+    4300340: AdvertisingColumn170
+    4300342: RoadJunction171
+    4300344: Tree172
+    4300346: RoadConnector173
+    4300348: Tree174
+    4300350: RoadJunction175
+    4300352: Tree176
+    4300354: RoadCrossingAtConnector177
+    4300356: StreetLamp178
+    4300358: Tree179
+    4300360: Tree180
+    4300362: Tree181
+    4300364: StreetLamp182
+    4300366: Tree183
+    4300368: StreetLamp184
+    4300370: Tree185
+    4300372: StreetLamp186
+    4300374: StreetLamp187
+    4300376: StreetLamp188
+    4300378: RoadCrossingAtConnector189
+    4300380: StreetLamp190
+    4300382: Tree191
+    4300384: StreetLamp192
+    4300386: StreetLamp193
+    4300388: Tree194
+    4300390: Tree195
+    4300392: StreetLamp196
+    4300394: Tree197
+    4300396: StreetLamp198
+    4300398: Tree199
+    4300400: Tree200
+    4300402: StreetLamp201
+    4300404: AdvertisingColumn202
+    4300406: RoadJunction203
+    4300408: RoadCrossingAtConnector204
+    4300410: Tree205
+    4300412: RoadCrossingAtConnector206
+    4300414: BuildingEntrance207
+    4300416: "Road Wielandstra\xDFe"
+    4300418: "Road Wielandstra\xDFe.000"
+    4300420: "Road Wielandstra\xDFe.001"
+    4300422: PoleFence208
+    4300424: PoleFence209
+    4300426: PoleFence210
+    4300428: Road211
+    4300430: Road212
+    4300432: Road213
+    4300434: Road214
+    4300436: Wall215
+    4300438: Wall216
+    4300440: Road217
+    4300442: Road218
+    4300444: Road219
+    4300446: Road220
+    4300448: Road221
+    4300450: Road222
+    4300452: Road223
+    4300454: Road224
+    4300456: Road225
+    4300458: Road226
+    4300460: Road227
+    4300462: Road228
+    4300464: Road229
+    4300466: Road230
+    4300468: Road231
+    4300470: "Road Kantstra\xDFe"
+    4300472: "Road Kantstra\xDFe.000"
+    4300474: "Road Kantstra\xDFe.001"
+    4300476: "Road Kantstra\xDFe.002"
+    4300478: "Road Kantstra\xDFe.007"
+    4300480: "Road Kantstra\xDFe.008"
+    4300482: "Road Kantstra\xDFe.009"
+    4300484: "Road Kantstra\xDFe.010"
+    4300486: "Road Kantstra\xDFe.011"
+    4300488: "Road Kantstra\xDFe.012"
+    4300490: "Road Kantstra\xDFe.013"
+    4300492: "Road Kantstra\xDFe.014"
+    4300494: "Road Kantstra\xDFe.015"
+    4300496: "Road Kantstra\xDFe.016"
+    4300498: "Road Kantstra\xDFe.017"
+    4300500: "Road Grolmanstra\xDFe"
+    4300502: "Road Grolmanstra\xDFe.000"
+    4300504: "Road Grolmanstra\xDFe.001"
+    4300506: "Road Grolmanstra\xDFe.002"
+    4300508: "Road Grolmanstra\xDFe.003"
+    4300510: "Road Grolmanstra\xDFe.004"
+    4300512: "Road Grolmanstra\xDFe.005"
+    4300514: Road232
+    4300516: "Road Schl\xFCterstra\xDFe"
+    4300518: "Road Pestalozzistra\xDFe"
+    4300520: "Road Pestalozzistra\xDFe.000"
+    4300522: "Road Pestalozzistra\xDFe.001"
+    4300524: "Road Pestalozzistra\xDFe.002"
+    4300526: "Road Pestalozzistra\xDFe.003"
+    4300528: "Road Kantstra\xDFe.018"
+    4300530: "Road Kantstra\xDFe.019"
+    4300532: "Road Kantstra\xDFe.020"
+    4300534: "Road Kantstra\xDFe.021"
+    4300536: "Road Kantstra\xDFe.022"
+    4300538: "Road Kantstra\xDFe.023"
+    4300540: "Road Kantstra\xDFe.024"
+    4300542: "Road Kantstra\xDFe.025"
+    4300544: "Road Bleibtreustra\xDFe"
+    4300546: "Road Bleibtreustra\xDFe.000"
+    4300548: "Road Bleibtreustra\xDFe.001"
+    4300550: "Road Bleibtreustra\xDFe.002"
+    4300552: "Road Schl\xFCterstra\xDFe.000"
+    4300554: Road233
+    4300556: "Road Pestalozzistra\xDFe.004"
+    4300558: "Road Pestalozzistra\xDFe.005"
+    4300560: "Road Pestalozzistra\xDFe.006"
+    4300562: "Road Pestalozzistra\xDFe.007"
+    4300564: "Road Pestalozzistra\xDFe.008"
+    4300566: Road234
+    4300568: "Road Schl\xFCterstra\xDFe.002"
+    4300570: "Road Schl\xFCterstra\xDFe.003"
+    4300572: "Road Schl\xFCterstra\xDFe.004"
+    4300574: "Road Schl\xFCterstra\xDFe.005"
+    4300576: "Road Schl\xFCterstra\xDFe.006"
+    4300578: "Road Schl\xFCterstra\xDFe.007"
+    4300580: Road235
+    4300582: "Road Grolmanstra\xDFe.007"
+    4300584: "Road Grolmanstra\xDFe.008"
+    4300586: Wall236
+    4300588: Road237
+    4300590: Road238
+    4300592: Road239
+    4300594: Road240
+    4300596: Road241
+    4300598: Road242
+    4300600: Road243
+    4300602: Road244
+    4300604: Road245
+    4300606: Road246
+    4300608: "Road Wielandstra\xDFe.002"
+    4300610: "Road Wielandstra\xDFe.003"
+    4300612: Building247
+    4300614: Building248
+    4300616: Building249
+    4300618: Building250
+    4300620: Building253
+    4300622: Building254
+    4300624: Building255
+    4300626: Building256
+    4300628: Building257
+    4300630: Building258
+    4300632: Building259
+    4300634: Building260
+    4300636: SurfaceParking261
+    4300638: Building262
+    4300640: Building263
+    4300642: Building264
+    4300644: SurfaceArea265
+    4300646: Building266
+    4300648: Building267
+    4300650: Building268
+    4300652: Building269
+    4300654: Building270
+    4300656: Building271
+    4300658: Building272
+    4300660: Building273
+    4300662: Building274
+    4300664: Building275
+    4300666: Building276
+    4300668: Building277
+    4300670: Building278
+    4300672: Building279
+    4300674: Building280
+    4300676: Building281
+    4300678: Building282
+    4300680: Building283
+    4300682: Building284
+    4300684: Building285
+    4300686: Building286
+    4300688: Building Synagoge Charlottenburg
+    4300690: Building287
+    4300692: Building288
+    4300694: Building289
+    4300696: Building290
+    4300698: Building291
+    4300700: Building292
+    4300702: Building293
+    4300704: Building294
+    4300706: Building295
+    4300708: Building296
+    4300710: Building297
+    4300712: Building298
+    4300714: Building299
+    4300716: Building300
+    4300718: Building301
+    4300720: Building302
+    4300722: Building303
+    4300724: Building304
+    4300726: Building305
+    4300728: Building306
+    4300730: Building307
+    4300732: Building308
+    4300734: Building309
+    4300736: Building310
+    4300738: Building311
+    4300740: Building312
+    4300742: Building313
+    4300744: Building314
+    4300746: Building315
+    4300748: Building316
+    4300750: Building317
+    4300752: Building318
+    4300754: Building319
+    4300756: Building320
+    4300758: Building321
+    4300760: Building322
+    4300762: Building323
+    4300764: Building324
+    4300766: Building325
+    4300768: Building326
+    4300770: Building327
+    4300772: Building328
+    4300774: Building329
+    4300776: Building330
+    4300778: Building331
+    4300780: Building332
+    4300782: Building333
+    4300784: Building334
+    4300786: Building335
+    4300788: Building336
+    4300790: Building337
+    4300792: Building338
+    4300794: Building339
+    4300796: Building340
+    4300798: Building341
+    4300800: Building342
+    4300802: Building343
+    4300804: Building344
+    4300806: Building347
+    4300808: Building348
+    4300810: Building349
+    4300812: Building350
+    4300814: Building351
+    4300816: Building352
+    4300818: Building353
+    4300820: Building354
+    4300822: Building355
+    4300824: Building356
+    4300826: Building357
+    4300828: Building358
+    4300830: Building359
+    4300832: Building360
+    4300834: Building361
+    4300836: Building362
+    4300838: Building363
+    4300840: Building364
+    4300842: Building365
+    4300844: Building366
+    4300846: Building367
+    4300848: Building368
+    4300850: Building369
+    4300852: Building370
+    4300854: Building371
+    4300856: Building372
+    4300858: Building373
+    4300860: Building374
+    4300862: Building375
+    4300864: Building376
+    4300866: SurfaceArea377
+    4300868: Building378
+    4300870: Building379
+    4300872: Building380
+    4300874: Building381
+    4300876: Building382
+    4300878: Building384
+    4300880: Building385
+    4300882: Building386
+    4300884: Building387
+    4300886: Building388
+    4300888: Building389
+    4300890: Building Atelierhaus
+    4300892: Building390
+    4300894: Building391
+    4300896: Building392
+    4300898: Building393
+    4300900: Building394
+    4300902: Building395
+    4300904: Building396
+    4300906: Building397
+    4300908: Building398
+    4300910: Building399
+    4300912: Building400
+    4300914: Building401
+    4300916: Building402
+    4300918: Building403
+    4300920: Building404
+    4300922: Building405
+    4300924: Building406
+    4300926: Building407
+    4300928: Building408
+    4300930: Building409
+    4300932: SurfaceArea410
+    4300934: Building411
+    4300936: Building412
+    4300938: Building413
+    4300940: Building414
+    4300942: Building415
+    4300944: Building416
+    4300946: Building417
+    4300948: SurfaceArea418
+    4300950: SurfaceArea419
+    4300952: SurfaceArea420
+    4300954: SurfaceArea421
+    10800000: Light
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

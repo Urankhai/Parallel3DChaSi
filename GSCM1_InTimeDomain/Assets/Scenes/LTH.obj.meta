@@ -1,0 +1,202 @@
+fileFormatVersion: 2
+guid: 88c3601a771307487bd8e85c94630b67
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Bridge
+    100002: Building
+    100004: BuildingEntrance
+    100006: //RootNode
+    100008: Rail
+    100010: Road
+    100012: RoadArea
+    100014: RoadConnector
+    100016: RoadCrossingAtConnector
+    100018: RoadJunction
+    100020: SoccerPitch
+    100022: SurfaceArea
+    100024: SurfaceParking
+    100026: Table
+    100028: Tree
+    100030: Wall
+    100032: WasteBasket
+    100034: Water
+    100036: Waterway
+    400000: Bridge
+    400002: Building
+    400004: BuildingEntrance
+    400006: //RootNode
+    400008: Rail
+    400010: Road
+    400012: RoadArea
+    400014: RoadConnector
+    400016: RoadCrossingAtConnector
+    400018: RoadJunction
+    400020: SoccerPitch
+    400022: SurfaceArea
+    400024: SurfaceParking
+    400026: Table
+    400028: Tree
+    400030: Wall
+    400032: WasteBasket
+    400034: Water
+    400036: Waterway
+    2100000: BridgeMat
+    2100002: BuildingMat
+    2100004: BuildingEntranceMat
+    2100006: RailMat
+    2100008: RoadMat
+    2100010: RoadAreaMat
+    2100012: RoadConnectorMat
+    2100014: RoadCrossingAtConnectorMat
+    2100016: RoadJunctionMat
+    2100018: SoccerPitchMat
+    2100020: SurfaceAreaMat
+    2100022: SurfaceParkingMat
+    2100024: TableMat
+    2100026: TreeMat
+    2100028: WallMat
+    2100030: WasteBasketMat
+    2100032: WaterMat
+    2100034: WaterwayMat
+    2300000: Bridge
+    2300002: Building
+    2300004: BuildingEntrance
+    2300006: Rail
+    2300008: Road
+    2300010: RoadArea
+    2300012: RoadConnector
+    2300014: RoadCrossingAtConnector
+    2300016: RoadJunction
+    2300018: SoccerPitch
+    2300020: SurfaceArea
+    2300022: SurfaceParking
+    2300024: Table
+    2300026: Tree
+    2300028: Wall
+    2300030: WasteBasket
+    2300032: Water
+    2300034: Waterway
+    3300000: Bridge
+    3300002: Building
+    3300004: BuildingEntrance
+    3300006: Rail
+    3300008: Road
+    3300010: RoadArea
+    3300012: RoadConnector
+    3300014: RoadCrossingAtConnector
+    3300016: RoadJunction
+    3300018: SoccerPitch
+    3300020: SurfaceArea
+    3300022: SurfaceParking
+    3300024: Table
+    3300026: Tree
+    3300028: Wall
+    3300030: WasteBasket
+    3300032: Water
+    3300034: Waterway
+    4300000: Bridge
+    4300002: Building
+    4300004: BuildingEntrance
+    4300006: Rail
+    4300008: Road
+    4300010: RoadArea
+    4300012: RoadConnector
+    4300014: RoadCrossingAtConnector
+    4300016: RoadJunction
+    4300018: SoccerPitch
+    4300020: SurfaceArea
+    4300022: SurfaceParking
+    4300024: Table
+    4300026: Tree
+    4300028: Wall
+    4300030: WasteBasket
+    4300032: Water
+    4300034: Waterway
+    2186277476908879412: ImportLogs
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
