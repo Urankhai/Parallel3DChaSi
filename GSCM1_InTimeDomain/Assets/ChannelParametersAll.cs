@@ -160,7 +160,7 @@ public struct ChannelParametersAll : IJobParallelFor
 
                                 float angular_gain = angular_gain1 * gain12 * angular_gain2;
                                 float attenuation = att1 * angular_gain * att2;
-                                if (attenuation > 0.000000001) // 10^(-9) => -180 dBm
+                                if (attenuation > 0.00001) // 10^(-5) => -100 dBm
                                 {
                                     
 
@@ -236,7 +236,7 @@ public struct ChannelParametersAll : IJobParallelFor
 
                                 float angular_gain = angular_gain1 * gain123 * angular_gain3;
                                 float attenuation = att1 * angular_gain * att3;
-                                if (attenuation > 0.000000001) // 10^(-9) => -180 dBm
+                                if (attenuation > 0.00001) // 10^(-5) => -100 dBm
                                 {
                                     
 

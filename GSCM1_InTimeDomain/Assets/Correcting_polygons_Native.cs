@@ -181,7 +181,7 @@ public class Correcting_polygons_Native : MonoBehaviour
         List<Vector3> GlobalMPC3 = new List<Vector3>();
         List<Vector3> GlobalDMC = new List<Vector3>();
 
-        //int inclusion_count = 0;
+        // int inclusion_count = 0;
         // analyzing each seen building separately
         NativeArray<V6> MPC1_Pick = new NativeArray<V6>(MPC1_Native.Length, Allocator.TempJob);
         NativeArray<V6> MPC2_Pick = new NativeArray<V6>(MPC2_Native.Length, Allocator.TempJob);
@@ -611,7 +611,7 @@ public class Correcting_polygons_Native : MonoBehaviour
         power2.Complete();
         for (int i = 0; i < ActiveV6_MPC2_Power.Length; i++)
         {
-            ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length + ActiveV6_MPC1_Power.Length] = 2 * ActiveV6_MPC2_Power[i]; // It seems that Carl uses only one multiplication to the coefficient
+            ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length + ActiveV6_MPC1_Power.Length] = Mathf.Pow( ActiveV6_MPC2_Power[i], 1/2 ); // It seems that Carl uses only one multiplication to the coefficient
         }
 
 
@@ -625,7 +625,7 @@ public class Correcting_polygons_Native : MonoBehaviour
         power3.Complete();
         for (int i = 0; i < ActiveV6_MPC3_Power.Length; i++)
         {
-            ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length + ActiveV6_MPC1_Power.Length + ActiveV6_MPC2_Power.Length] = 3 * ActiveV6_MPC3_Power[i]; // It seems that Carl uses only one multiplication to the coefficient
+            ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length + ActiveV6_MPC1_Power.Length + ActiveV6_MPC2_Power.Length] = Mathf.Pow( ActiveV6_MPC3_Power[i], 1/3 ); // It seems that Carl uses only one multiplication to the coefficient
         }
         #endregion
 
