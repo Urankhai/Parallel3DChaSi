@@ -160,7 +160,7 @@ public struct ChannelParametersAll : IJobParallelFor
 
                                 float angular_gain = angular_gain1 * gain12 * angular_gain2;
                                 float attenuation = att1 * angular_gain * att2;
-                                if (attenuation > 0.00001) // 10^(-5) => -100 dBm
+                                if (attenuation > 0.0000001) // 10^(-7) => -140 dBm
                                 {
                                     
 
@@ -236,7 +236,7 @@ public struct ChannelParametersAll : IJobParallelFor
 
                                 float angular_gain = angular_gain1 * gain123 * angular_gain3;
                                 float attenuation = att1 * angular_gain * att3;
-                                if (attenuation > 0.00001) // 10^(-5) => -100 dBm
+                                if (attenuation > 0.0000001) // 10^(-7) => -140 dBm
                                 {
                                     
 
@@ -280,20 +280,20 @@ public struct ChannelParametersAll : IJobParallelFor
     private float AngularGainFunc(float angle1, float angle2, float threshold1, float threshold2)
     {
         float Gain0 = 1;
-        //float Gain1 = 1; // comment it according to Carl's Matlab script
-        //float Gain2 = 1;
+        float Gain1 = 1; // should be commented it according to Carl's Matlab script
+        float Gain2 = 1;
 
         if (Mathf.Abs(angle1 - angle2) > threshold1)
         { Gain0 = Mathf.Exp(-12 * (Mathf.Abs(angle1 - angle2) - threshold1)); }
 
-        //if (Mathf.Abs(angle1) > threshold2)
-        //{ Gain1 = Mathf.Exp(-12 * (Mathf.Abs(angle1) - threshold2)); }
+        if (Mathf.Abs(angle1) > threshold2)
+        { Gain1 = Mathf.Exp(-12 * (Mathf.Abs(angle1) - threshold2)); }
 
-        //if (Mathf.Abs(angle2) > threshold2)
-        //{ Gain2 = Mathf.Exp(-12 * (Mathf.Abs(angle2) - threshold2)); }
+        if (Mathf.Abs(angle2) > threshold2)
+        { Gain2 = Mathf.Exp(-12 * (Mathf.Abs(angle2) - threshold2)); }
         // commented since the gain part from mpc side is already calculated
 
-        float Gain = Gain0;// * Gain1;// * Gain2; // comment it according to Carl's Matlab script
+        float Gain = Gain0 * Gain1 * Gain2; // should be commented according to Carl's Matlab script
         return Gain;
     }
 }

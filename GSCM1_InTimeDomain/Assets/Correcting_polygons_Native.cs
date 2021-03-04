@@ -611,7 +611,7 @@ public class Correcting_polygons_Native : MonoBehaviour
         power2.Complete();
         for (int i = 0; i < ActiveV6_MPC2_Power.Length; i++)
         {
-            ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length + ActiveV6_MPC1_Power.Length] = Mathf.Pow( ActiveV6_MPC2_Power[i], 1/2 ); // It seems that Carl uses only one multiplication to the coefficient
+            ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length + ActiveV6_MPC1_Power.Length] = Mathf.Pow( ActiveV6_MPC2_Power[i], 0.5f ); // It seems that Carl uses only one multiplication to the coefficient
         }
 
 
@@ -625,7 +625,7 @@ public class Correcting_polygons_Native : MonoBehaviour
         power3.Complete();
         for (int i = 0; i < ActiveV6_MPC3_Power.Length; i++)
         {
-            ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length + ActiveV6_MPC1_Power.Length + ActiveV6_MPC2_Power.Length] = Mathf.Pow( ActiveV6_MPC3_Power[i], 1/3 ); // It seems that Carl uses only one multiplication to the coefficient
+            ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length + ActiveV6_MPC1_Power.Length + ActiveV6_MPC2_Power.Length] = Mathf.Pow( ActiveV6_MPC3_Power[i], 0.3333f ); // It seems that Carl uses only one multiplication to the coefficient
         }
         #endregion
 
@@ -671,8 +671,8 @@ public struct MPCPowerGeneration : IJobParallelFor
     public void Execute(int index)
     {
         var rng = rngs[threadId];
-
-        float MPC_power = rng.NextFloat(MinMax.x, MinMax.y);
+        float PowerAdjustingShift = 40f;
+        float MPC_power = rng.NextFloat(MinMax.x + PowerAdjustingShift, MinMax.y + PowerAdjustingShift);
         
         rngs[threadId] = rng;
 

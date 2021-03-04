@@ -668,6 +668,7 @@ public partial class ChannelGenManager : MonoBehaviour
         
         for (int i = 0; i < H.Length; i++)
         {
+            
             Y_output[i] = 10 * Mathf.Log10( Mathf.Pow((float)System.Numerics.Complex.Abs(outputSignal_Freq[i]), 2) + 0.0000000000001f);
             H_output[i] = 10 * Mathf.Log10( Mathf.Pow((float)System.Numerics.Complex.Abs(H[i]), 2) + 0.0000000000001f);
             
@@ -675,6 +676,7 @@ public partial class ChannelGenManager : MonoBehaviour
         }
 
         Debug.Log("RSS = " + 10 * Mathf.Log10((float)RSS) + " dBm");
+        
 
         Drawing.drawChart(tfTime, X_inputValues, Y_output, "time");
         Drawing.drawChart(tfFreq, X_inputValues, H_output, "frequency");
@@ -761,7 +763,7 @@ public struct ParallelChannel : IJobParallelFor
                 do
                 {
                     float HNLoS_dist = path.PathParameters.Distance;
-                    float HNLoS_dist_gain = 1 / (InverseLambdas[i_sub] * 4 * Mathf.PI * HNLoS_dist);
+                    float HNLoS_dist_gain = 1 / (InverseLambdas[i_sub] * 4 * Mathf.PI * HNLoS_dist); // Free space loss
                     float HNLoS_attnuation = path.PathParameters.Attenuation;
 
                     double ReExpHLoS = Mathf.Cos(2 * Mathf.PI * InverseLambdas[i_sub] * HNLoS_dist);

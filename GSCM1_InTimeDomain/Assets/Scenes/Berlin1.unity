@@ -3296,7 +3296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7bb5abd96d647e4a82f06cfc286f292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PowerInMilliWatts: 1000
+  PowerInMilliWatts: 100
   SpeedofLight: 299792450
   CarrierFrequency: 5.9e+9
   fsubcarriers: 200000
