@@ -1565,9 +1565,9 @@ NavMeshAgent:
   m_GameObject: {fileID: 297854052}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 4
+  m_Radius: 2
   m_Speed: 15
-  m_Acceleration: 8
+  m_Acceleration: 20
   avoidancePriority: 1
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -3305,7 +3305,8 @@ MonoBehaviour:
   DrawingOverlaps: 0
   DrawingPath1: 0
   DrawingPath2: 0
-  DrawingPath3: 1
+  DrawingPath3: 0
+  SubframePower: 0
 --- !u!4 &604064072
 Transform:
   m_ObjectHideFlags: 0
@@ -3335,10 +3336,10 @@ NavMeshAgent:
   m_GameObject: {fileID: 642061108}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 4
-  m_Speed: 20
-  m_Acceleration: 8
-  avoidancePriority: 5
+  m_Radius: 2
+  m_Speed: 15
+  m_Acceleration: 20
+  avoidancePriority: 2
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
@@ -3347,7 +3348,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 3
+  m_ObstacleAvoidanceType: 2
 --- !u!64 &642061110
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10027,9 +10028,9 @@ NavMeshAgent:
   m_GameObject: {fileID: 1812961304}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 4
+  m_Radius: 2
   m_Speed: 15
-  m_Acceleration: 8
+  m_Acceleration: 20
   avoidancePriority: 3
   m_AngularSpeed: 120
   m_StoppingDistance: 0
@@ -10039,7 +10040,7 @@ NavMeshAgent:
   m_Height: 2
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 1
+  m_ObstacleAvoidanceType: 3
 --- !u!64 &1812961306
 MeshCollider:
   m_ObjectHideFlags: 0

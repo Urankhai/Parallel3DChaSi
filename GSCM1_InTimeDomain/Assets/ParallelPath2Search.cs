@@ -42,8 +42,8 @@ public struct ParallelPath2Search : IJobParallelFor
                     // calculating angular gain
                     float gd = AngularGainFunc(aod, thr);
                     float ga = AngularGainFunc(aoa, thr);
-                    float g0 = gd * ga; // according to the Carl's paper, it should be commented
-                    //float g0 = 1; // according to Carl's Matlab code
+                    //float g0 = gd * ga; // according to the Carl's paper, it should be commented
+                    float g0 = 1; // according to Carl's Matlab code
 
                     PossiblePath2[index] = new SeenPath2(ID[index], temp_dist, aod, aoa, signDep, signArr, g0);
                 }

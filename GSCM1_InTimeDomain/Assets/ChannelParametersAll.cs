@@ -286,11 +286,13 @@ public struct ChannelParametersAll : IJobParallelFor
         if (Mathf.Abs(angle1 - angle2) > threshold1)
         { Gain0 = Mathf.Exp(-12 * (Mathf.Abs(angle1 - angle2) - threshold1)); }
 
+        /*
         if (Mathf.Abs(angle1) > threshold2)
         { Gain1 = Mathf.Exp(-12 * (Mathf.Abs(angle1) - threshold2)); }
 
         if (Mathf.Abs(angle2) > threshold2)
         { Gain2 = Mathf.Exp(-12 * (Mathf.Abs(angle2) - threshold2)); }
+        */
         // commented since the gain part from mpc side is already calculated
 
         float Gain = Gain0 * Gain1 * Gain2; // should be commented according to Carl's Matlab script

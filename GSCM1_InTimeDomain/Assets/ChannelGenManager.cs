@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Burst;
+using System.IO;
 
 public partial class ChannelGenManager : MonoBehaviour
 {
@@ -12,21 +13,25 @@ public partial class ChannelGenManager : MonoBehaviour
     public float CarrierFrequency = (float)(5.9 * Mathf.Pow(10, 9)); // GHz
     public float fsubcarriers = (float)200000; // kHz
 
+    
     /// <summary>
     ///  Data for Fourier transform
     /// </summary>
 
     double[] Y_output;
     double[] H_output;
-    double[] Y_noise_output;
-    double[] H_noise_output;
+    //double[] Y_noise_output;
+    //double[] H_noise_output;
     double[] X_inputValues;
     [Space(10)]
     [Header("CHARTS FOR DRAWING")]
     [Space]
     public Transform tfTime;
     public Transform tfFreq;
-    
+
+    // for saving data
+    public List<List<string>> H_save = new List<List<string>>(); // for saving data into a csv file
+    public List<List<string>> h_save = new List<List<string>>(); // for saving data into a csv file
 
     // control parameters
     public bool DrawingOverlaps = false;
@@ -122,8 +127,13 @@ public partial class ChannelGenManager : MonoBehaviour
     NativeArray<System.Numerics.Complex> H2;
     NativeArray<System.Numerics.Complex> H3;
     NativeArray<System.Numerics.Complex> H_NLoS;
+
+    public float SubframePower;
     private void OnEnable()
     {
+        SubframePower = PowerInMilliWatts / FFTNum;
+        Debug.Log("Power per subframe = " + SubframePower);
+
         Subcarriers = new NativeArray<float>(FFTNum, Allocator.Persistent);
         InverseWavelengths = new NativeArray<float>(FFTNum, Allocator.Persistent);
         
@@ -145,7 +155,7 @@ public partial class ChannelGenManager : MonoBehaviour
 
         commandsLoS.Dispose();
         resultsLoS.Dispose();
-        
+        /*
         SoA0.Dispose();
         Seen0.Dispose();
         commands0.Dispose();
@@ -165,7 +175,7 @@ public partial class ChannelGenManager : MonoBehaviour
         Seen3.Dispose();
         commands3.Dispose();
         results3.Dispose();
-
+        */
         SoA.Dispose();
         Seen.Dispose();
         commands.Dispose();
@@ -174,11 +184,53 @@ public partial class ChannelGenManager : MonoBehaviour
         Subcarriers.Dispose();
         InverseWavelengths.Dispose();
         H_LoS.Dispose();
+        /*
         H0.Dispose();
         H1.Dispose();
         H2.Dispose();
         H3.Dispose();
+        */
         H_NLoS.Dispose();
+    }
+
+    private void OnDisable()
+    {
+        
+        string path1 = Application.persistentDataPath + "/h_time1.csv";
+
+        using (var file = File.CreateText(path1))
+        {
+            foreach (var arr in h_save)
+            {
+                //if (String.IsNullOrEmpty(arr)) continue;
+                file.Write(arr[0]);
+                for (int i = 1; i < arr.Count; i++)
+                {
+                    file.Write(',');
+                    file.Write(arr[i]);
+                }
+                file.WriteLine();
+            }
+        }
+
+        string path2 = Application.persistentDataPath + "/H_freq1.csv";
+
+        using (var file = File.CreateText(path2))
+        {
+            foreach (var arr in H_save)
+            {
+                //if (String.IsNullOrEmpty(arr)) continue;
+                file.Write(arr[0]);
+                for (int i = 1; i < arr.Count; i++)
+                {
+                    file.Write(',');
+                    file.Write(arr[i]);
+                }
+                file.WriteLine();
+            }
+        }
+
+        Debug.Log("The lenght of the list<list> structure " + h_save.Count);
     }
 
     void Start()
@@ -264,6 +316,8 @@ public partial class ChannelGenManager : MonoBehaviour
         // LoS
         commandsLoS = new NativeArray<RaycastCommand>(link_num, Allocator.Persistent);
         resultsLoS = new NativeArray<RaycastHit>(link_num, Allocator.Persistent);
+        
+        /*
         // DMC
         SoA0 = new NativeArray<float>(DMC_num * car_num, Allocator.Persistent);
         Seen0 = new NativeArray<int>(DMC_num * car_num, Allocator.Persistent);
@@ -284,6 +338,7 @@ public partial class ChannelGenManager : MonoBehaviour
         Seen3 = new NativeArray<int>(MPC3_num * car_num, Allocator.Persistent);
         commands3 = new NativeArray<RaycastCommand>(MPC3_num * car_num, Allocator.Persistent);
         results3 = new NativeArray<RaycastHit>(MPC3_num * car_num, Allocator.Persistent);
+        */
 
         // MPCs
         SoA = new NativeArray<float>( (DMC_num + MPC1_num + MPC2_num + MPC3_num) * car_num, Allocator.Persistent);
@@ -303,10 +358,10 @@ public partial class ChannelGenManager : MonoBehaviour
 
         // Channels for all links
         H_LoS = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
-        H0 = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
-        H1 = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
-        H2 = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
-        H3 = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
+        //H0 = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
+        //H1 = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
+        //H2 = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
+        //H3 = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
         H_NLoS = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
 
 
@@ -666,17 +721,42 @@ public partial class ChannelGenManager : MonoBehaviour
         Y_output = new double[H.Length];
         H_output = new double[H.Length];
         
+        List<string> h_snapshot = new List<string>();
+        List<string> H_snapshot = new List<string>();
+
         for (int i = 0; i < H.Length; i++)
         {
             
             Y_output[i] = 10 * Mathf.Log10( Mathf.Pow((float)System.Numerics.Complex.Abs(outputSignal_Freq[i]), 2) + 0.0000000000001f);
             H_output[i] = 10 * Mathf.Log10( Mathf.Pow((float)System.Numerics.Complex.Abs(H[i]), 2) + 0.0000000000001f);
+
             
-            RSS += Mathf.Pow((float)System.Numerics.Complex.Abs(H[i]), 2) * (PowerInMilliWatts / 1024);
+            RSS += Mathf.Pow((float)System.Numerics.Complex.Abs(H[i]), 2) * SubframePower;
+            
+
+            // procedure to write to a file
+            string h_string = Mathf.Pow((float)System.Numerics.Complex.Abs(outputSignal_Freq[i]), 2).ToString();
+            h_snapshot.Add(h_string); // channel in time domain
+
+            // apparently, we need to convert a complex number to a string using such a weird method QUICK FIX
+            
+            string H_string;
+            if (H[i].Imaginary > 0)
+            {
+                H_string = H[i].Real.ToString() + "+" + H[i].Imaginary.ToString() + "i";
+            }
+            else // in case of negative imaginary part
+            {
+                H_string = H[i].Real.ToString() + H[i].Imaginary.ToString() + "i";
+            }
+            H_snapshot.Add(H_string); // channel in frequence domain
+            
         }
 
         Debug.Log("RSS = " + 10 * Mathf.Log10((float)RSS) + " dBm");
-        
+
+        h_save.Add(h_snapshot);
+        H_save.Add(H_snapshot);
 
         Drawing.drawChart(tfTime, X_inputValues, Y_output, "time");
         Drawing.drawChart(tfFreq, X_inputValues, H_output, "frequency");
