@@ -56,7 +56,8 @@ public partial class ChannelGenManager : MonoBehaviour
     int MPC1_num;
     int MPC2_num;
     int MPC3_num;
-    
+
+    NativeArray<Vector2> Pattern;
 
     int MPC_num;
     NativeArray<V6> MPC_Native;
@@ -149,6 +150,7 @@ public partial class ChannelGenManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        Pattern.Dispose();
         Links.Dispose();
         Overlaps1.Dispose();
         TxOverlaps2.Dispose();
@@ -367,7 +369,28 @@ public partial class ChannelGenManager : MonoBehaviour
         //H3 = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
         H_NLoS = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
 
+        
+        Pattern = new NativeArray<Vector2>(17, Allocator.Persistent); //new Vector2[17];
+        Pattern[0] = new Vector2(0.0068f, -0.0004f);
+        Pattern[1] = new Vector2(-0.0024f, 0.0024f);
+        Pattern[2] = new Vector2(-0.0751f, 0.0071f);
+        Pattern[3] = new Vector2(0.0051f, -0.0603f);
 
+        Pattern[4] = new Vector2(0.2522f, 0.0103f);
+        Pattern[5] = new Vector2(-0.0464f, 0.3858f);
+        Pattern[6] = new Vector2(-0.8632f, -0.0495f);
+        Pattern[7] = new Vector2(0.0175f, -1.2042f);
+
+        Pattern[8] = new Vector2(1.6836f, 0.0000f);
+        Pattern[9] = new Vector2(0.0175f, 1.2042f);
+        Pattern[10] = new Vector2(-0.8632f, 0.0495f);
+        Pattern[11] = new Vector2(-0.0464f, 0.3858f);
+
+        Pattern[12] = new Vector2(0.2522f, -0.0103f);
+        Pattern[13] = new Vector2(0.0051f,  0.0603f);
+        Pattern[14] = new Vector2(-0.0751f, 0.0071f);
+        Pattern[15] = new Vector2(-0.0024f, -0.0024f);
+        Pattern[16] = new Vector2(0.0068f, 0.0004f);
     }
 
     //private void FixedUpdate()
@@ -460,6 +483,7 @@ public partial class ChannelGenManager : MonoBehaviour
             Links = Links,
             raycastresults = resultsLoS,
             inverseLambdas = InverseWavelengths,
+            Pattern = Pattern,
 
             HLoS = H_LoS,
         };
