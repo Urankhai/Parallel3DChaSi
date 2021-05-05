@@ -7234,7 +7234,7 @@ MonoBehaviour:
   chiW1: 0.044
   chiW2: 0.066
   chiW3: 0.088
-  chiD: 0.61
+  chiD: 0.0061
   DrawMPCs: 0
   MPC1_Prefab: {fileID: 2863241428559084695, guid: bc2ab7630964ee54ab9157438b0f468c,
     type: 3}

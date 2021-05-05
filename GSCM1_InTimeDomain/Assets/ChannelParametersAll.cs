@@ -34,6 +34,9 @@ public struct ChannelParametersAll : IJobParallelFor
     [ReadOnly] public NativeArray<float> SignOfArrival;
     [ReadOnly] public NativeArray<int> SeenIndicator;
 
+    // Antenna Pattern (EADF)
+    [ReadOnly] public NativeArray<Vector2> Pattern;
+
     [WriteOnly] public NativeArray<int> IDArray; // Size MPCNum*LinksSize
     [WriteOnly]
     [NativeDisableContainerSafetyRestriction]
@@ -48,6 +51,9 @@ public struct ChannelParametersAll : IJobParallelFor
 
         int i_car1 = ChannelLinks[i_link].x;
         int i_car2 = ChannelLinks[i_link].y;
+
+        Vector3 fwd1 = CarsForwardsDir[i_car1];
+        Vector3 fwd2 = CarsForwardsDir[i_car2];
 
         int i_mpc_car1 = i_car1 * MPCNum + i_mpc;
         float test_dist1 = Results[i_mpc_car1].distance;
@@ -67,6 +73,14 @@ public struct ChannelParametersAll : IJobParallelFor
                 {
                     Vector3 dir1 = Commands[i_mpc_car1].direction; // from car1 to the MPC
                     Vector3 dir2 = Commands[i_mpc_car2].direction; // from car2 to the MPC
+
+                    // find the angle of vision of MPCs from the car sight
+                    float phi1 = Mathf.Acos(Vector3.Dot(dir1, fwd1));
+                    float phi2 = Mathf.Acos(Vector3.Dot(dir2, fwd2));
+
+                    float antenna_gain1 = EADF_Reconstruction(Pattern, phi1);
+                    float antenna_gain2 = EADF_Reconstruction(Pattern, phi2);
+
                     Vector3 norm = MPC_Array[i_mpc].Normal;
 
                     //Vector2Int link = new Vector2Int(i_car1, i_car2);
@@ -78,7 +92,7 @@ public struct ChannelParametersAll : IJobParallelFor
                     float angular_gain = AngularGainFunc(AoA, AoD, thr1, thr2);
                     if (angular_gain > 0.000001)
                     {
-                        float attenuation = angular_gain * MPC_Attenuation[i_mpc];
+                        float attenuation = antenna_gain1* antenna_gain2*angular_gain * MPC_Attenuation[i_mpc];
 
 
 
@@ -139,6 +153,13 @@ public struct ChannelParametersAll : IJobParallelFor
                                 Vector3 dir1 = Commands[i_mpc_car1].direction; // from car1 to the MPC
                                 Vector3 dir2 = Commands[i_mpc2_car2].direction; // from car2 to the MPC
 
+                                // find the angle of vision of MPCs from the car sight
+                                float phi1 = Mathf.Acos(Vector3.Dot(dir1, fwd1));
+                                float phi2 = Mathf.Acos(Vector3.Dot(dir2, fwd2));
+
+                                float antenna_gain1 = EADF_Reconstruction(Pattern, phi1);
+                                float antenna_gain2 = EADF_Reconstruction(Pattern, phi2);
+
                                 // Parameters of active MPC
                                 float att1 = MPC_Attenuation[i_mpc];
                                 Vector3 norm1 = MPC_Array[i_mpc].Normal;
@@ -159,7 +180,7 @@ public struct ChannelParametersAll : IJobParallelFor
                                 float gain12 = LookUpTableMPC2[i].AngularGain;                  // pre-calculated gain between MPC[i1] and MPC[i2]
 
                                 float angular_gain = angular_gain1 * gain12 * angular_gain2;
-                                float attenuation = att1 * angular_gain * att2;
+                                float attenuation = antenna_gain1 * antenna_gain2 * att1 * angular_gain * att2;
                                 if (attenuation > 0.0000001) // 10^(-7) => -140 dBm
                                 {
                                     
@@ -216,6 +237,13 @@ public struct ChannelParametersAll : IJobParallelFor
                                 Vector3 dir1 = Commands[i_mpc_car1].direction; // from car1 to the MPC
                                 Vector3 dir3 = Commands[i_mpc3_car2].direction; // from car2 to the MPC
 
+                                // find the angle of vision of MPCs from the car sight
+                                float phi1 = Mathf.Acos(Vector3.Dot(dir1, fwd1));
+                                float phi2 = Mathf.Acos(Vector3.Dot(dir3, fwd2));
+
+                                float antenna_gain1 = EADF_Reconstruction(Pattern, phi1);
+                                float antenna_gain2 = EADF_Reconstruction(Pattern, phi2);
+
                                 // Parameters of active MPC
                                 float att1 = MPC_Attenuation[i_mpc];
                                 Vector3 norm1 = MPC_Array[i_mpc].Normal;
@@ -235,7 +263,7 @@ public struct ChannelParametersAll : IJobParallelFor
                                 float gain123 = LookUpTableMPC3[i].AngularGain;                 // pre-calculated gain between MPC[i1], MPC[i2], and MPC[i3]
 
                                 float angular_gain = angular_gain1 * gain123 * angular_gain3;
-                                float attenuation = att1 * angular_gain * att3;
+                                float attenuation = antenna_gain1 * antenna_gain2 * att1 * angular_gain * att3;
                                 if (attenuation > 0.0000001) // 10^(-7) => -140 dBm
                                 {
                                     
@@ -275,6 +303,23 @@ public struct ChannelParametersAll : IJobParallelFor
         }
 
 
+    }
+
+    private float EADF_Reconstruction(NativeArray<Vector2> Pattern, float angle1)
+    {
+        System.Numerics.Complex Gain1 = 0;
+        int L = Pattern.Length;
+        // Analog of Inverse Fourier Transform
+        for (int i = 0; i < L; i++)
+        {
+            float mu = -(L - 1) / 2 + i;
+            System.Numerics.Complex db = new System.Numerics.Complex(Mathf.Cos(angle1 * mu), Mathf.Sin(angle1 * mu));
+            System.Numerics.Complex complex_pattern = new System.Numerics.Complex(Pattern[i].x, Pattern[i].y);
+            Gain1 += System.Numerics.Complex.Multiply(complex_pattern, db);
+            
+        }
+        float Gain = (float)System.Numerics.Complex.Abs(Gain1);
+        return Gain;
     }
 
     private float AngularGainFunc(float angle1, float angle2, float threshold1, float threshold2)

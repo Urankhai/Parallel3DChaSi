@@ -5,6 +5,7 @@ using Unity.Collections;
 using Unity.Jobs;
 using Unity.Burst;
 using System.IO;
+using System;
 
 public partial class ChannelGenManager : MonoBehaviour
 {
@@ -146,6 +147,51 @@ public partial class ChannelGenManager : MonoBehaviour
             Subcarriers[i] = CarrierFrequency + fsubcarriers * i;
             InverseWavelengths[i] = Subcarriers[i] / SpeedofLight;
         }
+
+
+        List<float> listA = new List<float>();
+        List<float> listB = new List<float>();
+
+        using (var reader = new StreamReader(@"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\EADF\HelixEADF.csv"))
+        {
+            while (!reader.EndOfStream)
+            {
+                var line = reader.ReadLine();
+                var values = line.Split(',');
+                //(float)Convert.ToDouble("41.00027357629127");
+                listA.Add((float)Convert.ToDouble(values[0]));
+                listB.Add((float)Convert.ToDouble(values[1]));
+            }
+            //Debug.Log(listA.Count);
+        }
+
+        Pattern = new NativeArray<Vector2>(listA.Count, Allocator.Persistent); //new Vector2[17];
+        
+        for (int i=0; i < listA.Count; i++)
+        {
+            Pattern[i] = new Vector2(listA[i], listB[i]);
+        }
+
+        //Pattern[0] = new Vector2(0.0068f, -0.0004f);
+        //Pattern[1] = new Vector2(-0.0024f, 0.0024f);
+        //Pattern[2] = new Vector2(-0.0751f, 0.0071f);
+        //Pattern[3] = new Vector2(0.0051f, -0.0603f);
+
+        //Pattern[4] = new Vector2(0.2522f, 0.0103f);
+        //Pattern[5] = new Vector2(-0.0464f, 0.3858f);
+        //Pattern[6] = new Vector2(-0.8632f, -0.0495f);
+        //Pattern[7] = new Vector2(0.0175f, -1.2042f);
+
+        //Pattern[8] = new Vector2(1.6836f, 0.0000f);
+        //Pattern[9] = new Vector2(0.0175f, 1.2042f);
+        //Pattern[10] = new Vector2(-0.8632f, 0.0495f);
+        //Pattern[11] = new Vector2(-0.0464f, 0.3858f);
+
+        //Pattern[12] = new Vector2(0.2522f, -0.0103f);
+        //Pattern[13] = new Vector2(0.0051f, 0.0603f);
+        //Pattern[14] = new Vector2(-0.0751f, 0.0071f);
+        //Pattern[15] = new Vector2(-0.0024f, -0.0024f);
+        //Pattern[16] = new Vector2(0.0068f, 0.0004f);
     }
 
     private void OnDestroy()
@@ -369,28 +415,6 @@ public partial class ChannelGenManager : MonoBehaviour
         //H3 = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
         H_NLoS = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
 
-        
-        Pattern = new NativeArray<Vector2>(17, Allocator.Persistent); //new Vector2[17];
-        Pattern[0] = new Vector2(0.0068f, -0.0004f);
-        Pattern[1] = new Vector2(-0.0024f, 0.0024f);
-        Pattern[2] = new Vector2(-0.0751f, 0.0071f);
-        Pattern[3] = new Vector2(0.0051f, -0.0603f);
-
-        Pattern[4] = new Vector2(0.2522f, 0.0103f);
-        Pattern[5] = new Vector2(-0.0464f, 0.3858f);
-        Pattern[6] = new Vector2(-0.8632f, -0.0495f);
-        Pattern[7] = new Vector2(0.0175f, -1.2042f);
-
-        Pattern[8] = new Vector2(1.6836f, 0.0000f);
-        Pattern[9] = new Vector2(0.0175f, 1.2042f);
-        Pattern[10] = new Vector2(-0.8632f, 0.0495f);
-        Pattern[11] = new Vector2(-0.0464f, 0.3858f);
-
-        Pattern[12] = new Vector2(0.2522f, -0.0103f);
-        Pattern[13] = new Vector2(0.0051f,  0.0603f);
-        Pattern[14] = new Vector2(-0.0751f, 0.0071f);
-        Pattern[15] = new Vector2(-0.0024f, -0.0024f);
-        Pattern[16] = new Vector2(0.0068f, 0.0004f);
     }
 
     //private void FixedUpdate()
@@ -641,6 +665,8 @@ public partial class ChannelGenManager : MonoBehaviour
             Results = results,
             SignOfArrival = SoA,
             SeenIndicator = Seen,
+            
+            Pattern = Pattern,
 
             IDArray = idarray,
             HashMap = map.AsParallelWriter(),

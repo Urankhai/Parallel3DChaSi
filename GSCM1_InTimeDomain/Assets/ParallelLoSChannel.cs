@@ -74,7 +74,7 @@ public struct ParallelLoSChannel : IJobParallelFor
         for (int i = 0; i < L; i++)
         {
             //db1 = exp(1j * ang1.* mu1);
-            float mu = -0.5f * (L - 1) + i;
+            float mu = -(L - 1)/2 + i;
             System.Numerics.Complex db1 = new System.Numerics.Complex(Mathf.Cos(angle1 * mu), Mathf.Sin(angle1 * mu));
             System.Numerics.Complex db2 = new System.Numerics.Complex(Mathf.Cos(angle2 * mu), Mathf.Sin(angle2 * mu));
 
