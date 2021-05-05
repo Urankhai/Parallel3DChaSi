@@ -2946,6 +2946,8 @@ MonoBehaviour:
     type: 3}
   DMC_Prefab: {fileID: 4140799477300138361, guid: efe6d3b228159344ab1f260a8192ff40,
     type: 3}
+  CornerPrefab: {fileID: 6427991435253944050, guid: 24872086e19b904409073a36a495ed68,
+    type: 3}
 --- !u!4 &540121493
 Transform:
   m_ObjectHideFlags: 0
@@ -10686,7 +10688,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8a49b1d79941b394291ca5c685bfba93, type: 2}
+  - {fileID: 2100000, guid: 004fca8710e96d5439e1e77922427d10, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -28,6 +28,7 @@ public class Correcting_polygons_Native : MonoBehaviour
     public GameObject MPC2_Prefab;
     public GameObject MPC3_Prefab;
     public GameObject DMC_Prefab;
+    public GameObject CornerPrefab;
 
     private GameObject[] Buildings;
     //private GameObject[] Observation_Points;
@@ -57,6 +58,9 @@ public class Correcting_polygons_Native : MonoBehaviour
 
     [HideInInspector] public NativeList<Vector3> Active_MPC_Perpendiculars;
 
+    // Data for diffraction effect
+    [HideInInspector] public NativeList<Vector3> Active_CornersNormalsPerpendiculars;
+
     private void OnEnable()
     {
         ActiveV6_MPC1_NativeList = new NativeList<V6>(Allocator.Persistent);
@@ -73,6 +77,9 @@ public class Correcting_polygons_Native : MonoBehaviour
         Active_MPC3_Perpendiculars = new NativeList<Vector3>(Allocator.Persistent);
 
         Active_MPC_Perpendiculars = new NativeList<Vector3>(Allocator.Persistent);
+
+        // Data for diffraction effect
+        Active_CornersNormalsPerpendiculars = new NativeList<Vector3>(Allocator.Persistent);
     }
     private void OnDestroy()
     {
@@ -98,6 +105,9 @@ public class Correcting_polygons_Native : MonoBehaviour
         Active_MPC3_Perpendiculars.Dispose();
 
         Active_MPC_Perpendiculars.Dispose();
+
+        // Data for diffraction effect
+        Active_CornersNormalsPerpendiculars.Dispose();
     }
 
 
@@ -204,6 +214,8 @@ public class Correcting_polygons_Native : MonoBehaviour
             Vector3[] vrtx = Building_list[k].GetComponent<MeshFilter>().mesh.vertices;
             Vector3[] nrml = Building_list[k].GetComponent<MeshFilter>().mesh.normals;
 
+            
+
             List<Vector3> floor_vrtx = new List<Vector3>();
             List<Vector3> floor_nrml = new List<Vector3>();
             var pairs = new List<V6>();
@@ -223,9 +235,11 @@ public class Correcting_polygons_Native : MonoBehaviour
                     // adding coordinates and normals of the vertices into a single object V6 (like a N x 6 matrix)
                     V6 valid_pair = new V6(vrtx[l], nrml[l]);
                     pairs.Add(valid_pair);
-
+                    
                 }
             }
+
+            
             // finding the edges of each building
             List<Vector3> SortedByX = floor_vrtx.OrderBy(vertex => vertex.x).ToList();
             List<Vector3> SortedByZ = floor_vrtx.OrderBy(vertex => vertex.z).ToList();
@@ -234,7 +248,60 @@ public class Correcting_polygons_Native : MonoBehaviour
             float z_d = SortedByZ[0].z - WW2;                     // z down
             float z_u = SortedByZ[SortedByX.Count - 1].z + WW2;   // z up
 
+            // This procedure is needed for defining the corner the building for further Diffraction simulation
+            string building_name = Building_list[k].name;
             
+            Vector3 corner321 = new Vector3(0, 0, 0);
+            Vector3 normal321 = new Vector3(0, 0, 0);
+            Vector3 perpen321 = new Vector3(0, 0, 0);
+
+            Vector3 corner334 = new Vector3(0, 0, 0);
+            Vector3 normal334 = new Vector3(0, 0, 0);
+            Vector3 perpen334 = new Vector3(0, 0, 0);
+
+            if (building_name == "Building321")
+            {
+                Debug.Log(building_name);
+                corner321 = SortedByX[SortedByX.Count - 1];
+
+                GameObject Corner321 = Instantiate(CornerPrefab, corner321, Quaternion.identity);
+
+                for (int v = 0; v < floor_vrtx.Count; v++)
+                {
+                    if (corner321 == floor_vrtx[v])
+                    {
+                        normal321 += floor_nrml[v]; // I use the assumption that the vertex is used only twice
+                    }
+                }
+                normal321 = normal321.normalized;
+                perpen321 = new Vector3(-normal321.z, 0, normal321.x);
+                Debug.DrawLine(corner321, corner321 + 5 * normal321, Color.red, 30f);
+
+                Active_CornersNormalsPerpendiculars.Add(corner321);
+                Active_CornersNormalsPerpendiculars.Add(normal321);
+                Active_CornersNormalsPerpendiculars.Add(perpen321);
+            }
+            if (building_name == "Building334")
+            {
+                Debug.Log(building_name);
+                corner334 = SortedByX[0];
+                GameObject Corner334 = Instantiate(CornerPrefab, corner334, Quaternion.identity);
+                
+                for (int v = 0; v < floor_vrtx.Count; v++)
+                {
+                    if (corner334 == floor_vrtx[v])
+                    {
+                        normal334 += floor_nrml[v]; // I use the assumption that the vertex is used only twice
+                    }
+                }
+                normal334 = normal334.normalized;
+                perpen334 = new Vector3(-normal334.z, 0, normal334.x);
+                Debug.DrawLine(corner334, corner334 + 5 * normal334, Color.red, 30f);
+
+                Active_CornersNormalsPerpendiculars.Add(corner334);
+                Active_CornersNormalsPerpendiculars.Add(normal334);
+                Active_CornersNormalsPerpendiculars.Add(perpen334);
+            }
             //////////////////////////////////////////////////////////////////////////////////////////////////////////
             /// Defining areas around building where scatterers can be located
             //////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -40,21 +40,21 @@ public partial class ChannelGenManager : MonoBehaviour
     public bool DrawingPath3 = false;
 
     // MPCs Data
-    NativeArray<V6> DMC_Native;
-    NativeArray<Vector3> DMC_perp;
-    NativeArray<float> DMC_attenuation;
+    //NativeArray<V6> DMC_Native;
+    //NativeArray<Vector3> DMC_perp;
+    //NativeArray<float> DMC_attenuation;
+    //NativeArray<V6> MPC1_Native;
+    //NativeArray<Vector3> MPC1_perp;
+    //NativeArray<float> MPC1_attenuation;
+    //NativeArray<V6> MPC2_Native;
+    //NativeArray<Vector3> MPC2_perp;
+    //NativeArray<float> MPC2_attenuation;
+    //NativeArray<V6> MPC3_Native;
+    //NativeArray<Vector3> MPC3_perp;
+    //NativeArray<float> MPC3_attenuation;
     int DMC_num;
-    NativeArray<V6> MPC1_Native;
-    NativeArray<Vector3> MPC1_perp;
-    NativeArray<float> MPC1_attenuation;
     int MPC1_num;
-    NativeArray<V6> MPC2_Native;
-    NativeArray<Vector3> MPC2_perp;
-    NativeArray<float> MPC2_attenuation;
     int MPC2_num;
-    NativeArray<V6> MPC3_Native;
-    NativeArray<Vector3> MPC3_perp;
-    NativeArray<float> MPC3_attenuation;
     int MPC3_num;
     
 
@@ -65,8 +65,8 @@ public partial class ChannelGenManager : MonoBehaviour
 
     // LookUp Table Data
     float maxdistance;
-    int maxNumberSeenMPC2;
-    int maxNumberSeenMPC3;
+    //int maxNumberSeenMPC2;
+    //int maxNumberSeenMPC3;
     NativeArray<SeenPath2> LookUpTableMPC2; // this array shows all properties of the path2s
     NativeArray<Vector2Int> MPC2LUTID; // this array shows how many paths come from each MPC2
     NativeArray<SeenPath3> LookUpTableMPC3;
@@ -91,7 +91,9 @@ public partial class ChannelGenManager : MonoBehaviour
     //LoS
     NativeArray<RaycastCommand> commandsLoS;
     NativeArray<RaycastHit> resultsLoS;
+    NativeArray<Vector3> CornersNormals;
     //DMC
+    /*
     NativeArray<float> SoA0;
     NativeArray<int> Seen0; // either 0 or 1
     NativeArray<RaycastCommand> commands0; // for DMCs
@@ -108,6 +110,7 @@ public partial class ChannelGenManager : MonoBehaviour
     NativeArray<int> Seen3; // either 0 or 1
     NativeArray<RaycastCommand> commands3;  // for MPC3s
     NativeArray<RaycastHit> results3;  // for MPC3s
+    */
 
     NativeArray<float> SoA;
     NativeArray<int> Seen; // either 0 or 1
@@ -122,10 +125,10 @@ public partial class ChannelGenManager : MonoBehaviour
     NativeArray<float> Subcarriers;
     NativeArray<float> InverseWavelengths;
     NativeArray<System.Numerics.Complex> H_LoS;
-    NativeArray<System.Numerics.Complex> H0;
-    NativeArray<System.Numerics.Complex> H1;
-    NativeArray<System.Numerics.Complex> H2;
-    NativeArray<System.Numerics.Complex> H3;
+    //NativeArray<System.Numerics.Complex> H0;
+    //NativeArray<System.Numerics.Complex> H1;
+    //NativeArray<System.Numerics.Complex> H2;
+    //NativeArray<System.Numerics.Complex> H3;
     NativeArray<System.Numerics.Complex> H_NLoS;
 
     public float SubframePower;
@@ -195,8 +198,8 @@ public partial class ChannelGenManager : MonoBehaviour
 
     private void OnDisable()
     {
-        
-        string path1 = Application.persistentDataPath + "/h_time1.csv";
+        string path = @"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\";
+        string path1 = path + "h_time1.csv";//Application.persistentDataPath + "/h_time1.csv";
 
         using (var file = File.CreateText(path1))
         {
@@ -213,7 +216,7 @@ public partial class ChannelGenManager : MonoBehaviour
             }
         }
 
-        string path2 = Application.persistentDataPath + "/H_freq1.csv";
+        string path2 = path + "H_freq1.csv";// Application.persistentDataPath + "/H_freq1.csv";
 
         using (var file = File.CreateText(path2))
         {
@@ -251,27 +254,27 @@ public partial class ChannelGenManager : MonoBehaviour
         MPC2_num = MPC_Native_Script.ActiveV6_MPC2_NativeList.Length;
         MPC3_num = MPC_Native_Script.ActiveV6_MPC3_NativeList.Length;
         
-        MPC_num  = MPC_Native_Script.ActiveV6_MPC_NativeList.Length;
-
-        DMC_Native = MPC_Native_Script.ActiveV6_DMC_NativeList;
-        MPC1_Native = MPC_Native_Script.ActiveV6_MPC1_NativeList;
-        MPC2_Native = MPC_Native_Script.ActiveV6_MPC2_NativeList;
-        MPC3_Native = MPC_Native_Script.ActiveV6_MPC3_NativeList;
         
-        MPC_Native  = MPC_Native_Script.ActiveV6_MPC_NativeList;
+        CornersNormals = MPC_Native_Script.Active_CornersNormalsPerpendiculars;
+        //DMC_Native = MPC_Native_Script.ActiveV6_DMC_NativeList;
+        //MPC1_Native = MPC_Native_Script.ActiveV6_MPC1_NativeList;
+        //MPC2_Native = MPC_Native_Script.ActiveV6_MPC2_NativeList;
+        //MPC3_Native = MPC_Native_Script.ActiveV6_MPC3_NativeList;
 
-        DMC_attenuation = MPC_Native_Script.ActiveV6_DMC_Power;
-        MPC1_attenuation = MPC_Native_Script.ActiveV6_MPC1_Power;
-        MPC2_attenuation = MPC_Native_Script.ActiveV6_MPC2_Power;
-        MPC3_attenuation = MPC_Native_Script.ActiveV6_MPC3_Power;
+        //DMC_attenuation = MPC_Native_Script.ActiveV6_DMC_Power;
+        //MPC1_attenuation = MPC_Native_Script.ActiveV6_MPC1_Power;
+        //MPC2_attenuation = MPC_Native_Script.ActiveV6_MPC2_Power;
+        //MPC3_attenuation = MPC_Native_Script.ActiveV6_MPC3_Power;
 
+        //DMC_perp = MPC_Native_Script.Active_DMC_Perpendiculars;
+        //MPC1_perp = MPC_Native_Script.Active_MPC1_Perpendiculars;
+        //MPC2_perp = MPC_Native_Script.Active_MPC2_Perpendiculars;
+        //MPC3_perp = MPC_Native_Script.Active_MPC3_Perpendiculars;
+        
+        // for all MPCs
+        MPC_num = MPC_Native_Script.ActiveV6_MPC_NativeList.Length;
+        MPC_Native = MPC_Native_Script.ActiveV6_MPC_NativeList;
         MPC_attenuation = MPC_Native_Script.ActiveV6_MPC_Power;
-
-        DMC_perp = MPC_Native_Script.Active_DMC_Perpendiculars;
-        MPC1_perp = MPC_Native_Script.Active_MPC1_Perpendiculars;
-        MPC2_perp = MPC_Native_Script.Active_MPC2_Perpendiculars;
-        MPC3_perp = MPC_Native_Script.Active_MPC3_Perpendiculars;
-
         MPC_perp = MPC_Native_Script.Active_MPC_Perpendiculars;
 
         #endregion
@@ -281,8 +284,8 @@ public partial class ChannelGenManager : MonoBehaviour
         GameObject LookUpTable = GameObject.Find("LookUpTablesUpd");
         LookUpTableGenUpd LUT_Script = LookUpTable.GetComponent<LookUpTableGenUpd>();
         maxdistance = LUT_Script.MaxSeenDistance;
-        maxNumberSeenMPC2 = LUT_Script.maxlengthMPC2;
-        maxNumberSeenMPC3 = LUT_Script.maxlengthMPC3;
+        //maxNumberSeenMPC2 = LUT_Script.maxlengthMPC2;
+        //maxNumberSeenMPC3 = LUT_Script.maxlengthMPC3;
 
         LookUpTableMPC2 = LUT_Script.LookUpTableMPC2;
         MPC2LUTID = LUT_Script.MPC2LUTID;
@@ -644,9 +647,9 @@ public partial class ChannelGenManager : MonoBehaviour
                             Vector3 car2_coor = CarCoordinates[path.ChainIDs.Car2];
                             Vector3 MPC_coor1 = MPC_Native[path.ChainIDs.ID1].Coordinates;
                             Vector3 MPC_coor2 = MPC_Native[path.ChainIDs.ID2].Coordinates;
-                            Debug.DrawLine(car1_coor, MPC_coor1, Color.cyan);
-                            Debug.DrawLine(MPC_coor1, MPC_coor2, Color.magenta);
-                            Debug.DrawLine(MPC_coor2, car2_coor, Color.black);
+                            Debug.DrawLine(car1_coor, MPC_coor1, Color.white);
+                            Debug.DrawLine(MPC_coor1, MPC_coor2, Color.white);
+                            Debug.DrawLine(MPC_coor2, car2_coor, Color.white);
                         }
                         else if (path.PathOrder == 3 && DrawingPath3)
                         {
@@ -656,9 +659,9 @@ public partial class ChannelGenManager : MonoBehaviour
                             Vector3 MPC_coor2 = MPC_Native[path.ChainIDs.ID2].Coordinates;
                             Vector3 MPC_coor3 = MPC_Native[path.ChainIDs.ID3].Coordinates;
                             Debug.DrawLine(car1_coor, MPC_coor1, Color.green);
-                            Debug.DrawLine(MPC_coor1, MPC_coor2, Color.red);
-                            Debug.DrawLine(MPC_coor2, MPC_coor3, Color.yellow);
-                            Debug.DrawLine(MPC_coor3, car2_coor, Color.blue);
+                            Debug.DrawLine(MPC_coor1, MPC_coor2, Color.green);
+                            Debug.DrawLine(MPC_coor2, MPC_coor3, Color.green);
+                            Debug.DrawLine(MPC_coor3, car2_coor, Color.green);
                             //Debug.Log(20 * Mathf.Log10(path3.AngularGain));
                         }
                     }
