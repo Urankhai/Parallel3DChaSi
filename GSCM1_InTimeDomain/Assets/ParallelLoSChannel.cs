@@ -60,7 +60,7 @@ public struct ParallelLoSChannel : IJobParallelFor
             // defining exponent
             System.Numerics.Complex ExpGround = new System.Numerics.Complex(ReExpGround, ImExpGround);
 
-            HLoS[index] = LoS_gain * ExpLoS + ground_gain * ExpGround;
+            HLoS[index] = LoS_gain * ExpLoS;// + ground_gain * ExpGround;
         }
         else
         { HLoS[index] = 0; }
