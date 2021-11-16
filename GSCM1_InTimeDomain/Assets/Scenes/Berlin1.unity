@@ -3300,8 +3300,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PowerInMilliWatts: 100
   SpeedofLight: 299792450
-  CarrierFrequency: 5.9e+9
-  fsubcarriers: 200000
+  CarrierFrequency: 5.2e+9
+  fsubcarriers: 1000000
   tfTime: {fileID: 1144777040}
   tfFreq: {fileID: 956427315}
   DrawingOverlaps: 0
