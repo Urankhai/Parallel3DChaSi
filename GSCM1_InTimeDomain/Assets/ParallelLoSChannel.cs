@@ -7,6 +7,7 @@ using Unity.Burst;
 [BurstCompile]
 public struct ParallelLoSChannel : IJobParallelFor
 {
+    [ReadOnly] public bool OmniAntennaFlag;
     [ReadOnly] public int FFTSize;
     [ReadOnly] public NativeArray<Vector3> CarsPositions;
     [ReadOnly] public NativeArray<Vector3> CarsFwd;
@@ -36,7 +37,11 @@ public struct ParallelLoSChannel : IJobParallelFor
             float phi1 = Mathf.Acos(Vector3.Dot(fwd1, LoS_dir_nrom));
             float phi2 = Mathf.Acos(Vector3.Dot(fwd2, -LoS_dir_nrom));
 
-            float antenna_gain = EADF_rec(Pattern, phi1, phi2);
+            float antenna_gain = 1;
+            if (OmniAntennaFlag == false)
+            {
+                antenna_gain = EADF_rec(Pattern, phi1, phi2);
+            }
 
             // line of sight parameters
 
@@ -60,7 +65,7 @@ public struct ParallelLoSChannel : IJobParallelFor
             // defining exponent
             System.Numerics.Complex ExpGround = new System.Numerics.Complex(ReExpGround, ImExpGround);
 
-            HLoS[index] = LoS_gain * ExpLoS;// + ground_gain * ExpGround;
+            HLoS[index] = LoS_gain * ExpLoS + ground_gain * ExpGround;
         }
         else
         { HLoS[index] = 0; }

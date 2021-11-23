@@ -14,6 +14,7 @@ public partial class ChannelGenManager : MonoBehaviour
     public float CarrierFrequency = (float)(5.9 * Mathf.Pow(10, 9)); // GHz
     public float fsubcarriers = (float)200000; // kHz
 
+    public bool OmniAntenna = false;
     
     /// <summary>
     ///  Data for Fourier transform
@@ -264,7 +265,7 @@ public partial class ChannelGenManager : MonoBehaviour
             }
         }
 
-        string path2 = path + "H_freq1.csv";// Application.persistentDataPath + "/H_freq1.csv";
+        string path2 = path + "H_freq6.csv";// Application.persistentDataPath + "/H_freq1.csv";
 
         using (var file = File.CreateText(path2))
         {
@@ -501,6 +502,7 @@ public partial class ChannelGenManager : MonoBehaviour
 
         ParallelLoSChannel LoSChannel = new ParallelLoSChannel
         {
+            OmniAntennaFlag = OmniAntenna,
             FFTSize = FFTNum,
             CarsPositions = CarCoordinates,
             CarsFwd = CarForwardVect,
@@ -643,6 +645,7 @@ public partial class ChannelGenManager : MonoBehaviour
         var idarray = new NativeArray<int>(MPC_num*link_num, Allocator.TempJob);
         ChannelParametersAll channelParameters = new ChannelParametersAll
         {
+            OmniAntennaFlag = OmniAntenna,
             MPC_Attenuation = MPC_attenuation,
             MPC_Array = MPC_Native,
             MPC_Perp = MPC_perp,

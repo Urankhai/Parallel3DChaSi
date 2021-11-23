@@ -8,6 +8,7 @@ using Unity.Collections.LowLevel.Unsafe;
 [BurstCompile]
 public struct ChannelParametersAll : IJobParallelFor
 {
+    [ReadOnly] public bool OmniAntennaFlag;
     // Environment
     [ReadOnly] public NativeArray<float> MPC_Attenuation;
     [ReadOnly] public NativeArray<V6> MPC_Array;
@@ -78,8 +79,13 @@ public struct ChannelParametersAll : IJobParallelFor
                     float phi1 = Mathf.Acos(Vector3.Dot(dir1, fwd1));
                     float phi2 = Mathf.Acos(Vector3.Dot(dir2, fwd2));
 
-                    float antenna_gain1 = EADF_Reconstruction(Pattern, phi1);
-                    float antenna_gain2 = EADF_Reconstruction(Pattern, phi2);
+                    float antenna_gain1 = 1;
+                    float antenna_gain2 = 1;
+                    if (OmniAntennaFlag == false)
+                    {
+                        antenna_gain1 = EADF_Reconstruction(Pattern, phi1);
+                        antenna_gain2 = EADF_Reconstruction(Pattern, phi2);
+                    }
 
                     Vector3 norm = MPC_Array[i_mpc].Normal;
 
