@@ -58,31 +58,35 @@ public struct ChannelParametersAll : IJobParallelFor
 
         int i_mpc_car1 = i_car1 * MPCNum + i_mpc;
         float test_dist1 = Results[i_mpc_car1].distance;
+        float comm_dist1 = Commands[i_mpc_car1].distance;
         float SoA1 = SignOfArrival[i_mpc_car1]; // car1 sees the MPC[i_mpc] from left or right direction
 
         //Vector3 asd1 = MPC_Array[i_mpc].Coordinates - CarsCoordinates[i_car1];
         //float signofA1 = Mathf.Sign(Vector3.Dot( MPC_Perp[i_mpc], -asd1));
 
-        if (test_dist1 == 0)
+        if (test_dist1 == 0 && comm_dist1 != 0)
         {
             if (i_mpc < DMCNum + MPC1Num)// DMC and MCP1 Channel Parameters
             {
                 int i_mpc_car2 = i_car2 * MPCNum + i_mpc;
                 float test_dist2 = Results[i_mpc_car2].distance; // if the resulting distance is zero, then the ray hasn't hit anything
+                float comm_dist2 = Commands[i_mpc_car2].distance; // if the resulting distance is zero, then the ray hasn't hit anything
                 float test_sign = SoA1 * SignOfArrival[i_mpc_car2];
-                if (test_dist2 == 0 && test_sign < 0)
+                if (test_dist2 == 0 && comm_dist2 !=0 && test_sign < 1)
                 {
                     Vector3 dir1 = Commands[i_mpc_car1].direction; // from car1 to the MPC
                     Vector3 dir2 = Commands[i_mpc_car2].direction; // from car2 to the MPC
 
-                    // find the angle of vision of MPCs from the car sight
-                    float phi1 = Mathf.Acos(Vector3.Dot(dir1, fwd1));
-                    float phi2 = Mathf.Acos(Vector3.Dot(dir2, fwd2));
+                    
 
                     float antenna_gain1 = 1;
                     float antenna_gain2 = 1;
                     if (OmniAntennaFlag == false)
                     {
+                        // find the angle of vision of MPCs from the car sight
+                        float phi1 = Mathf.Acos(Vector3.Dot(dir1, fwd1));
+                        float phi2 = Mathf.Acos(Vector3.Dot(dir2, fwd2));
+
                         antenna_gain1 = EADF_Reconstruction(Pattern, phi1);
                         antenna_gain2 = EADF_Reconstruction(Pattern, phi2);
                     }

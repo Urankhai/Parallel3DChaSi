@@ -28,13 +28,8 @@ title('PDP')
 xlabel('Delay distance (m)')
 ylabel('Time (s)')
 
-ranges = 40:124;
 
 figure
-plot(tt2(1:ranges(end)-ranges(1)+1),10*log10(gyy(ranges)).','g')
-grid on
-
-figure(3)
 hold on
 plot(7.58*tt2/max(tt2),10*log10(gyy).','b')
 grid on

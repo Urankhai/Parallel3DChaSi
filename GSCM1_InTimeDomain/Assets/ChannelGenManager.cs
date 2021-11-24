@@ -429,8 +429,8 @@ public partial class ChannelGenManager : MonoBehaviour
 
     }
 
-    //private void FixedUpdate()
-    void Update()
+    private void FixedUpdate()
+    //void Update()
     {
         
 
@@ -996,7 +996,8 @@ public struct ParallelRayCastingDataCars : IJobParallelFor
         float cosA = Vector3.Dot(MPC_Array[i_mpc].Normal, -temp_direction.normalized); // NOTE: the sign is negative
         if (cosA > (float)0.1 && temp_direction.magnitude < CastingDistance)
         {
-            SoA[index] = Mathf.Sign(Vector3.Dot(MPC_Perpendiculars[i_mpc], -temp_direction.normalized));
+            //SoA[index] = Mathf.Sign(Vector3.Dot(MPC_Perpendiculars[i_mpc], -temp_direction.normalized));
+            SoA[index] = Vector3.Dot(MPC_Perpendiculars[i_mpc], -temp_direction.normalized);
             SeenIndicator[index] = 1;
             commands[index] = new RaycastCommand(Cars_Positions[i_car], temp_direction.normalized, temp_direction.magnitude);
         }

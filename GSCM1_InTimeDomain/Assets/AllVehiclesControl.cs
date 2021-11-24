@@ -44,7 +44,8 @@ public class AllVehiclesControl : MonoBehaviour
         }
     }
 
-    void Update()
+    //private void FixedUpdate()
+    private void FixedUpdate()
     {
         for (int i = 0; i < carsArray.Length; i++)
         {
