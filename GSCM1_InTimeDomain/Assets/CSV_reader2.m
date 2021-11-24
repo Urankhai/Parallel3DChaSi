@@ -1,7 +1,7 @@
 clear all
 % close all
 
-Hyy = csvread("C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\H_freq5.csv");
+Hyy = csvread("C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\H_freq1.csv");
 
 Nfft = 1024;
 dt = 1/(Nfft*1000000);
@@ -34,6 +34,7 @@ figure
 plot(tt2(1:ranges(end)-ranges(1)+1),10*log10(gyy(ranges)).','g')
 grid on
 
-figure
+figure(3)
+hold on
 plot(7.58*tt2/max(tt2),10*log10(gyy).','b')
 grid on

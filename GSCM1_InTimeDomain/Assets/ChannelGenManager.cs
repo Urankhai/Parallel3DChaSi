@@ -9,13 +9,22 @@ using System;
 
 public partial class ChannelGenManager : MonoBehaviour
 {
-    public float PowerInMilliWatts = 200;
+    [Space]
+    [Header("PHYSICAL PARAMETERS")]
+    [Space]
+    public float PowerInMilliWatts;
     public float SpeedofLight = 299792458.0f; // m/s
     public float CarrierFrequency = (float)(5.9 * Mathf.Pow(10, 9)); // GHz
     public float fsubcarriers = (float)200000; // kHz
 
     public bool OmniAntenna = false;
-    
+
+    [Space]
+    [Header("RESULTS FILE")]
+    [Space]
+
+    public string filename;
+
     /// <summary>
     ///  Data for Fourier transform
     /// </summary>
@@ -25,9 +34,10 @@ public partial class ChannelGenManager : MonoBehaviour
     //double[] Y_noise_output;
     //double[] H_noise_output;
     double[] X_inputValues;
-    [Space(10)]
+    [Space]
     [Header("CHARTS FOR DRAWING")]
     [Space]
+
     public Transform tfTime;
     public Transform tfFreq;
 
@@ -149,6 +159,7 @@ public partial class ChannelGenManager : MonoBehaviour
             InverseWavelengths[i] = Subcarriers[i] / SpeedofLight;
         }
 
+        Debug.Log("File name" + filename);
 
         List<float> listA = new List<float>();
         List<float> listB = new List<float>();
@@ -265,7 +276,7 @@ public partial class ChannelGenManager : MonoBehaviour
             }
         }
 
-        string path2 = path + "H_freq6.csv";// Application.persistentDataPath + "/H_freq1.csv";
+        string path2 = path + filename;// Application.persistentDataPath + "/H_freq1.csv";
 
         using (var file = File.CreateText(path2))
         {

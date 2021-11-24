@@ -725,7 +725,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 72832159}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 172.9, y: 2.1, z: 68.1}
+  m_LocalPosition: {x: 0, y: 2.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2355,7 +2355,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &400345307
 Transform:
   m_ObjectHideFlags: 0
@@ -2547,7 +2547,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &493069454
 Transform:
   m_ObjectHideFlags: 0
@@ -3303,10 +3303,11 @@ MonoBehaviour:
   CarrierFrequency: 5.2e+9
   fsubcarriers: 1000000
   OmniAntenna: 1
+  filename: H_freq1.csv
   tfTime: {fileID: 1144777040}
   tfFreq: {fileID: 956427315}
   DrawingOverlaps: 0
-  DrawingPath1: 0
+  DrawingPath1: 1
   DrawingPath2: 0
   DrawingPath3: 0
   SubframePower: 0
@@ -7136,9 +7137,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6abfee8b4f3f734586481635bfb5a3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bottom_left_corner: {x: -259.5, y: 0, z: -145}
+  bottom_left_corner: {x: -141, y: 0, z: -145}
   area_height: 300
-  area_width: 550
+  area_width: 300
   chiW1: 0.044
   chiW2: 0.066
   chiW3: 0.088
@@ -7670,7 +7671,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1365435996}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 156.9, y: 0, z: -24.1}
+  m_LocalPosition: {x: 104.4, y: 0, z: -18.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

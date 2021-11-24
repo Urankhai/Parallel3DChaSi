@@ -14,7 +14,7 @@ public class Scatterers_Spawning2 : MonoBehaviour
     public Vector3 bottom_left_corner;
     public float area_height;
     public float area_width;
-    private readonly int IfVisualize = 2;
+    private readonly int IfVisualize = 1;
 
     
 

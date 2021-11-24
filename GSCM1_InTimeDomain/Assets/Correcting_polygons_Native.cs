@@ -630,7 +630,8 @@ public class Correcting_polygons_Native : MonoBehaviour
         ActiveV6_MPC3_Power = new NativeArray<float>(ActiveV6_MPC3_NativeList.Length, Allocator.Persistent);
         int MPC_length = ActiveV6_DMC_NativeList.Length + ActiveV6_MPC1_NativeList.Length + ActiveV6_MPC2_NativeList.Length + ActiveV6_MPC3_NativeList.Length;
         ActiveV6_MPC_Power = new NativeArray<float>(MPC_length, Allocator.Persistent);
-        Vector2 DMCPower = new Vector2(-80, -68); // (Mathf.Pow(10, (-80/20)), Mathf.Pow(10, (-68/20))); // (-80, -68)[dB] % Diffuse 1st)
+        int clbrcoef = 10;
+        Vector2 DMCPower = new Vector2(-80, -68);  // + new Vector2(1,1) * clbrcoef; // (Mathf.Pow(10, (-80/20)), Mathf.Pow(10, (-68/20))); // (-80, -68)[dB] % Diffuse 1st)
         Vector2 MPC1Power = new Vector2(-65, -48); // (Mathf.Pow(10, (-65/20)), Mathf.Pow(10, (-48/20))); // (-65, -48)[dB] % 1st
         Vector2 MPC2Power = new Vector2(-70, -59); // (Mathf.Pow(10, (-70/20)), Mathf.Pow(10, (-59/20))); // (-70, -59)[dB] % 2nd
         Vector2 MPC3Power = new Vector2(-75, -65); // (Mathf.Pow(10, (-75/20)), Mathf.Pow(10, (-65/20))); // (-75, -65)[dB] % 3rd
