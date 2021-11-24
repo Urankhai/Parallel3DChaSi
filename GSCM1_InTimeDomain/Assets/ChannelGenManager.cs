@@ -9,6 +9,9 @@ using System;
 
 public partial class ChannelGenManager : MonoBehaviour
 {
+    int FrameCounter;
+    int NeigbouringCount;
+    
     [Space]
     [Header("PHYSICAL PARAMETERS")]
     [Space]
@@ -256,6 +259,7 @@ public partial class ChannelGenManager : MonoBehaviour
         H_NLoS.Dispose();
     }
 
+    /*
     private void OnDisable()
     {
         string path = @"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\";
@@ -295,9 +299,12 @@ public partial class ChannelGenManager : MonoBehaviour
 
         Debug.Log("The lenght of the list<list> structure " + h_save.Count);
     }
+    */
 
     void Start()
     {
+        FrameCounter = 0;
+        NeigbouringCount = 0;
         /// for Fourier transform
         X_inputValues = new double[H.Length];
         for (int i = 0; i < H.Length; i++)
@@ -432,7 +439,39 @@ public partial class ChannelGenManager : MonoBehaviour
     private void FixedUpdate()
     //void Update()
     {
+        FrameCounter++;
         
+        if (Mathf.Abs(-18.0f - CarCoordinates[1].z) < 1.0f)
+        {
+            
+            NeigbouringCount++;
+            if (NeigbouringCount == 1)
+            {
+                Debug.Log("Frame number = " + FrameCounter);
+                
+                string path = @"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\";
+                string path2 = path + filename;// Application.persistentDataPath + "/H_freq1.csv";
+
+                using (var file = File.CreateText(path2))
+                {
+                    foreach (var arr in H_save)
+                    {
+                        //if (String.IsNullOrEmpty(arr)) continue;
+                        file.Write(arr[0]);
+                        for (int i = 1; i < arr.Count; i++)
+                        {
+                            file.Write(',');
+                            file.Write(arr[i]);
+                        }
+                        file.WriteLine();
+                    }
+                }
+
+                Debug.Log("The lenght of the list<list> structure " + h_save.Count);
+            }
+        }
+
+        Debug.Log("Car 4 coordinates " + CarCoordinates[1]);
 
         #region Defining edges of seen areas for all links (The duration is about 20 micro seconds)
         AreaOverlaps areaOverlaps = new AreaOverlaps
@@ -775,7 +814,7 @@ public partial class ChannelGenManager : MonoBehaviour
         parallelChannelJob.Complete();
         //Debug.Log("Time spent for channel calculation: " + ((Time.realtimeSinceStartup - t_chan) * 1000f) + " ms");
 
-        Debug.Log("Time spent for Raycasting all at once: " + ((Time.realtimeSinceStartup - t_all) * 1000f) + " ms");
+        //Debug.Log("Time spent for Raycasting all at once: " + ((Time.realtimeSinceStartup - t_all) * 1000f) + " ms");
 
         #region FFT operation
         //float t_fft = Time.realtimeSinceStartup;
@@ -820,7 +859,7 @@ public partial class ChannelGenManager : MonoBehaviour
             
         }
 
-        Debug.Log("RSS = " + 10 * Mathf.Log10((float)RSS) + " dBm");
+        //Debug.Log("RSS = " + 10 * Mathf.Log10((float)RSS) + " dBm");
 
         h_save.Add(h_snapshot);
         H_save.Add(H_snapshot);

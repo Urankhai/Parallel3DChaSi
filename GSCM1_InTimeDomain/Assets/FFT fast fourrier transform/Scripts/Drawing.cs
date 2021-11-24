@@ -23,8 +23,8 @@ public static class Drawing
         //do not resize array
         if (type=="time")
         {
-            X_inputValues = ArrayResize(X_inputValues, (int)X_inputValues.Length / 4);
-            Y_inputValues = ArrayResize(Y_inputValues, (int)Y_inputValues.Length / 4);
+            //X_inputValues = ArrayResize(X_inputValues, (int)X_inputValues.Length / 4);
+            //Y_inputValues = ArrayResize(Y_inputValues, (int)Y_inputValues.Length / 4);
 
         }
         //resize array
