@@ -34,12 +34,14 @@ public struct ParallelLoSChannel : IJobParallelFor
             Vector3 LoS_dir_flat = new Vector3(LoS_dir.x, 0, LoS_dir.z);
             Vector3 LoS_dir_nrom = LoS_dir_flat.normalized;
 
-            float phi1 = Mathf.Acos(Vector3.Dot(fwd1, LoS_dir_nrom));
-            float phi2 = Mathf.Acos(Vector3.Dot(fwd2, -LoS_dir_nrom));
+            
 
             float antenna_gain = 1;
             if (OmniAntennaFlag == false)
             {
+                float phi1 = Mathf.Acos(Vector3.Dot(fwd1, LoS_dir_nrom));
+                float phi2 = Mathf.Acos(Vector3.Dot(fwd2, -LoS_dir_nrom));
+
                 antenna_gain = EADF_rec(Pattern, phi1, phi2);
             }
 
@@ -47,6 +49,7 @@ public struct ParallelLoSChannel : IJobParallelFor
 
             float LoS_dist = LoS_dir.magnitude;
             float LoS_gain = antenna_gain / (inverseLambdas[i_sub] * 4 * Mathf.PI * LoS_dist);
+            //float LoS_gain = 1 / (inverseLambdas[i_sub] * 4 * Mathf.PI * LoS_dist);
 
             double ReExpLoS = Mathf.Cos(2 * Mathf.PI * inverseLambdas[i_sub] * LoS_dist);
             double ImExpLoS = Mathf.Sin(2 * Mathf.PI * inverseLambdas[i_sub] * LoS_dist);
@@ -55,7 +58,7 @@ public struct ParallelLoSChannel : IJobParallelFor
 
 
             // ground reflection parameters
-            float Fresnel_coef = antenna_gain * 0.5f; // TODO: should be calculated correctly
+            float Fresnel_coef = antenna_gain * 0.7f; // TODO: should be calculated correctly
             float totalhight = car1.y + car2.y;
             float ground_dist = Mathf.Sqrt(LoS_dist * LoS_dist + totalhight * totalhight);
             float ground_gain = Fresnel_coef / (inverseLambdas[i_sub] * 4 * Mathf.PI * ground_dist);
@@ -66,6 +69,10 @@ public struct ParallelLoSChannel : IJobParallelFor
             System.Numerics.Complex ExpGround = new System.Numerics.Complex(ReExpGround, ImExpGround);
 
             HLoS[index] = LoS_gain * ExpLoS + ground_gain * ExpGround;
+            if (index < 1024)
+            {
+                int asd = 1;
+            }
         }
         else
         { HLoS[index] = 0; }

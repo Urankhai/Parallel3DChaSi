@@ -739,7 +739,7 @@ public struct MPCPowerGeneration : IJobParallelFor
     public void Execute(int index)
     {
         var rng = rngs[threadId];
-        float PowerAdjustingShift = 35f;
+        float PowerAdjustingShift = 45f;
         float MPC_power = rng.NextFloat(MinMax.x + PowerAdjustingShift, MinMax.y + PowerAdjustingShift);
         
         rngs[threadId] = rng;

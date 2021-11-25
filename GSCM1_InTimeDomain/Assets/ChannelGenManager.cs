@@ -6,6 +6,7 @@ using Unity.Jobs;
 using Unity.Burst;
 using System.IO;
 using System;
+using UnityEditor;
 
 public partial class ChannelGenManager : MonoBehaviour
 {
@@ -467,11 +468,14 @@ public partial class ChannelGenManager : MonoBehaviour
                     }
                 }
 
-                Debug.Log("The lenght of the list<list> structure " + h_save.Count);
+                Debug.Log("The lenght of the list<list> structure " + H_save.Count);
+                //Application.Quit();
+
+                EditorApplication.isPlaying = false;
             }
         }
 
-        Debug.Log("Car 4 coordinates " + CarCoordinates[1]);
+        //Debug.Log("Car 4 coordinates " + CarCoordinates[1]);
 
         #region Defining edges of seen areas for all links (The duration is about 20 micro seconds)
         AreaOverlaps areaOverlaps = new AreaOverlaps
@@ -836,8 +840,8 @@ public partial class ChannelGenManager : MonoBehaviour
             Y_output[i] = 10 * Mathf.Log10( Mathf.Pow((float)System.Numerics.Complex.Abs(outputSignal_Freq[i]), 2) + 0.0000000000001f);
             H_output[i] = 10 * Mathf.Log10( Mathf.Pow((float)System.Numerics.Complex.Abs(H[i]), 2) + 0.0000000000001f);
 
-            
-            RSS += Mathf.Pow((float)System.Numerics.Complex.Abs(H[i]), 2) * SubframePower;
+
+            RSS += Mathf.Pow((float)System.Numerics.Complex.Abs(H_LoS[i]), 2);// * SubframePower;
             
 
             // procedure to write to a file
@@ -859,7 +863,14 @@ public partial class ChannelGenManager : MonoBehaviour
             
         }
 
-        //Debug.Log("RSS = " + 10 * Mathf.Log10((float)RSS) + " dBm");
+        if (RSS != 0)
+        {
+            //Debug.Log("RSS = " + 10 * Mathf.Log10((float)RSS));
+
+            float test_distance = (CarCoordinates[0] - CarCoordinates[1]).magnitude;
+            float test_gain = 10 * Mathf.Log10(Mathf.Pow( 1/(InverseWavelengths[0] * 4 * Mathf.PI * test_distance) , 2));
+            Debug.Log("RSS = " + 10 * Mathf.Log10((float)RSS) + " dB; distance " + test_distance + "; path gain = " + test_gain);
+        }
 
         h_save.Add(h_snapshot);
         H_save.Add(H_snapshot);
