@@ -725,7 +725,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 72832159}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.1, z: 0}
+  m_LocalPosition: {x: 309.9, y: 2.1, z: 178.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1566,7 +1566,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 2
-  m_Speed: 9.7
+  m_Speed: 10
   m_Acceleration: 20
   avoidancePriority: 2
   m_AngularSpeed: 120
@@ -3303,7 +3303,7 @@ MonoBehaviour:
   CarrierFrequency: 5.2e+9
   fsubcarriers: 1000000
   OmniAntenna: 1
-  filename: H_freq1.csv
+  filename: H_freq104.csv
   tfTime: {fileID: 1144777040}
   tfFreq: {fileID: 956427315}
   DrawingOverlaps: 0
