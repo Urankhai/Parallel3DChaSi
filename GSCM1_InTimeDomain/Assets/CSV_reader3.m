@@ -7,7 +7,7 @@ filt_window = 1;
 
 
 
-pathname = "C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\H_freq";
+pathname = 'H_freq'; %"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\H_freq";
 colors = {'m','b','g','c','k'};
 time_step = 0.02;
 Nf = 12; % Number_of_files
@@ -35,7 +35,7 @@ hold on
 
 for k = 1:Nf % [1,2,4,5,9]
     kk = k+0;
-    fileAddress = pathname + kk + ".csv";
+    fileAddress = [pathname, num2str(kk),'.csv'];
     Hload = csvread(fileAddress);
     Hyy = Hload(1:NumbOfSamples,1:Nfft);
     H_long(:,1:Nfft) = Hyy;
