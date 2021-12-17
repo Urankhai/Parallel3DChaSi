@@ -69,13 +69,72 @@ public struct ParallelLoSChannel : IJobParallelFor
             System.Numerics.Complex ExpGround = new System.Numerics.Complex(ReExpGround, ImExpGround);
 
             HLoS[index] = LoS_gain * ExpLoS + ground_gain * ExpGround;
-            if (index < 1024)
-            {
-                int asd = 1;
-            }
         }
         else
-        { HLoS[index] = 0; }
+        {
+            
+            // the following shows how much of the distance is covered by the buildings
+            float penetration_distance = (raycastresults[0].point - raycastresults[3].point).magnitude; 
+            float D0 = 17.0f; // a threshold distance in meters
+
+            if (penetration_distance < D0)
+            {
+                // sinusoid function
+                float diffraction_coefficient = 0.5f * ( Mathf.Sin(Mathf.PI * (D0 - penetration_distance) / D0 - 0.5f * Mathf.PI) + 1.0f );
+                // exponential function
+                //float diffraction_coefficient = 1.0f - Mathf.Exp(2 * D0 * penetration_distance - D0 * D0 - penetration_distance * penetration_distance);
+
+
+                int i_sub = index - i_link * FFTSize; // calculating index within FFT array
+                Vector3 car1 = CarsPositions[Links[i_link].x];
+                Vector3 car2 = CarsPositions[Links[i_link].y];
+
+                Vector3 fwd1 = CarsFwd[Links[i_link].x];
+                Vector3 fwd2 = CarsFwd[Links[i_link].y];
+
+                Vector3 LoS_dir = car2 - car1;
+                Vector3 LoS_dir_flat = new Vector3(LoS_dir.x, 0, LoS_dir.z);
+                Vector3 LoS_dir_nrom = LoS_dir_flat.normalized;
+
+
+
+                float antenna_gain = 1;
+                if (OmniAntennaFlag == false)
+                {
+                    float phi1 = Mathf.Acos(Vector3.Dot(fwd1, LoS_dir_nrom));
+                    float phi2 = Mathf.Acos(Vector3.Dot(fwd2, -LoS_dir_nrom));
+
+                    antenna_gain = EADF_rec(Pattern, phi1, phi2);
+                }
+
+                // line of sight parameters
+
+                float LoS_dist = LoS_dir.magnitude;
+                float LoS_gain = antenna_gain / (inverseLambdas[i_sub] * 4 * Mathf.PI * LoS_dist);
+                //float LoS_gain = 1 / (inverseLambdas[i_sub] * 4 * Mathf.PI * LoS_dist);
+
+                double ReExpLoS = Mathf.Cos(2 * Mathf.PI * inverseLambdas[i_sub] * LoS_dist);
+                double ImExpLoS = Mathf.Sin(2 * Mathf.PI * inverseLambdas[i_sub] * LoS_dist);
+                // defining exponent
+                System.Numerics.Complex ExpLoS = new System.Numerics.Complex(ReExpLoS, ImExpLoS);
+
+
+                // ground reflection parameters
+                float Fresnel_coef = antenna_gain * 0.7f; // TODO: should be calculated correctly
+                float totalhight = car1.y + car2.y;
+                float ground_dist = Mathf.Sqrt(LoS_dist * LoS_dist + totalhight * totalhight);
+                float ground_gain = Fresnel_coef / (inverseLambdas[i_sub] * 4 * Mathf.PI * ground_dist);
+
+                double ReExpGround = Mathf.Cos(2 * Mathf.PI * inverseLambdas[i_sub] * ground_dist);
+                double ImExpGround = Mathf.Sin(2 * Mathf.PI * inverseLambdas[i_sub] * ground_dist);
+                // defining exponent
+                System.Numerics.Complex ExpGround = new System.Numerics.Complex(ReExpGround, ImExpGround);
+
+                HLoS[index] = diffraction_coefficient* (LoS_gain * ExpLoS + ground_gain * ExpGround);
+            }
+            else
+            { HLoS[index] = 0; }
+        }
     }
     
     private float EADF_rec(NativeArray<Vector2> Pattern, float angle1, float angle2)
@@ -110,9 +169,19 @@ public struct ParallelLoSDetection : IJobParallelFor
     [WriteOnly] public NativeArray<RaycastCommand> commands;
     public void Execute(int index)
     {
-        int TxCarID = Links[index].x;
-        int RxCarID = Links[index].y;
-        Vector3 temp_direction = CarsPositions[RxCarID] - CarsPositions[TxCarID];
-        commands[index] = new RaycastCommand(CarsPositions[TxCarID], temp_direction.normalized, temp_direction.magnitude);
+        if (index < 3)
+        {
+            int TxCarID = Links[index].x;
+            int RxCarID = Links[index].y;
+            Vector3 temp_direction = CarsPositions[RxCarID] - CarsPositions[TxCarID];
+            commands[index] = new RaycastCommand(CarsPositions[TxCarID], temp_direction.normalized, temp_direction.magnitude);
+        }
+        else
+        {
+            int TxCarID = Links[index - 3].y;
+            int RxCarID = Links[index - 3].x;
+            Vector3 temp_direction = CarsPositions[RxCarID] - CarsPositions[TxCarID];
+            commands[index] = new RaycastCommand(CarsPositions[TxCarID], temp_direction.normalized, temp_direction.magnitude);
+        }
     }
 }

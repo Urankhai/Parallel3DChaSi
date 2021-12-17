@@ -168,7 +168,7 @@ public partial class ChannelGenManager : MonoBehaviour
         List<float> listA = new List<float>();
         List<float> listB = new List<float>();
 
-        using (var reader = new StreamReader(@"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\EADF\HelixV2VEADF.csv"))
+        using (var reader = new StreamReader(@"C:\Users\Alexey\Documents\GitHub\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\EADF\HelixV2VEADF.csv"))
         {
             while (!reader.EndOfStream)
             {
@@ -385,8 +385,8 @@ public partial class ChannelGenManager : MonoBehaviour
         RxOverlaps3 = new NativeArray<Overlap>(link_num, Allocator.Persistent);
 
         // LoS
-        commandsLoS = new NativeArray<RaycastCommand>(link_num, Allocator.Persistent);
-        resultsLoS = new NativeArray<RaycastHit>(link_num, Allocator.Persistent);
+        commandsLoS = new NativeArray<RaycastCommand>(2*link_num, Allocator.Persistent);
+        resultsLoS = new NativeArray<RaycastHit>(2*link_num, Allocator.Persistent);
         
         /*
         // DMC
@@ -442,15 +442,17 @@ public partial class ChannelGenManager : MonoBehaviour
     {
         FrameCounter++;
         
+        
+
         if (Mathf.Abs(-18.0f - CarCoordinates[1].z) < 1.0f)
         {
-            
+            Debug.Log("Frame number = " + FrameCounter);
             NeigbouringCount++;
             if (NeigbouringCount == 1)
             {
                 Debug.Log("Frame number = " + FrameCounter);
                 
-                string path = @"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\";
+                string path = @"C:\Users\Alexey\Documents\GitHub\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\";
                 string path2 = path + filename;// Application.persistentDataPath + "/H_freq1.csv";
 
                 using (var file = File.CreateText(path2))
@@ -548,11 +550,18 @@ public partial class ChannelGenManager : MonoBehaviour
             Links = Links,
             commands = commandsLoS,
         };
-        JobHandle LoSDetectionHandle = LoSDetection.Schedule(link_num, 1);
+        JobHandle LoSDetectionHandle = LoSDetection.Schedule(2*link_num, 1);
         LoSDetectionHandle.Complete();
         // parallel raycasting
         JobHandle rayCastJobLoS = RaycastCommand.ScheduleBatch(commandsLoS, resultsLoS, 1, default);
         rayCastJobLoS.Complete();
+
+        /*if (FrameCounter >= 200)
+        {
+            float buildingthinkness = (resultsLoS[0].point - resultsLoS[3].point).magnitude;
+            Debug.Log("Car 1 = [" + CarCoordinates[0] + "]; Car 2 = [" + CarCoordinates[1] + "]");
+            Debug.Log("The ray goes through buildings and covers = " + buildingthinkness + "m");
+        }*/
 
         ParallelLoSChannel LoSChannel = new ParallelLoSChannel
         {
@@ -570,7 +579,10 @@ public partial class ChannelGenManager : MonoBehaviour
         JobHandle LoSChannelHandle = LoSChannel.Schedule(H_LoS.Length, 64);
         LoSChannelHandle.Complete();
         #endregion
-
+        if(H_LoS[0] != 0)
+        {
+            Debug.Log("Diffraction is on its place");
+        }
 
 
 
@@ -960,7 +972,7 @@ public struct ParallelChannel : IJobParallelFor
                 do
                 {
                     float HNLoS_dist = path.PathParameters.Distance;
-                    float HNLoS_dist_gain = 1 / (InverseLambdas[i_sub] * 4 * Mathf.PI * HNLoS_dist); // Free space loss
+                    float HNLoS_dist_gain = 1.0f / (InverseLambdas[i_sub] * 4 * Mathf.PI * HNLoS_dist); // Free space loss
                     float HNLoS_attnuation = path.PathParameters.Attenuation;
 
                     double ReExpHLoS = Mathf.Cos(2 * Mathf.PI * InverseLambdas[i_sub] * HNLoS_dist);

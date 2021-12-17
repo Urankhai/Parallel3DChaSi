@@ -1,5 +1,5 @@
 % clear all
-% close all
+close all
 
 
 plot_factor = -115;
@@ -10,9 +10,9 @@ filt_window = 1;
 pathname = 'H_freq'; %"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\H_freq";
 colors = {'m','b','g','c','k'};
 time_step = 0.02;
-Nf = 12; % Number_of_files
+Nf = 10; % Number_of_files
 
-NumbOfSamples = 378;
+NumbOfSamples = 372;
 
 Nfft = 1000;
 dt = 1/(Nfft*1000000);
@@ -33,8 +33,11 @@ figure
 view(90,0)
 hold on
 
-for k = 1:Nf % [1,2,4,5,9]
-    kk = k+0;
+number_of_files = 0;
+for k = 1:Nf%2001:2003%1001:1013
+    number_of_files = number_of_files + 1;
+    
+    kk = k+3000;
     fileAddress = [pathname, num2str(kk),'.csv'];
     Hload = csvread(fileAddress);
     Hyy = Hload(1:NumbOfSamples,1:Nfft);
@@ -65,6 +68,7 @@ for k = 1:Nf % [1,2,4,5,9]
 %     plot(7.58*tt2/max(tt2),10*log10(gyy(:,k)).')
 %     grid on
 end
+%%
 gsort = sort(gyy,2);
 
 for ii =1:NumbOfSamples
@@ -79,18 +83,33 @@ for uu=1:length(gsort(:,end))-10
     gsort2(uu)=mean(10*log10(gsort(uu:uu+10,end)).');
 end
 
-gavg = sum(gyy,2)./Averaging_ID;
+gavg = sum(gyy,2)/number_of_files;
 
-open NarrowPDP.fig
+data = open('NarrowPDP171_11.fig');
+extract = findobj(data,'Type','line');
+
+figure
+grid on
 hold on
+ylim([-115 -65])
+plot(7.58*tt2/max(tt2),10*log10(gyy))
+
 plot(7.58*tt2/max(tt2),10*log10(gavg).','r','linewidth',2)
 
-plot(7.58*tt2(6:end-5)/max(tt2),gsort1,'--','color',[0.5 0.5 0.5])
-plot(7.58*tt2(6:end-5)/max(tt2),gsort2,'--','color',[0.5 0.5 0.5])
+plot(7.58*tt2(5:end-5)/max(tt2),gsort1,'--k', 'linewidth',1)
+plot(7.58*tt2(5:end-5)/max(tt2),gsort2,'--k', 'linewidth',1)
+
+for nn = 1:length(extract)
+    plot(extract(nn).XData, extract(nn).YData,'k','linewidth', 2); 
+end
+
+
+
 
 %%
+time_shift = 12;
 time_window = 209;
-power_elevation = 0;
+power_elevation = 5;
 % figure
 % h=pcolor(distance2, tt2(1:time_window), 10*log10(PDPavg(end-time_window+1:end,1:filt_window:end)/Nf));
 % set(h,'linestyle','none')
@@ -109,18 +128,22 @@ power_elevation = 0;
 
 
 figure
-subplot(1,2,1)
-h=pcolor(3e8*tau,tav(1:end-3),10*log10(PDPnn));
+subplot(2,1,2)
+h=pcolor(3e8*tau,3+tav(1:end-3),10*log10(PDPnn));
 set(h,'linestyle','none')
 caxis([-115 -70])
+xlim([0 200])
+ylim([4 7.18])
 title('PDP for GSCM from [3]')
 xlabel('Delay distance (m)')
 ylabel('Time (s)')
 
-subplot(1,2,2)
-h=pcolor(distance2, tt2(1:time_window), 10*log10(PDPavg(end-time_window+1:end,1:filt_window:end)/Nf));
+subplot(2,1,1)
+h=pcolor(distance2, 3+tt2(1:time_window), 10*log10(PDPavg(end-time_window-time_shift+1:end-time_shift,1:filt_window:end)/number_of_files));
 set(h,'linestyle','none')
-caxis([plot_factor+power_elevation, -70-power_elevation])
+caxis([plot_factor, -71])
+xlim([0 200])
+ylim([4 7.18])
 title('PDP from Unity3D Implementation')
 xlabel('Delay distance (m)')
 ylabel('Time (s)')
