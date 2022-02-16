@@ -61,6 +61,8 @@ public struct ChannelParametersAll : IJobParallelFor
         float comm_dist1 = Commands[i_mpc_car1].distance;
         float SoA1 = SignOfArrival[i_mpc_car1]; // car1 sees the MPC[i_mpc] from left or right direction
 
+
+        float Optimization_Angle = 0.7f;
         //Vector3 asd1 = MPC_Array[i_mpc].Coordinates - CarsCoordinates[i_car1];
         //float signofA1 = Mathf.Sign(Vector3.Dot( MPC_Perp[i_mpc], -asd1));
 
@@ -71,8 +73,8 @@ public struct ChannelParametersAll : IJobParallelFor
                 int i_mpc_car2 = i_car2 * MPCNum + i_mpc;
                 float test_dist2 = Results[i_mpc_car2].distance; // if the resulting distance is zero, then the ray hasn't hit anything
                 float comm_dist2 = Commands[i_mpc_car2].distance; // if the resulting distance is zero, then the ray hasn't hit anything
-                float test_sign = SoA1 * SignOfArrival[i_mpc_car2];
-                if (test_dist2 == 0 && comm_dist2 !=0 && test_sign < 1)
+                float test_sign = SoA1 * SignOfArrival[i_mpc_car2]; // Vector3.Dot(MPC_Perpendiculars[i_mpc], -temp_direction.normalized)
+                if (test_dist2 == 0 && comm_dist2 !=0 && test_sign < 1) // optimally, test_sign should be < 1
                 {
                     Vector3 dir1 = Commands[i_mpc_car1].direction; // from car1 to the MPC
                     Vector3 dir2 = Commands[i_mpc_car2].direction; // from car2 to the MPC
@@ -131,11 +133,12 @@ public struct ChannelParametersAll : IJobParallelFor
                         float SoA2_car1 = LookUpTableMPC2[i].SoD; // we check if incident directions come from different sides
                         float SoA2_car2 = LookUpTableMPC2[i].SoA; // direction of arrival for the MPC2[i_mpc2]
 
-                        if (SoA1 * SoA2_car1 < 0) // car1 ---> SoA1 {---> MPC[i_mpc] = MPC2[i_mpc2] --->} SoA2_car1 <--- MPC2[seen_mpc2_from_i_mpc2]
+                        if (SoA1 * SoA2_car1 < Optimization_Angle) // car1 ---> SoA1 {---> MPC[i_mpc] = MPC2[i_mpc2] --->} SoA2_car1 <--- MPC2[seen_mpc2_from_i_mpc2]
                         {
                             // from car2 to different MCP2s
                             int i_mpc2_car2 = i_car2 * MPCNum + DMCNum + MPC1Num + seen_mpc2_from_i_mpc2; // the ID of the mpc within the array that has length link_num*MPC_num
-                            float test_dist = Results[i_mpc2_car2].distance; // if the resulting distance is zero, then the ray hasn't hit anything
+                            float test_dist = Results[i_mpc2_car2].distance;    // if the resulting distance is zero, then the ray hasn't hit anything
+                            float comm_dist = Commands[i_mpc2_car2].distance;  // if the resulting distance is zero, then the ray hasn't hit anything
                             float SoA2 = SignOfArrival[i_mpc2_car2]; // car2 sees MPC2[seen_mpc2_from_i_mpc2] from left or right side
 
                             #region Addional testing features
@@ -157,7 +160,7 @@ public struct ChannelParametersAll : IJobParallelFor
                             */
                             #endregion
 
-                            if (test_dist == 0 && SoA2_car2 * SoA2 < 0) // car2 ---> SoA2 {---> MPC[i_mpc2_car2] = MPC2[seen_mpc2_from_i_mpc2] --->} SoA2_car2 <--- MPC2[i_mpc2]
+                            if (test_dist == 0 && comm_dist !=0 && SoA2_car2 * SoA2 < Optimization_Angle) // car2 ---> SoA2 {---> MPC[i_mpc2_car2] = MPC2[seen_mpc2_from_i_mpc2] --->} SoA2_car2 <--- MPC2[i_mpc2]
                             {
                                 float distance = Commands[i_mpc_car1].distance + LookUpTableMPC2[i].Distance + Commands[i_mpc2_car2].distance;
                                 Vector3 dir1 = Commands[i_mpc_car1].direction; // from car1 to the MPC
@@ -234,14 +237,15 @@ public struct ChannelParametersAll : IJobParallelFor
                         int seen_mpc3_from_i_mpc3 = LookUpTableMPC3[i].MPC_IDs.z; // the ID of the mpc within MPC3_Array (not MPC_Array)
                         float SoA3_car1 = LookUpTableMPC3[i].SoD; // we check if incident directions come from different sides
                         float SoA3_car2 = LookUpTableMPC3[i].SoA; // direction of arrival for the MPC2[i_mpc2]
-                        if (SoA1 * SoA3_car1 < 0)
+                        if (SoA1 * SoA3_car1 < Optimization_Angle)
                         {
                             // from car2 to different MCP2s
                             int i_mpc3_car2 = i_car2 * MPCNum + DMCNum + MPC1Num + MPC2Num + seen_mpc3_from_i_mpc3; // the ID of the mpc within the array that has length link_num*MPC_num
-                            float test_dist = Results[i_mpc3_car2].distance; // if the resulting distance is zero, then the ray hasn't hit anything
+                            float test_dist = Results[i_mpc3_car2].distance;    // if the resulting distance is zero, then the ray hasn't hit anything
+                            float comm_dist = Commands[i_mpc3_car2].distance;   // if the resulting distance is zero, then the ray hasn't hit anything
                             float SoA2 = SignOfArrival[i_mpc3_car2]; // car2 sees MPC3[seen_mpc3_from_i_mpc3] from left or right side
 
-                            if (test_dist == 0 && SoA3_car2 * SoA2 < 0)
+                            if (test_dist == 0 && comm_dist != 0 && SoA3_car2 * SoA2 < Optimization_Angle)
                             {
                                 float distance = Commands[i_mpc_car1].distance + LookUpTableMPC3[i].Distance + Commands[i_mpc3_car2].distance;
                                 Vector3 dir1 = Commands[i_mpc_car1].direction; // from car1 to the MPC

@@ -7,10 +7,10 @@ filt_window = 1;
 
 
 
-pathname = 'H_freq'; %"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\H_freq";
+pathname = 'H_freq'; 
 colors = {'m','b','g','c','k'};
 time_step = 0.02;
-Nf = 10; % Number_of_files
+Nf = 8; % Number_of_files
 
 NumbOfSamples = 372;
 
@@ -30,14 +30,14 @@ Averaging_ID = zeros(NumbOfSamples, 1);
 H_long = zeros(NumbOfSamples, filt_window*Nfft);
 
 figure
-view(90,0)
+view(60,30)
 hold on
 
 number_of_files = 0;
 for k = 1:Nf%2001:2003%1001:1013
     number_of_files = number_of_files + 1;
     
-    kk = k+3000;
+    kk = k+4000;
     fileAddress = [pathname, num2str(kk),'.csv'];
     Hload = csvread(fileAddress);
     Hyy = Hload(1:NumbOfSamples,1:Nfft);
@@ -91,13 +91,14 @@ extract = findobj(data,'Type','line');
 figure
 grid on
 hold on
+ScalingTime = 7.4;%7.58;
 ylim([-115 -65])
-plot(7.58*tt2/max(tt2),10*log10(gyy))
+plot(ScalingTime*tt2/max(tt2),10*log10(gyy))
 
-plot(7.58*tt2/max(tt2),10*log10(gavg).','r','linewidth',2)
+plot(ScalingTime*tt2/max(tt2),10*log10(gavg).','r','linewidth',2)
 
-plot(7.58*tt2(5:end-5)/max(tt2),gsort1,'--k', 'linewidth',1)
-plot(7.58*tt2(5:end-5)/max(tt2),gsort2,'--k', 'linewidth',1)
+plot(ScalingTime*tt2(6:end-5)/max(tt2),gsort1,'--k', 'linewidth',1)
+plot(ScalingTime*tt2(6:end-5)/max(tt2),gsort2,'--k', 'linewidth',1)
 
 for nn = 1:length(extract)
     plot(extract(nn).XData, extract(nn).YData,'k','linewidth', 2); 

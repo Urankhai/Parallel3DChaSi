@@ -7,7 +7,7 @@ using Unity.Collections;
 public struct ParallelPath2Search : IJobParallelFor
 {
     [ReadOnly] public NativeArray<V6> MPC_Array;
-    [ReadOnly] public NativeArray<Vector3> MPC_Dir;
+    [ReadOnly] public NativeArray<Vector3> MPC_Dir; // Who is writing code like this??? It's actually Active_MPC2_Perpendiculars (perpendiculars Karl!!!)
 
     [ReadOnly] public NativeArray<RaycastCommand> commands;
     [ReadOnly] public NativeArray<RaycastHit> results;
@@ -24,24 +24,28 @@ public struct ParallelPath2Search : IJobParallelFor
             float temp_dist = commands[index].distance;
             if (temp_dist < maxDistance)
             {
-                Vector3 c1 = MPC_Array[ID[index].x].Coordinates;
+                //Vector3 c1 = MPC_Array[ID[index].x].Coordinates;
                 Vector3 n1 = MPC_Array[ID[index].x].Normal;
                 Vector3 p1 = MPC_Dir[ID[index].x];
-                Vector3 c2 = MPC_Array[ID[index].y].Coordinates;
+                //Vector3 c2 = MPC_Array[ID[index].y].Coordinates;
                 Vector3 n2 = MPC_Array[ID[index].y].Normal;
                 Vector3 p2 = MPC_Dir[ID[index].y];
+
                 Vector3 dir = commands[index].direction;
+
                 if (Vector3.Dot(dir, n1) > angleThreshold && Vector3.Dot(dir, n2) < -angleThreshold)
                 {
+                    // MPC from
                     float aod = Mathf.Acos(Vector3.Dot(dir, n1));
                     float signDep = Mathf.Sign(Vector3.Dot(dir, p1));
+                    // MPC to
                     float aoa = Mathf.Acos(Vector3.Dot(-dir, n2));
                     float signArr = Mathf.Sign(Vector3.Dot(-dir, p2));
-                    float thr = (float)1.22;// Mathf.Acos(angleThreshold);
+                    //float thr = (float)1.22;// Mathf.Acos(angleThreshold);
 
                     // calculating angular gain
-                    float gd = AngularGainFunc(aod, thr);
-                    float ga = AngularGainFunc(aoa, thr);
+                    //float gd = AngularGainFunc(aod, thr);
+                    //float ga = AngularGainFunc(aoa, thr);
                     //float g0 = gd * ga; // according to the Carl's paper, it should be commented
                     float g0 = 1; // according to Carl's Matlab code
 
@@ -51,6 +55,7 @@ public struct ParallelPath2Search : IJobParallelFor
 
         }
     }
+    /*
     private float AngularGainFunc(float angle, float threshold)
     {
         float Gain = 1;
@@ -58,5 +63,5 @@ public struct ParallelPath2Search : IJobParallelFor
         { Gain = Mathf.Exp(-12 * (Mathf.Abs(angle) - threshold)); }
 
         return Gain;
-    }
+    }*/
 }

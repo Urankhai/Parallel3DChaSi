@@ -251,14 +251,67 @@ public class Correcting_polygons_Native : MonoBehaviour
             // This procedure is needed for defining the corner the building for further Diffraction simulation
             string building_name = Building_list[k].name;
             
-            Vector3 corner321 = new Vector3(0, 0, 0);
-            Vector3 normal321 = new Vector3(0, 0, 0);
-            Vector3 perpen321 = new Vector3(0, 0, 0);
+            Vector3 corner1 = new Vector3(0, 0, 0);
+            Vector3 normal1 = new Vector3(0, 0, 0);
+            Vector3 perpen1 = new Vector3(0, 0, 0);
 
-            Vector3 corner334 = new Vector3(0, 0, 0);
-            Vector3 normal334 = new Vector3(0, 0, 0);
-            Vector3 perpen334 = new Vector3(0, 0, 0);
+            Vector3 corner2 = new Vector3(0, 0, 0);
+            Vector3 normal2 = new Vector3(0, 0, 0);
+            Vector3 perpen2 = new Vector3(0, 0, 0);
 
+            if (building_name == "Building258")
+            {
+                Debug.Log(building_name);
+                corner1 = SortedByX[2];
+                corner2 = SortedByX[6];
+
+                GameObject Corner1 = Instantiate(CornerPrefab, corner1, Quaternion.identity);
+                GameObject Corner2 = Instantiate(MPC1_Prefab, corner2, Quaternion.identity);
+
+                int corner1_count = 0;
+                for (int v = 0; v < floor_vrtx.Count; v++)
+                {
+                    if (corner1 == floor_vrtx[v])
+                    {
+                        if (corner1_count == 0)
+                        {
+                            normal1 = floor_nrml[v]; // I use the assumption that the vertex is used only twice
+                            corner1_count = 1;
+                        }
+                    }
+                    if (corner2 == floor_vrtx[v])
+                    {
+                        normal2 = floor_nrml[v]; // I use the assumption that the vertex is used only twice
+                    }
+                }
+                normal1 = normal1.normalized;
+                perpen1 = new Vector3(-normal1.z, 0, normal1.x);
+                Debug.DrawLine(corner1, corner1 + 5 * normal1, Color.red, 30f);
+
+                normal2 = normal2.normalized;
+                perpen2 = new Vector3(-normal2.z, 0, normal2.x);
+                Debug.DrawLine(corner2, corner2 + 5 * normal2, Color.red, 30f);
+
+                
+
+                Active_CornersNormalsPerpendiculars.Add(corner1);
+                Active_CornersNormalsPerpendiculars.Add(normal1);
+                Active_CornersNormalsPerpendiculars.Add(perpen1);
+
+                Active_CornersNormalsPerpendiculars.Add(corner2);
+                Active_CornersNormalsPerpendiculars.Add(normal2);
+                Active_CornersNormalsPerpendiculars.Add(perpen2);
+
+                // this is done to model single edge building (keep in mind, multipath go through the angle)
+                // Vector3 corner_test = (corner1 + corner2) / 2 + 3.0f * (normal1 + normal2) / 2;
+                Vector3 corner_test = new Vector3(53.64f, 0.0f, -26.89f);
+                GameObject Corner_Test = Instantiate(CornerPrefab, corner_test, Quaternion.identity);
+
+                Active_CornersNormalsPerpendiculars.Add(corner_test);
+                
+            }
+
+            /*
             if (building_name == "Building321")
             {
                 Debug.Log(building_name);
@@ -302,6 +355,8 @@ public class Correcting_polygons_Native : MonoBehaviour
                 Active_CornersNormalsPerpendiculars.Add(normal334);
                 Active_CornersNormalsPerpendiculars.Add(perpen334);
             }
+            */
+
             //////////////////////////////////////////////////////////////////////////////////////////////////////////
             /// Defining areas around building where scatterers can be located
             //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -630,7 +685,7 @@ public class Correcting_polygons_Native : MonoBehaviour
         ActiveV6_MPC3_Power = new NativeArray<float>(ActiveV6_MPC3_NativeList.Length, Allocator.Persistent);
         int MPC_length = ActiveV6_DMC_NativeList.Length + ActiveV6_MPC1_NativeList.Length + ActiveV6_MPC2_NativeList.Length + ActiveV6_MPC3_NativeList.Length;
         ActiveV6_MPC_Power = new NativeArray<float>(MPC_length, Allocator.Persistent);
-        int clbrcoef = 10;
+        //int clbrcoef = 10;
         Vector2 DMCPower = new Vector2(-80, -68);  // + new Vector2(1,1) * clbrcoef; // (Mathf.Pow(10, (-80/20)), Mathf.Pow(10, (-68/20))); // (-80, -68)[dB] % Diffuse 1st)
         Vector2 MPC1Power = new Vector2(-65, -48); // (Mathf.Pow(10, (-65/20)), Mathf.Pow(10, (-48/20))); // (-65, -48)[dB] % 1st
         Vector2 MPC2Power = new Vector2(-70, -59); // (Mathf.Pow(10, (-70/20)), Mathf.Pow(10, (-59/20))); // (-70, -59)[dB] % 2nd

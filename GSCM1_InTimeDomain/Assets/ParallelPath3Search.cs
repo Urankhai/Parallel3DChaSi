@@ -38,7 +38,7 @@ public struct ParallelPath3Search : IJobParallelFor
 
                 float direction_sign = Vector3.Dot(mpc_perp_vector, incoming_vector) * Vector3.Dot(mpc_perp_vector, outgoing_vector);
                 
-                if (direction_sign > 0)
+                if (direction_sign > -0.5f) // the angle limiting possible paths, 
                 {
                     float thr = (float)0.35;// the value is hard written according to Carls paper
 

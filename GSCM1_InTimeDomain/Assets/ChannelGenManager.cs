@@ -22,6 +22,7 @@ public partial class ChannelGenManager : MonoBehaviour
     public float fsubcarriers = (float)200000; // kHz
 
     public bool OmniAntenna = false;
+    float EdgeEffectCoeff = -100.0f;
 
     [Space]
     [Header("RESULTS FILE")]
@@ -108,7 +109,7 @@ public partial class ChannelGenManager : MonoBehaviour
     //LoS
     NativeArray<RaycastCommand> commandsLoS;
     NativeArray<RaycastHit> resultsLoS;
-    NativeArray<Vector3> CornersNormals;
+    NativeArray<Vector3> CornersNormalsPerpendiculars;
     //DMC
     /*
     NativeArray<float> SoA0;
@@ -168,7 +169,7 @@ public partial class ChannelGenManager : MonoBehaviour
         List<float> listA = new List<float>();
         List<float> listB = new List<float>();
 
-        using (var reader = new StreamReader(@"C:\Users\Alexey\Documents\GitHub\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\EADF\HelixV2VEADF.csv"))
+        using (var reader = new StreamReader(@"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\EADF\HelixV2VEADF.csv"))
         {
             while (!reader.EndOfStream)
             {
@@ -321,9 +322,9 @@ public partial class ChannelGenManager : MonoBehaviour
         MPC1_num = MPC_Native_Script.ActiveV6_MPC1_NativeList.Length;
         MPC2_num = MPC_Native_Script.ActiveV6_MPC2_NativeList.Length;
         MPC3_num = MPC_Native_Script.ActiveV6_MPC3_NativeList.Length;
-        
-        
-        CornersNormals = MPC_Native_Script.Active_CornersNormalsPerpendiculars;
+
+
+        CornersNormalsPerpendiculars = MPC_Native_Script.Active_CornersNormalsPerpendiculars;
         //DMC_Native = MPC_Native_Script.ActiveV6_DMC_NativeList;
         //MPC1_Native = MPC_Native_Script.ActiveV6_MPC1_NativeList;
         //MPC2_Native = MPC_Native_Script.ActiveV6_MPC2_NativeList;
@@ -435,6 +436,8 @@ public partial class ChannelGenManager : MonoBehaviour
         //H3 = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
         H_NLoS = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
 
+
+        //EdgeEffectCoeff = 10.0f;
     }
 
     private void FixedUpdate()
@@ -452,7 +455,7 @@ public partial class ChannelGenManager : MonoBehaviour
             {
                 Debug.Log("Frame number = " + FrameCounter);
                 
-                string path = @"C:\Users\Alexey\Documents\GitHub\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\";
+                string path = @"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\";
                 string path2 = path + filename;// Application.persistentDataPath + "/H_freq1.csv";
 
                 using (var file = File.CreateText(path2))
@@ -563,6 +566,8 @@ public partial class ChannelGenManager : MonoBehaviour
             Debug.Log("The ray goes through buildings and covers = " + buildingthinkness + "m");
         }*/
 
+        
+
         ParallelLoSChannel LoSChannel = new ParallelLoSChannel
         {
             OmniAntennaFlag = OmniAntenna,
@@ -573,21 +578,73 @@ public partial class ChannelGenManager : MonoBehaviour
             raycastresults = resultsLoS,
             inverseLambdas = InverseWavelengths,
             Pattern = Pattern,
+            Corners = CornersNormalsPerpendiculars,
 
             HLoS = H_LoS,
+            DiffCoeff = EdgeEffectCoeff,
         };
         JobHandle LoSChannelHandle = LoSChannel.Schedule(H_LoS.Length, 64);
         LoSChannelHandle.Complete();
         #endregion
-        if(H_LoS[0] != 0)
+
+        //Debug.Log("Car 1 hight " + CarCoordinates[0].y + "; Car 2 hight " + CarCoordinates[1].y);
+        //if (H_LoS[0] != 0)
+        //{
+
+        //}
+
+        Vector3 car1 = CarCoordinates[0];
+        Vector3 corner1 = new Vector3(CornersNormalsPerpendiculars[3].x, car1.y, CornersNormalsPerpendiculars[3].z);
+        Vector3 normal1 = CornersNormalsPerpendiculars[4]; // since we consider only two cars
+
+        Vector3 car2 = CarCoordinates[1];
+        Vector3 corner2 = new Vector3(CornersNormalsPerpendiculars[0].x, car2.y, CornersNormalsPerpendiculars[0].z); // we elevate the corner to the hight of the car
+        Vector3 normal2 = CornersNormalsPerpendiculars[1];
+
+        //
+        // Knife edge effect calculating function (from Carl's paper with slight modification in angle calculation)
+        Vector3 virtual_corner = (corner1 + corner2) / 2.0f;
+        Vector3 virtual_normal = (normal1 + normal2) / 2.0f;
+        Vector3 car1_corner = virtual_corner - car1;
+        Vector3 car2_corner = virtual_corner - car2;
+
+        //Vector3 heruistic_corner = new Vector3(53.9f, car1.y, -26.468f);
+        // (53.64f, 0.0f, -26.89f)
+        Vector3 heruistic_corner = new Vector3(CornersNormalsPerpendiculars[6].x, car1.y, CornersNormalsPerpendiculars[6].z);
+
+        int corner_indicator = 1;
+        if (corner_indicator == 1)
         {
-            Debug.Log("Diffraction is on its place");
+            car1_corner = heruistic_corner - car1;
+            car2_corner = heruistic_corner - car2;
         }
+        
 
+        float dist1 = (car1_corner).magnitude;
+        float dist2 = (car2_corner).magnitude;
 
+        Vector3 direction1 = car1_corner.normalized;
+        Vector3 direction2 = car2_corner.normalized;
 
+        // angles from Carl's matlab code
+        // float phi = Mathf.Acos(Vector3.Dot(direction1, -direction2));
+        float alpha1 = Mathf.PI / 2.0f - Mathf.Acos(Vector3.Dot(direction1, virtual_normal));
+        float alpha2 = Mathf.PI / 2.0f - Mathf.Acos(Vector3.Dot(direction2, virtual_normal));
+        float phi = alpha1 + alpha2;
 
+        //float theta = Mathf.Acos(Vector3.Dot(direction1, -direction2));
 
+        float nu = phi * Mathf.Sqrt(2.0f * (InverseWavelengths[1023]) / (1.0f / dist1 + 1.0f / dist2));
+
+        float diff_K = 2.2131f; // it's 10^(6.9/20)
+        float DiffractionCoefficient = 1.0f;
+        if (nu > -0.78)
+        {
+            DiffractionCoefficient =  diff_K * (nu - 0.1f + Mathf.Sqrt((nu - 0.1f) * (nu - 0.1f) + 1.0f)); // the main formula for diffraction
+        }
+        //
+        Debug.Log("phi = " + phi + "; nu = " + nu + "; Diffraction coefficient = " + 1 / DiffractionCoefficient);
+        //Debug.Log("Diffraction coefficient = " + 1/DiffractionCoefficient + "; Ny = " + nu); 
         #region DMC and MPC1 Channel Parameters
         /*
         float t_upd = Time.realtimeSinceStartup;
@@ -684,7 +741,7 @@ public partial class ChannelGenManager : MonoBehaviour
         #endregion
 
 
-        
+
 
 
         float t_all = Time.realtimeSinceStartup;
@@ -838,7 +895,7 @@ public partial class ChannelGenManager : MonoBehaviour
         double RSS = 0;
         
         for (int i = 0; i < H.Length; i++)
-        { H[i] = H_LoS[i] + H_NLoS[i]; }
+        { H[i] = H_LoS[i] / DiffractionCoefficient + H_NLoS[i]; }
 
         Y_output = new double[H.Length];
         H_output = new double[H.Length];
@@ -875,6 +932,7 @@ public partial class ChannelGenManager : MonoBehaviour
             
         }
 
+        /*
         if (RSS != 0)
         {
             //Debug.Log("RSS = " + 10 * Mathf.Log10((float)RSS));
@@ -883,6 +941,7 @@ public partial class ChannelGenManager : MonoBehaviour
             float test_gain = 10 * Mathf.Log10(Mathf.Pow( 1/(InverseWavelengths[0] * 4 * Mathf.PI * test_distance) , 2));
             Debug.Log("RSS = " + 10 * Mathf.Log10((float)RSS) + " dB; distance " + test_distance + "; path gain = " + test_gain);
         }
+        */
 
         h_save.Add(h_snapshot);
         H_save.Add(H_snapshot);
@@ -1055,7 +1114,7 @@ public struct ParallelRayCastingDataCars : IJobParallelFor
         int i_mpc = index - i_car * MPC_Array.Length;
         Vector3 temp_direction = MPC_Array[i_mpc].Coordinates - Cars_Positions[i_car];
 
-        float cosA = Vector3.Dot(MPC_Array[i_mpc].Normal, -temp_direction.normalized); // NOTE: the sign is negative
+        float cosA = Vector3.Dot(MPC_Array[i_mpc].Normal, -temp_direction.normalized); // NOTE: the sign is negative (upd 16.02.2022: I do not remember what I ment by this)
         if (cosA > (float)0.1 && temp_direction.magnitude < CastingDistance)
         {
             //SoA[index] = Mathf.Sign(Vector3.Dot(MPC_Perpendiculars[i_mpc], -temp_direction.normalized));

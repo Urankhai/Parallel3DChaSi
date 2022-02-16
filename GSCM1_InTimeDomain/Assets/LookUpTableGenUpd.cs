@@ -79,7 +79,7 @@ public class LookUpTableGenUpd : MonoBehaviour
         ParallelPath2Search parallelPath2Search = new ParallelPath2Search
         {
             MPC_Array = MPC2_Native,
-            MPC_Dir = MPC2_Side,
+            MPC_Dir = MPC2_Side,                    // Who is writing code like this??? It's actually Active_MPC2_Perpendiculars (perpendiculars Karl!!!)
             commands = CommandsNativeArray_MPC2,
             results = ResultsNativeArray_MPC2,
             ID = MPC2_ID,
@@ -377,7 +377,8 @@ public class LookUpTableGenUpd : MonoBehaviour
 
         #region drawing MPC3 connections
         /*
-        for (int i = 0; i < LookUpTableMPC3.Length; i++)
+        //for (int i = 0; i < LookUpTableMPC3.Length; i++)
+        for (int i = 0; i < 100; i++)
         {
             int first_MPC = LookUpTableMPC3[i].MPC_IDs.x;
             int second_MPC = LookUpTableMPC3[i].MPC_IDs.y;
@@ -385,8 +386,8 @@ public class LookUpTableGenUpd : MonoBehaviour
             
             Debug.DrawLine(MPC3_Native[first_MPC].Coordinates, MPC3_Native[second_MPC].Coordinates, Color.yellow, 1.0f);
             Debug.DrawLine(MPC3_Native[second_MPC].Coordinates + new Vector3(0,1,0), MPC3_Native[third_MPC].Coordinates + new Vector3(0, 1, 0), Color.red, 1.0f);
-        }
-        */
+        }*/
+        
         #endregion
         // End: calculation of the whole path3s
 
@@ -471,13 +472,13 @@ public struct ParallelRayCastingDataV6 : IJobParallelFor
     [WriteOnly] public NativeArray<Vector2Int> ID;
     public void Execute(int index)
     {
-        int i_org = Mathf.FloorToInt(index / (MPC_Array.Length - 1));
-        int i_dir = index - i_org * (MPC_Array.Length - 1);
+        int i_org = Mathf.FloorToInt(index / (MPC_Array.Length - 1));   // MPC from which a ray is casted
+        int i_dir = index - i_org * (MPC_Array.Length - 1);             // MPC where the ray is coming
         if (i_org > i_dir)
         {
             Vector3 temp_direction = MPC_Array[i_dir].Coordinates - MPC_Array[i_org].Coordinates;
             commands[index] = new RaycastCommand(MPC_Array[i_org].Coordinates, temp_direction.normalized, temp_direction.magnitude);
-            ID[index] = new Vector2Int(i_org, i_dir);
+            ID[index] = new Vector2Int(i_org, i_dir);                   // save indexes of MPC i the seen MPC k : [i,k]
         }
         else if (i_org <= i_dir)
         {
