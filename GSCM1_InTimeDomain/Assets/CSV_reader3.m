@@ -10,12 +10,12 @@ filt_window = 1;
 pathname = 'H_freq'; 
 colors = {'m','b','g','c','k'};
 time_step = 0.02;
-Nf = 8; % Number_of_files
+Nf = 10; % Number_of_files
 
 NumbOfSamples = 372;
 
 Nfft = 1000;
-dt = 1/(Nfft*1000000);
+dt = 1/(Nfft*1000000)/1.1;
 distance2 = 3e8*(dt:dt:Nfft*dt);
     
 
@@ -34,7 +34,7 @@ view(60,30)
 hold on
 
 number_of_files = 0;
-for k = 1:Nf%2001:2003%1001:1013
+for k = 1:Nf
     number_of_files = number_of_files + 1;
     
     kk = k+4000;
@@ -91,7 +91,7 @@ extract = findobj(data,'Type','line');
 figure
 grid on
 hold on
-ScalingTime = 7.4;%7.58;
+ScalingTime = 7.44;%7.58;
 ylim([-115 -65])
 plot(ScalingTime*tt2/max(tt2),10*log10(gyy))
 
@@ -101,7 +101,11 @@ plot(ScalingTime*tt2(6:end-5)/max(tt2),gsort1,'--k', 'linewidth',1)
 plot(ScalingTime*tt2(6:end-5)/max(tt2),gsort2,'--k', 'linewidth',1)
 
 for nn = 1:length(extract)
-    plot(extract(nn).XData, extract(nn).YData,'k','linewidth', 2); 
+    if nn == 1
+        plot(extract(nn).XData(1:47), extract(nn).YData(1:47),'k','linewidth', 2); 
+    else
+        plot(extract(nn).XData, extract(nn).YData,'k','linewidth', 2); 
+    end
 end
 
 
@@ -142,7 +146,7 @@ ylabel('Time (s)')
 subplot(2,1,1)
 h=pcolor(distance2, 3+tt2(1:time_window), 10*log10(PDPavg(end-time_window-time_shift+1:end-time_shift,1:filt_window:end)/number_of_files));
 set(h,'linestyle','none')
-caxis([plot_factor, -71])
+caxis([-115, -71])
 xlim([0 200])
 ylim([4 7.18])
 title('PDP from Unity3D Implementation')

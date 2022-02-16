@@ -37,6 +37,47 @@ public struct ParallelLoSChannel : IJobParallelFor
 
         float GroundReflCoef = 0.7f;
 
+        Vector3 LoS_dir = car2 - car1;
+        Vector3 LoS_dir_flat = new Vector3(LoS_dir.x, 0, LoS_dir.z);
+        Vector3 LoS_dir_nrom = LoS_dir_flat.normalized;
+
+
+
+        float antenna_gain = 1;
+        if (OmniAntennaFlag == false)
+        {
+            float phi1 = Mathf.Acos(Vector3.Dot(fwd1, LoS_dir_nrom));
+            float phi2 = Mathf.Acos(Vector3.Dot(fwd2, -LoS_dir_nrom));
+
+            antenna_gain = EADF_rec(Pattern, phi1, phi2);
+        }
+
+        // line of sight parameters
+
+        float LoS_dist = LoS_dir.magnitude;
+        float LoS_gain = antenna_gain / (inverseLambdas[i_sub] * 4 * Mathf.PI * LoS_dist);
+        //float LoS_gain = 1 / (inverseLambdas[i_sub] * 4 * Mathf.PI * LoS_dist);
+
+        double ReExpLoS = Mathf.Cos(2 * Mathf.PI * inverseLambdas[i_sub] * LoS_dist);
+        double ImExpLoS = Mathf.Sin(2 * Mathf.PI * inverseLambdas[i_sub] * LoS_dist);
+        // defining exponent
+        System.Numerics.Complex ExpLoS = new System.Numerics.Complex(ReExpLoS, ImExpLoS);
+
+
+        // ground reflection parameters
+        float Fresnel_coef = antenna_gain * GroundReflCoef; // TODO: should be calculated correctly
+        float totalhight = car1.y + car2.y;
+        float ground_dist = Mathf.Sqrt(LoS_dist * LoS_dist + totalhight * totalhight);
+        float ground_gain = Fresnel_coef / (inverseLambdas[i_sub] * 4 * Mathf.PI * ground_dist);
+
+        double ReExpGround = Mathf.Cos(2 * Mathf.PI * inverseLambdas[i_sub] * ground_dist);
+        double ImExpGround = Mathf.Sin(2 * Mathf.PI * inverseLambdas[i_sub] * ground_dist);
+        // defining exponent
+        System.Numerics.Complex ExpGround = new System.Numerics.Complex(ReExpGround, ImExpGround);
+
+        HLoS[index] = (LoS_gain * ExpLoS + ground_gain * ExpGround);
+
+        /*
         if (raycastresults[i_link].distance == 0)
         {
 
@@ -128,8 +169,8 @@ public struct ParallelLoSChannel : IJobParallelFor
 
             HLoS[index] = (LoS_gain * ExpLoS + ground_gain * ExpGround);
         }
+        */
 
-        
 
         /*
         if (raycastresults[i_link].distance == 0)
