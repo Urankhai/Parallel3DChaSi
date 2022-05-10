@@ -10,7 +10,7 @@ filt_window = 1;
 pathname = 'H_freq'; 
 colors = {'m','b','g','c','k'};
 time_step = 0.02;
-Nf = 10; % Number_of_files
+Nf = 2; % Number_of_files
 
 NumbOfSamples = 372;
 
@@ -146,7 +146,7 @@ ylabel('Time (s)')
 subplot(2,1,1)
 h=pcolor(distance2, 3+tt2(1:time_window), 10*log10(PDPavg(end-time_window-time_shift+1:end-time_shift,1:filt_window:end)/number_of_files));
 set(h,'linestyle','none')
-caxis([-115, -71])
+caxis([-115, -70])
 xlim([0 200])
 ylim([4 7.18])
 title('PDP from Unity3D Implementation')

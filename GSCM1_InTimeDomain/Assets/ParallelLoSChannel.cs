@@ -19,12 +19,12 @@ public struct ParallelLoSChannel : IJobParallelFor
     [ReadOnly] public NativeArray<Vector3> Corners; // [coord, norm, perp][coord, norm, perp]...[coord, norm, perp] given number of corners
 
     [WriteOnly] public NativeArray<System.Numerics.Complex> HLoS;
-    [WriteOnly] public float DiffCoeff;
+    
     public void Execute(int index)
     {
         int i_link = Mathf.FloorToInt(index / FFTSize);
 
-        DiffCoeff = 1.0f;
+        
 
 
         int i_sub = index - i_link * FFTSize; // calculating index within FFT array
@@ -58,8 +58,8 @@ public struct ParallelLoSChannel : IJobParallelFor
         float LoS_gain = antenna_gain / (inverseLambdas[i_sub] * 4 * Mathf.PI * LoS_dist);
         //float LoS_gain = 1 / (inverseLambdas[i_sub] * 4 * Mathf.PI * LoS_dist);
 
-        double ReExpLoS = Mathf.Cos(2 * Mathf.PI * inverseLambdas[i_sub] * LoS_dist);
-        double ImExpLoS = Mathf.Sin(2 * Mathf.PI * inverseLambdas[i_sub] * LoS_dist);
+        double ReExpLoS = Mathf.Cos(2.0f * Mathf.PI * inverseLambdas[i_sub] * LoS_dist);
+        double ImExpLoS = Mathf.Sin(2.0f * Mathf.PI * inverseLambdas[i_sub] * LoS_dist);
         // defining exponent
         System.Numerics.Complex ExpLoS = new System.Numerics.Complex(ReExpLoS, ImExpLoS);
 
@@ -70,12 +70,12 @@ public struct ParallelLoSChannel : IJobParallelFor
         float ground_dist = Mathf.Sqrt(LoS_dist * LoS_dist + totalhight * totalhight);
         float ground_gain = Fresnel_coef / (inverseLambdas[i_sub] * 4 * Mathf.PI * ground_dist);
 
-        double ReExpGround = Mathf.Cos(2 * Mathf.PI * inverseLambdas[i_sub] * ground_dist);
-        double ImExpGround = Mathf.Sin(2 * Mathf.PI * inverseLambdas[i_sub] * ground_dist);
+        double ReExpGround = Mathf.Cos(2.0f * Mathf.PI * inverseLambdas[i_sub] * ground_dist);
+        double ImExpGround = Mathf.Sin(2.0f * Mathf.PI * inverseLambdas[i_sub] * ground_dist);
         // defining exponent
         System.Numerics.Complex ExpGround = new System.Numerics.Complex(ReExpGround, ImExpGround);
 
-        HLoS[index] = (LoS_gain * ExpLoS + ground_gain * ExpGround);
+        HLoS[index] = LoS_gain * ExpLoS + ground_gain * ExpGround;
 
         /*
         if (raycastresults[i_link].distance == 0)
@@ -428,6 +428,26 @@ public struct ParallelLoSChannel : IJobParallelFor
         float Gain = (float)System.Numerics.Complex.Abs(mult);
         return Gain;
     }
+    /*
+    private float EADF_Reconstruction(NativeArray<Vector2> Pattern, float angle_azimuth, float angle_elevation)
+    {
+        System.Numerics.Complex Gain1 = 0;
+        int L1 = Pattern.Length;
+        int L2 = Pattern.Length;
+        // Analog of Inverse Fourier Transform
+        for (int i = 0; i < L1; i++)
+        {
+            float mu1 = -(L1 - 1) / 2 + i;
+            float mu2 = -(L2 - 1) / 2 + i;
+            System.Numerics.Complex db_azimuth = new System.Numerics.Complex(Mathf.Cos(angle_azimuth * mu1), Mathf.Sin(angle_azimuth * mu1));
+            System.Numerics.Complex complex_pattern = new System.Numerics.Complex(Pattern[i].x, Pattern[i].y);
+            Gain1 += System.Numerics.Complex.Multiply(complex_pattern, db_azimuth);
+
+        }
+        float Gain = (float)System.Numerics.Complex.Abs(Gain1);
+        return Gain;
+    }
+    */
 }
 
 
