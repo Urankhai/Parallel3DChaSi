@@ -36,27 +36,73 @@ public struct ParallelPath3Search : IJobParallelFor
                 
                 Vector3 mpc_perp_vector = new Vector3(-MPC_array[second_level_ID].Normal.z, 0, MPC_array[second_level_ID].Normal.x);
 
+                //float sign_incoming = Mathf.Sign(Vector3.Dot(incoming_vector, mpc_perp_vector));
+                //float sign_outgoing = Mathf.Sign(Vector3.Dot(mpc_perp_vector, outgoing_vector));
+
+
                 float direction_sign = Vector3.Dot(mpc_perp_vector, incoming_vector) * Vector3.Dot(mpc_perp_vector, outgoing_vector);
                 
                 if (direction_sign > -0.5f) // the angle limiting possible paths, 
                 {
                     float thr = (float)0.35;// the value is hard written according to Carls paper
 
+                    Vector3 mpc1 = MPC_array[first_level_ID].Coordinates;
+                    Vector3 mpc2 = MPC_array[second_level_ID].Coordinates;
+                    Vector3 nrm2 = MPC_array[second_level_ID].Normal;
+                    Vector3 mpc3 = MPC_array[third_level_ID].Coordinates;
+
+                    Vector3 b = (mpc2 - mpc1).normalized;
+                    Vector3 a = (mpc3 - mpc2).normalized;
+                    Vector3 p = new Vector3(nrm2.z, 0, -nrm2.x);
+                    
+                    float Y1 = -Vector3.Dot(b, p);
+                    float X1 = Vector3.Dot(b, nrm2);
+
+                    float Y2 = Vector3.Dot(a, p);
+                    float X2 = Vector3.Dot(a, nrm2);
+
+                    float theta1 = 180.0f * Mathf.Atan2( Y1, X1) / Mathf.PI; 
+                    float theta2 = 180.0f * Mathf.Atan2( Y2, X2) / Mathf.PI;
+
+                    float val1 = Y1 / X1;
+                    float val2 = Y2 / X2;
+
                     // extracting parameters of the first chain
                     float distance1 = InArray[i_org].Distance;
                     float aod1 = InArray[i_org].AoD;
                     float sod1 = InArray[i_org].SoD;
                     float aoa1 = InArray[i_org].AoA;
+                    float soa1 = -InArray[i_org].SoA; // same as sign_incoming
                     float gain1 = InArray[i_org].AngularGain;
+
+                    /*
+                    if (sign_incoming - soa1 != 0)
+                    { 
+                        soa1 = -soa1;
+                    }
+                    */
 
                     // extracting parameters of the second chain
                     float distance2 = InArray[i].Distance;
                     float aod2 = InArray[i].AoD;
+                    float sod2 = InArray[i].SoD; // same as sign_outgoing
                     float aoa2 = InArray[i].AoA;
                     float soa2 = InArray[i].SoA;
                     float gain2 = InArray[i].AngularGain;
 
+                    /*
+                    if (sign_outgoing - sod2 != 0)
+                    {
+                        sod2 = -sod2;
+                    }
+                    */
+
                     // calculating angular gain
+                    if (soa1 - sod2 != 0)
+                    {
+                        aod2 = -aod2;
+                    }
+
                     float gain12 = AngularGainFunc(aoa1, aod2, thr);
 
                     // calculating total path3 parameters
@@ -75,7 +121,9 @@ public struct ParallelPath3Search : IJobParallelFor
         float Gain = 1;
 
         if (Mathf.Abs(angle1 - angle2) > threshold)
-        { Gain = Mathf.Exp(-12 * (Mathf.Abs(angle1 - angle2) - threshold)); }
+        { 
+            Gain = Mathf.Exp(-12 * (Mathf.Abs(angle1 - angle2) - threshold)); 
+        }
 
         return Gain;
     }

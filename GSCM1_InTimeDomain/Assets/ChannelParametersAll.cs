@@ -62,7 +62,7 @@ public struct ChannelParametersAll : IJobParallelFor
         float SoA1 = SignOfArrival[i_mpc_car1]; // car1 sees the MPC[i_mpc] from left or right direction
 
 
-        float Optimization_Angle = 0.7f;
+        float Optimization_Angle = 1.0f;
         //Vector3 asd1 = MPC_Array[i_mpc].Coordinates - CarsCoordinates[i_car1];
         //float signofA1 = Mathf.Sign(Vector3.Dot( MPC_Perp[i_mpc], -asd1));
 
@@ -73,8 +73,9 @@ public struct ChannelParametersAll : IJobParallelFor
                 int i_mpc_car2 = i_car2 * MPCNum + i_mpc;
                 float test_dist2 = Results[i_mpc_car2].distance; // if the resulting distance is zero, then the ray hasn't hit anything
                 float comm_dist2 = Commands[i_mpc_car2].distance; // if the resulting distance is zero, then the ray hasn't hit anything
-                float test_sign = SoA1 * SignOfArrival[i_mpc_car2]; // Vector3.Dot(MPC_Perpendiculars[i_mpc], -temp_direction.normalized)
-                if (test_dist2 == 0 && comm_dist2 !=0 && test_sign < 1) // optimally, test_sign should be < 1
+                float SoA2 = SignOfArrival[i_mpc_car2]; // SignOfArrival = Vector3.Dot(MPC_Perpendiculars[i_mpc], car - mpc)
+                float test_sign = SoA1 * SoA2;
+                if (test_dist2 == 0 && comm_dist2 !=0 && test_sign < 0.7f) // optimally, test_sign should be < 1
                 {
                     Vector3 dir1 = Commands[i_mpc_car1].direction; // from car1 to the MPC
                     Vector3 dir2 = Commands[i_mpc_car2].direction; // from car2 to the MPC
@@ -94,17 +95,31 @@ public struct ChannelParametersAll : IJobParallelFor
                     }
 
                     Vector3 norm = MPC_Array[i_mpc].Normal;
+                    Vector3 perp = MPC_Perp[i_mpc];
 
                     //Vector2Int link = new Vector2Int(i_car1, i_car2);
                     float distance = Commands[i_mpc_car1].distance + Commands[i_mpc_car2].distance;
 
+                    // picture below explains directions from car1 to MPC to car2
+                    //        MPC --> perp
+                    //     >   |   \
+                    //    /    V    >
+                    // car1  norm  car2
+                    float SignAoA = Mathf.Sign(Vector3.Dot(dir1, perp)); // sign of dir1 is pointed to the MPC
+                    float SignAoD = Mathf.Sign(Vector3.Dot(-dir2, perp)); // sign of dir2 is pointed from the MPC
+
                     float AoA = Mathf.Acos(Vector3.Dot(-dir1, norm));
                     float AoD = Mathf.Acos(Vector3.Dot(-dir2, norm));
+                    float sAoD;
+                    if (SignAoA != SignAoD)
+                    { sAoD = -AoD; }
+                    else
+                    { sAoD = AoD; }
 
-                    float angular_gain = AngularGainFunc(AoA, AoD, thr1, thr2);
+                    float angular_gain = AngularGainFunc(AoA, sAoD, thr1, thr2);
                     if (angular_gain > 0.000001)
                     {
-                        float attenuation = antenna_gain1* antenna_gain2*angular_gain * MPC_Attenuation[i_mpc];
+                        float attenuation = antenna_gain1 * antenna_gain2 * angular_gain * MPC_Attenuation[i_mpc];
 
 
 
@@ -167,28 +182,92 @@ public struct ChannelParametersAll : IJobParallelFor
                                 Vector3 dir2 = Commands[i_mpc2_car2].direction; // from car2 to the MPC
 
                                 // find the angle of vision of MPCs from the car sight
-                                float phi1 = Mathf.Acos(Vector3.Dot(dir1, fwd1));
-                                float phi2 = Mathf.Acos(Vector3.Dot(dir2, fwd2));
+                                
+                                float antenna_gain1 = 1;
+                                float antenna_gain2 = 1;
+                                if (OmniAntennaFlag == false)
+                                {
+                                    // find the angle of vision of MPCs from the car sight
+                                    float phi1 = Mathf.Acos(Vector3.Dot(dir1, fwd1));
+                                    float phi2 = Mathf.Acos(Vector3.Dot(dir2, fwd2));
 
-                                float antenna_gain1 = EADF_Reconstruction(Pattern, phi1);
-                                float antenna_gain2 = EADF_Reconstruction(Pattern, phi2);
+                                    antenna_gain1 = EADF_Reconstruction(Pattern, phi1);
+                                    antenna_gain2 = EADF_Reconstruction(Pattern, phi2);
+                                }
 
                                 // Parameters of active MPC
                                 float att1 = MPC_Attenuation[i_mpc];
                                 Vector3 norm1 = MPC_Array[i_mpc].Normal;
+                                
 
                                 // Parameters of active MPC
                                 float att2 = MPC_Attenuation[DMCNum + MPC1Num + seen_mpc2_from_i_mpc2];
                                 Vector3 norm2 = MPC_Array[DMCNum + MPC1Num + seen_mpc2_from_i_mpc2].Normal;
+                                
 
 
                                 float AoA1 = Mathf.Acos(Vector3.Dot(-dir1, norm1));             // from car1 to MPC[i1]
                                 float AoD1 = LookUpTableMPC2[i].AoD;                            // AoD from MPC[i1] to MPC[i2]
+                                
+                                float sign_11 = -Mathf.Sign(SoA1); //Mathf.Sign(Vector3.Dot(dir1, perp1)); //Mathf.Sign(Vector3.Dot(mpc2_dir_orgn_car1, perp1));
+                                float sign_12 = LookUpTableMPC2[i].SoD;  // Mathf.Sign(Vector3.Dot(perp1, mpc2_dir_dest_orgn));
+
+                                if (sign_11 - sign_12 != 0)
+                                { AoD1 = -AoD1; }
+
                                 float angular_gain1 = AngularGainFunc(AoA1, AoD1, thr1, thr2);
 
+                                
                                 float AoD2 = Mathf.Acos(Vector3.Dot(-dir2, norm2));             // from MPC[i2] to car2
                                 float AoA2 = LookUpTableMPC2[i].AoA;                            // AoA from MPC[i2] to MPC[i1]
+
+                                float sign_21 = -LookUpTableMPC2[i].SoA; // Mathf.Sign(Vector3.Dot(mpc2_dir_dest_orgn, perp2));
+                                float sign_22 = Mathf.Sign(SoA2); //Mathf.Sign(Vector3.Dot(perp2, -dir2)); //Mathf.Sign(Vector3.Dot(perp2, mpc2_dir_car2_dest));
+
+                                if (sign_21 - sign_22 != 0)
+                                { AoD2 = -AoD2; }
+
                                 float angular_gain2 = AngularGainFunc(AoD2, AoA2, thr1, thr2);
+
+                                
+                                //-----------------------------------------------------------------------------------
+                                //-----------------------------------------------------------------------------------
+                                //-----------------------------------------------------------------------------------
+                                // testing code is here
+                                // all the below test has worked out and all the data is correct. 01.03.2022
+
+                                Vector3 car1 = CarsCoordinates[i_car1];
+                                Vector3 car2 = CarsCoordinates[i_car2];
+
+                                Vector3 mpc2_orgn = MPC_Array[i_mpc].Coordinates;
+                                Vector3 perp1 = MPC_Perp[i_mpc];
+
+                                Vector3 mpc2_dest = MPC_Array[DMCNum + MPC1Num + seen_mpc2_from_i_mpc2].Coordinates;
+                                Vector3 perp2 = MPC_Perp[DMCNum + MPC1Num + seen_mpc2_from_i_mpc2];
+                                
+                                Vector3 mpc2_dir_orgn_car1 = (mpc2_orgn - car1).normalized;
+                                Vector3 mpc2_dir_car2_dest = (car2 - mpc2_dest).normalized;
+
+                                float asd_sign_11 = -Mathf.Sign(SoA1); float asd1 = Mathf.Sign(Vector3.Dot(dir1, perp1)); //Mathf.Sign(Vector3.Dot(mpc2_dir_orgn_car1, perp1));
+                                float ads_sign_12 = LookUpTableMPC2[i].SoD;  //Mathf.Sign(Vector3.Dot(perp1, mpc2_dir_dest_orgn));
+                                float test_sign_11 = Mathf.Sign(Vector3.Dot(mpc2_dir_orgn_car1, perp1));
+                                float test_test_sign_11 = -Mathf.Sign(SoA1);
+
+                                
+                                float asd_sign_21 = -LookUpTableMPC2[i].SoA; // Mathf.Sign(Vector3.Dot(mpc2_dir_dest_orgn, perp2));
+                                float asd_sign_22 = Mathf.Sign(SoA2); //Mathf.Sign(Vector3.Dot(perp2, -dir2)); //Mathf.Sign(Vector3.Dot(perp2, mpc2_dir_car2_dest));
+                                //float test_sign_22 = Mathf.Sign(Vector3.Dot(perp2, mpc2_dir_car2_dest));
+                                //float test_test_sign_22 = Mathf.Sign(SoA2);
+
+                                
+                                //float Sign_Org_to_Destination_AoD1 = LookUpTableMPC2[i].SoD;  // same as sign_12
+                                //float Sign_Org_to_Destination_AoA2 = -LookUpTableMPC2[i].SoA; // same as sign_21
+                                
+
+                                //-----------------------------------------------------------------------------------
+                                //-----------------------------------------------------------------------------------
+                                //-----------------------------------------------------------------------------------
+                                
 
                                 float gain12 = LookUpTableMPC2[i].AngularGain;                  // pre-calculated gain between MPC[i1] and MPC[i2]
 
@@ -252,26 +331,82 @@ public struct ChannelParametersAll : IJobParallelFor
                                 Vector3 dir3 = Commands[i_mpc3_car2].direction; // from car2 to the MPC
 
                                 // find the angle of vision of MPCs from the car sight
+                                /*
                                 float phi1 = Mathf.Acos(Vector3.Dot(dir1, fwd1));
                                 float phi2 = Mathf.Acos(Vector3.Dot(dir3, fwd2));
 
                                 float antenna_gain1 = EADF_Reconstruction(Pattern, phi1);
                                 float antenna_gain2 = EADF_Reconstruction(Pattern, phi2);
+                                */
+                                float antenna_gain1 = 1;
+                                float antenna_gain2 = 1;
+                                if (OmniAntennaFlag == false)
+                                {
+                                    // find the angle of vision of MPCs from the car sight
+                                    float phi1 = Mathf.Acos(Vector3.Dot(dir1, fwd1));
+                                    float phi2 = Mathf.Acos(Vector3.Dot(dir3, fwd2));
+
+                                    antenna_gain1 = EADF_Reconstruction(Pattern, phi1);
+                                    antenna_gain2 = EADF_Reconstruction(Pattern, phi2);
+                                }
 
                                 // Parameters of active MPC
                                 float att1 = MPC_Attenuation[i_mpc];
                                 Vector3 norm1 = MPC_Array[i_mpc].Normal;
+                                //Vector3 coor1 = MPC_Array[i_mpc].Coordinates;
+                                //Vector3 perp1 = MPC_Perp[i_mpc];
+                                //Vector3 car1 = CarsCoordinates[i_car1];
+
+                                //Vector3 from_car1_to_mpc_orgn = (coor1 - car1).normalized;
+                                //float sign_AoA1 = Mathf.Sign(Vector3.Dot(perp1, from_car1_to_mpc_orgn));
+
+                                float AoA1 = Mathf.Acos(Vector3.Dot(-dir1, norm1));             // (alpha) from car1 to MPC[i1]
+                                float AoD1 = LookUpTableMPC3[i].AoD;                            // (beta)  AoD from MPC[i1] to MPC[i2]
+
+                                float sign_11 = -Mathf.Sign(SoA1);
+                                float sign_12 = LookUpTableMPC3[i].SoD;
+                                /*
+                                if (sign_AoA1 - sign_11 != 0)
+                                {
+                                    sign_11 = -sign_11;
+                                }
+                                */
+
+                                if (sign_11 - sign_12 != 0)
+                                {
+                                    AoD1 = -AoD1;
+                                }
+
+                                float angular_gain1 = AngularGainFunc(AoA1, AoD1, thr1, thr2);  // AngularGainFunc(alpha, beta, thr1, thr2)
 
                                 // Parameters of active MPC
                                 float att3 = MPC_Attenuation[DMCNum + MPC1Num + MPC2Num + seen_mpc3_from_i_mpc3];
                                 Vector3 norm3 = MPC_Array[DMCNum + MPC1Num + MPC2Num + seen_mpc3_from_i_mpc3].Normal;
+                                //Vector3 coor3 = MPC_Array[DMCNum + MPC1Num + MPC2Num + seen_mpc3_from_i_mpc3].Coordinates;
+                                //Vector3 perp3 = MPC_Perp[DMCNum + MPC1Num + MPC2Num + seen_mpc3_from_i_mpc3];
+                                //Vector3 car2 = CarsCoordinates[i_car2];
 
-                                float AoA1 = Mathf.Acos(Vector3.Dot(-dir1, norm1));             // (alpha) from car1 to MPC[i1]
-                                float AoD1 = LookUpTableMPC3[i].AoD;                            // (beta)  AoD from MPC[i1] to MPC[i2]
-                                float angular_gain1 = AngularGainFunc(AoA1, AoD1, thr1, thr2);  // AngularGainFunc(alpha, beta, thr1, thr2)
+                                //Vector3 from_mpc_dest_to_car2 = (car2 - coor3).normalized;
+                                //float sign_AoD3 = Mathf.Sign(Vector3.Dot(perp3, from_mpc_dest_to_car2));
 
+                                
                                 float AoD3 = Mathf.Acos(Vector3.Dot(-dir3, norm3));             // (alpha) from MPC[i2] to car2
                                 float AoA3 = LookUpTableMPC3[i].AoA;                            // (beta)  AoA from MPC[i2] to MPC[i1]
+
+                                float sign_31 = -LookUpTableMPC3[i].SoA; // Mathf.Sign(Vector3.Dot(mpc2_dir_dest_orgn, perp2));
+                                float sign_32 = Mathf.Sign(SoA2);
+                                /*
+                                if (sign_AoD3 - sign_32 != 0)
+                                {
+                                    sign_32 = -sign_32;
+                                }
+                                */
+
+                                if (sign_31 - sign_32 != 0)
+                                {
+                                    AoD3 = -AoD3;
+                                }
+
                                 float angular_gain3 = AngularGainFunc(AoD3, AoA3, thr1, thr2);  // AngularGainFunc(alpha, beta, thr1, thr2)
 
                                 float gain123 = LookUpTableMPC3[i].AngularGain;                 // pre-calculated gain between MPC[i1], MPC[i2], and MPC[i3]
@@ -339,22 +474,25 @@ public struct ChannelParametersAll : IJobParallelFor
     private float AngularGainFunc(float angle1, float angle2, float threshold1, float threshold2)
     {
         float Gain0 = 1;
-        float Gain1 = 1; // should be commented it according to Carl's Matlab script
-        float Gain2 = 1;
+        
 
         if (Mathf.Abs(angle1 - angle2) > threshold1)
         { Gain0 = Mathf.Exp(-12 * (Mathf.Abs(angle1 - angle2) - threshold1)); }
 
         /*
+        float Gain1 = 1; // should be commented it according to Carl's Matlab script
+        float Gain2 = 1;
+        
         if (Mathf.Abs(angle1) > threshold2)
         { Gain1 = Mathf.Exp(-12 * (Mathf.Abs(angle1) - threshold2)); }
 
         if (Mathf.Abs(angle2) > threshold2)
         { Gain2 = Mathf.Exp(-12 * (Mathf.Abs(angle2) - threshold2)); }
-        */
+        
+         */
         // commented since the gain part from mpc side is already calculated
 
-        float Gain = Gain0 * Gain1 * Gain2; // should be commented according to Carl's Matlab script
+        float Gain = Gain0;// * Gain1 * Gain2; // should be commented according to Carl's Matlab script
         return Gain;
     }
 }

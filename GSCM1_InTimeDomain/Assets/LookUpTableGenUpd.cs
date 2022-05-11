@@ -491,7 +491,7 @@ public struct ParallelRayCastingDataV6 : IJobParallelFor
 
 public struct SeenPath2
 {
-    public Vector2Int MPC_IDs;  // from MPC[0] to MPC[8] (MPC[25] -> MPC[16])
+    public Vector2Int MPC_IDs;  // from MPC[0] to MPC[8] (MPC[0] -> MPC[8])
     public float Distance;
     public float AoD; // angle that indicates departed ray from MPC[0]
     public float SoD;
@@ -514,7 +514,7 @@ public struct SeenPath2
 
 public struct SeenPath3
 {
-    public Vector3Int MPC_IDs;  // from 
+    public Vector3Int MPC_IDs;  // from MPC[0] to MPC[8]
     public float Distance;
     public float AoD; // angle that indicates departed ray from MPC[0]
     public float SoD;

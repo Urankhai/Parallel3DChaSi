@@ -22,7 +22,7 @@ public partial class ChannelGenManager : MonoBehaviour
     public float fsubcarriers = (float)200000; // kHz
 
     public bool OmniAntenna = false;
-    float EdgeEffectCoeff = -100.0f;
+    //float EdgeEffectCoeff = -100.0f;
 
     [Space]
     [Header("RESULTS FILE")]
@@ -153,7 +153,7 @@ public partial class ChannelGenManager : MonoBehaviour
     private void OnEnable()
     {
         SubframePower = PowerInMilliWatts / FFTNum;
-        Debug.Log("Power per subframe = " + SubframePower);
+        //Debug.Log("Power per subframe = " + SubframePower);
 
         Subcarriers = new NativeArray<float>(FFTNum, Allocator.Persistent);
         InverseWavelengths = new NativeArray<float>(FFTNum, Allocator.Persistent);
@@ -581,7 +581,6 @@ public partial class ChannelGenManager : MonoBehaviour
             Corners = CornersNormalsPerpendiculars,
 
             HLoS = H_LoS,
-            DiffCoeff = EdgeEffectCoeff,
         };
         JobHandle LoSChannelHandle = LoSChannel.Schedule(H_LoS.Length, 64);
         LoSChannelHandle.Complete();
@@ -645,6 +644,8 @@ public partial class ChannelGenManager : MonoBehaviour
         //
         Debug.Log("phi = " + phi + "; nu = " + nu + "; Diffraction coefficient = " + 1 / DiffractionCoefficient);
         //Debug.Log("Diffraction coefficient = " + 1/DiffractionCoefficient + "; Ny = " + nu); 
+
+
         #region DMC and MPC1 Channel Parameters
         /*
         float t_upd = Time.realtimeSinceStartup;
@@ -906,8 +907,8 @@ public partial class ChannelGenManager : MonoBehaviour
         for (int i = 0; i < H.Length; i++)
         {
             
-            Y_output[i] = 10 * Mathf.Log10( Mathf.Pow((float)System.Numerics.Complex.Abs(outputSignal_Freq[i]), 2) + 0.0000000000001f);
-            H_output[i] = 10 * Mathf.Log10( Mathf.Pow((float)System.Numerics.Complex.Abs(H[i]), 2) + 0.0000000000001f);
+            Y_output[i] = 10 * Mathf.Log10( Mathf.Pow( (float)System.Numerics.Complex.Abs(outputSignal_Freq[i]), 2 ) + 0.0000000000001f);
+            H_output[i] = 10 * Mathf.Log10( Mathf.Pow( (float)System.Numerics.Complex.Abs(H[i]), 2 ) + 0.0000000000001f);
 
 
             RSS += Mathf.Pow((float)System.Numerics.Complex.Abs(H_LoS[i]), 2);// * SubframePower;
@@ -923,6 +924,8 @@ public partial class ChannelGenManager : MonoBehaviour
             if (H[i].Imaginary > 0)
             {
                 H_string = H[i].Real.ToString() + "+" + H[i].Imaginary.ToString() + "i";
+                //double H_real = H[i].Real;
+                //double H_imag = H[i].Imaginary;
             }
             else // in case of negative imaginary part
             {
@@ -1031,15 +1034,23 @@ public struct ParallelChannel : IJobParallelFor
                 do
                 {
                     float HNLoS_dist = path.PathParameters.Distance;
+
+                    //float frequence = 299792458.0f * InverseLambdas[i_sub];
+                    //float inverse_lambda = InverseLambdas[i_sub];
+                    //float test_pi = Mathf.PI;
+                    
+
                     float HNLoS_dist_gain = 1.0f / (InverseLambdas[i_sub] * 4 * Mathf.PI * HNLoS_dist); // Free space loss
                     float HNLoS_attnuation = path.PathParameters.Attenuation;
 
-                    double ReExpHLoS = Mathf.Cos(2 * Mathf.PI * InverseLambdas[i_sub] * HNLoS_dist);
-                    double ImExpHLoS = Mathf.Sin(2 * Mathf.PI * InverseLambdas[i_sub] * HNLoS_dist);
-                    // defining exponent
-                    System.Numerics.Complex ExpHLoS = new System.Numerics.Complex(ReExpHLoS, ImExpHLoS);
+                    //float test_arg = 2.0f * Mathf.PI * InverseLambdas[i_sub] * HNLoS_dist;
 
-                    temp_HNLoS += HNLoS_attnuation * HNLoS_dist_gain * ExpHLoS;
+                    double ReExpNLoS = Mathf.Cos(2.0f * Mathf.PI * InverseLambdas[i_sub] * HNLoS_dist);
+                    double ImExpNLoS = Mathf.Sin(2.0f * Mathf.PI * InverseLambdas[i_sub] * HNLoS_dist);
+                    // defining exponent
+                    System.Numerics.Complex ExpNLoS = new System.Numerics.Complex(ReExpNLoS, ImExpNLoS);
+
+                    temp_HNLoS += HNLoS_attnuation * HNLoS_dist_gain * ExpNLoS;
                 }
                 while (HashMap.TryGetNextValue(out path, ref nativeMultiHashMapIterator));
             }
@@ -1114,7 +1125,7 @@ public struct ParallelRayCastingDataCars : IJobParallelFor
         int i_mpc = index - i_car * MPC_Array.Length;
         Vector3 temp_direction = MPC_Array[i_mpc].Coordinates - Cars_Positions[i_car];
 
-        float cosA = Vector3.Dot(MPC_Array[i_mpc].Normal, -temp_direction.normalized); // NOTE: the sign is negative (upd 16.02.2022: I do not remember what I ment by this)
+        float cosA = Vector3.Dot(MPC_Array[i_mpc].Normal, -temp_direction.normalized); // NOTE: the sign is negative (upd 24.02.2022: the sign of temp_direction)
         if (cosA > (float)0.1 && temp_direction.magnitude < CastingDistance)
         {
             //SoA[index] = Mathf.Sign(Vector3.Dot(MPC_Perpendiculars[i_mpc], -temp_direction.normalized));
