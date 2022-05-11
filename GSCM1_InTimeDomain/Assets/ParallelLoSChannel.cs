@@ -37,7 +37,7 @@ public struct ParallelLoSChannel : IJobParallelFor
 
         float GroundReflCoef = 0.7f;
 
-<<<<<<< HEAD
+
         Vector3 LoS_dir = car2 - car1;
         Vector3 LoS_dir_flat = new Vector3(LoS_dir.x, 0, LoS_dir.z);
         Vector3 LoS_dir_nrom = LoS_dir_flat.normalized;
