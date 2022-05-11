@@ -1024,10 +1024,13 @@ public struct ParallelChannel : IJobParallelFor
 
         // defining zero temp value
         System.Numerics.Complex temp_HNLoS = new System.Numerics.Complex(0, 0);
+
+
         
         //for (int i = i_link * MPCNum; i < (i_link + 1) * MPCNum; i++)
         for (int i = LinkIDs[i_link].x; i <= LinkIDs[i_link].y; i++)
         {
+            
             if (HashMap.TryGetFirstValue(NonZeroIndexes[i], out Path_and_IDs path, out NativeMultiHashMapIterator<int> nativeMultiHashMapIterator))
             {
                 // if there are many paths, then sum them up
@@ -1050,12 +1053,13 @@ public struct ParallelChannel : IJobParallelFor
                     // defining exponent
                     System.Numerics.Complex ExpNLoS = new System.Numerics.Complex(ReExpNLoS, ImExpNLoS);
 
-                    temp_HNLoS += HNLoS_attnuation * HNLoS_dist_gain * ExpNLoS;
+                    temp_HNLoS += HNLoS_attnuation * HNLoS_dist_gain * ExpNLoS;                    
+
                 }
                 while (HashMap.TryGetNextValue(out path, ref nativeMultiHashMapIterator));
             }
         }
-        H_NLoS[index] = temp_HNLoS;
+        H_NLoS[index] = temp_HNLoS;        
     }
 }
 
