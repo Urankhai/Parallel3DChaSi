@@ -3308,7 +3308,7 @@ MonoBehaviour:
   tfFreq: {fileID: 956427315}
   DrawingOverlaps: 0
   DrawingPath1: 0
-  DrawingPath2: 0
+  DrawingPath2: 1
   DrawingPath3: 0
   SubframePower: 0
 --- !u!4 &604064072

@@ -6,8 +6,8 @@ using Unity.Collections;
 [BurstCompile]
 public struct ParallelPath2Search : IJobParallelFor
 {
-    [ReadOnly] public NativeArray<V6> MPC_Array;
-    [ReadOnly] public NativeArray<Vector3> MPC_Dir; // Who is writing code like this??? It's actually Active_MPC2_Perpendiculars (perpendiculars Karl!!!)
+    [ReadOnly] public NativeArray<V6> MPC_Array; // coordinates and normals
+    [ReadOnly] public NativeArray<Vector3> MPC_Perpendiculars; // Who is writing code like this??? It's actually Active_MPC2_Perpendiculars (perpendiculars Karl!!!)
 
     [ReadOnly] public NativeArray<RaycastCommand> commands;
     [ReadOnly] public NativeArray<RaycastHit> results;
@@ -26,21 +26,25 @@ public struct ParallelPath2Search : IJobParallelFor
             {
                 //Vector3 c1 = MPC_Array[ID[index].x].Coordinates;
                 Vector3 n1 = MPC_Array[ID[index].x].Normal;
-                Vector3 p1 = MPC_Dir[ID[index].x];
+                Vector3 p1 = MPC_Perpendiculars[ID[index].x];
                 //Vector3 c2 = MPC_Array[ID[index].y].Coordinates;
                 Vector3 n2 = MPC_Array[ID[index].y].Normal;
-                Vector3 p2 = MPC_Dir[ID[index].y];
+                Vector3 p2 = MPC_Perpendiculars[ID[index].y];
+
+                //Vector3 temp_direction = (c2 - c1).normalized;
 
                 Vector3 dir = commands[index].direction;
 
                 if (Vector3.Dot(dir, n1) > angleThreshold && Vector3.Dot(dir, n2) < -angleThreshold)
                 {
                     // MPC from
-                    float aod = Mathf.Acos(Vector3.Dot(dir, n1));
                     float signDep = Mathf.Sign(Vector3.Dot(dir, p1));
+                    float aod = Mathf.Acos(Vector3.Dot(dir, n1));
+
                     // MPC to
-                    float aoa = Mathf.Acos(Vector3.Dot(-dir, n2));
                     float signArr = Mathf.Sign(Vector3.Dot(-dir, p2));
+                    float aoa = Mathf.Acos(Vector3.Dot(-dir, n2));
+                    
                     //float thr = (float)1.22;// Mathf.Acos(angleThreshold);
 
                     // calculating angular gain

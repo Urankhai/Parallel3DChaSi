@@ -741,7 +741,7 @@ public class Correcting_polygons_Native : MonoBehaviour
 
             float asd = ActiveV6_MPC2_Power[i];
             float zxc = Mathf.Pow(asd, 0.5f);
-            float qwe = 1.0f;
+            //float qwe = 1.0f;
         }
 
 

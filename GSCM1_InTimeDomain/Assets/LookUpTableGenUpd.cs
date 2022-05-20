@@ -79,7 +79,7 @@ public class LookUpTableGenUpd : MonoBehaviour
         ParallelPath2Search parallelPath2Search = new ParallelPath2Search
         {
             MPC_Array = MPC2_Native,
-            MPC_Dir = MPC2_Side,                    // Who is writing code like this??? It's actually Active_MPC2_Perpendiculars (perpendiculars Karl!!!)
+            MPC_Perpendiculars = MPC2_Side,                    // Who is writing code like this??? It's actually Active_MPC2_Perpendiculars (perpendiculars Karl!!!)
             commands = CommandsNativeArray_MPC2,
             results = ResultsNativeArray_MPC2,
             ID = MPC2_ID,
@@ -224,7 +224,7 @@ public class LookUpTableGenUpd : MonoBehaviour
         ParallelPath2Search parallelPath3Search = new ParallelPath2Search
         {
             MPC_Array = MPC3_Native,
-            MPC_Dir = MPC3_Side,
+            MPC_Perpendiculars = MPC3_Side,
             commands = CommandsNativeArray_MPC3,
             results = ResultsNativeArray_MPC3,
             ID = MPC3_ID,
