@@ -117,9 +117,9 @@ public class Correcting_polygons_Native : MonoBehaviour
         float t_native = Time.realtimeSinceStartup;
         GameObject MPC_Spawner = GameObject.Find("MPC_spawner");
         Scatterers_Spawning2 MPC_Script = MPC_Spawner.GetComponent<Scatterers_Spawning2>();
-        List<Vector3> MPC1 = MPC_Script.MPC1_possiblepositionList;
-        List<Vector3> MPC2 = MPC_Script.MPC2_possiblepositionList;
-        List<Vector3> MPC3 = MPC_Script.MPC3_possiblepositionList;
+        //List<Vector3> MPC1 = MPC_Script.MPC1_possiblepositionList;
+        //List<Vector3> MPC2 = MPC_Script.MPC2_possiblepositionList;
+        //List<Vector3> MPC3 = MPC_Script.MPC3_possiblepositionList;
 
         NativeList<V4> MPC1_Native = MPC_Script.MPC1_possiblepositionNativeList;
         NativeList<V4> MPC2_Native = MPC_Script.MPC2_possiblepositionNativeList;
@@ -153,7 +153,6 @@ public class Correcting_polygons_Native : MonoBehaviour
                 Vector3[] nrml = Buildings[b].GetComponent<MeshFilter>().mesh.normals;
 
                 int seen_vrtx_count = 0;
-
                 for (int v = 0; v < vrtx.Length; v++)
                 {
                     if (vrtx[v].y == 0)
@@ -311,51 +310,7 @@ public class Correcting_polygons_Native : MonoBehaviour
                 
             }
 
-            /*
-            if (building_name == "Building321")
-            {
-                Debug.Log(building_name);
-                corner321 = SortedByX[SortedByX.Count - 1];
-
-                GameObject Corner321 = Instantiate(CornerPrefab, corner321, Quaternion.identity);
-
-                for (int v = 0; v < floor_vrtx.Count; v++)
-                {
-                    if (corner321 == floor_vrtx[v])
-                    {
-                        normal321 += floor_nrml[v]; // I use the assumption that the vertex is used only twice
-                    }
-                }
-                normal321 = normal321.normalized;
-                perpen321 = new Vector3(-normal321.z, 0, normal321.x);
-                Debug.DrawLine(corner321, corner321 + 5 * normal321, Color.red, 30f);
-
-                Active_CornersNormalsPerpendiculars.Add(corner321);
-                Active_CornersNormalsPerpendiculars.Add(normal321);
-                Active_CornersNormalsPerpendiculars.Add(perpen321);
-            }
-            if (building_name == "Building334")
-            {
-                Debug.Log(building_name);
-                corner334 = SortedByX[0];
-                GameObject Corner334 = Instantiate(CornerPrefab, corner334, Quaternion.identity);
-                
-                for (int v = 0; v < floor_vrtx.Count; v++)
-                {
-                    if (corner334 == floor_vrtx[v])
-                    {
-                        normal334 += floor_nrml[v]; // I use the assumption that the vertex is used only twice
-                    }
-                }
-                normal334 = normal334.normalized;
-                perpen334 = new Vector3(-normal334.z, 0, normal334.x);
-                Debug.DrawLine(corner334, corner334 + 5 * normal334, Color.red, 30f);
-
-                Active_CornersNormalsPerpendiculars.Add(corner334);
-                Active_CornersNormalsPerpendiculars.Add(normal334);
-                Active_CornersNormalsPerpendiculars.Add(perpen334);
-            }
-            */
+            
 
             //////////////////////////////////////////////////////////////////////////////////////////////////////////
             /// Defining areas around building where scatterers can be located
@@ -489,7 +444,7 @@ public class Correcting_polygons_Native : MonoBehaviour
 
 
                 Area34 area_forloop = new Area34(point1, dmc_shift1, point2, dmc_shift2);
-                //DrawArea(area_forloop);
+                DrawArea(area_forloop);
 
                 // MPC1
                 PickMPCParallel pickMPCParallel_for = new PickMPCParallel
@@ -581,12 +536,32 @@ public class Correcting_polygons_Native : MonoBehaviour
 
         //float t_seq = Time.realtimeSinceStartup;
         // DMC
+        /*float[] randNumbers = new float[DMC_Native.Length];
+        for (int rnd_i = 0; rnd_i < DMC_Native.Length; rnd_i++)
+        {
+            randNumbers[rnd_i] = Random.Range(0.0f, 1.0f);
+        }*/
+        
         int inclusion_num0 = 0;
         for (int ii = 0; ii < DMC_Native.Length; ii++)
         {
             if (DMC_Native[ii].Inclusion == 1)
             {
                 inclusion_num0 += 1;
+                //===================================
+                // Rotating normals of DMC scatterers
+                //===================================
+                float randFloat = Random.Range(-0.35f, 0.35f);
+                float randAngle = Mathf.PI * randFloat;
+                
+                float rnx = DMC_Pick[ii].Normal.x * Mathf.Cos(randAngle) + DMC_Pick[ii].Normal.z * Mathf.Sin(randAngle);
+                float rnz = -DMC_Pick[ii].Normal.x * Mathf.Sin(randAngle) + DMC_Pick[ii].Normal.z * Mathf.Cos(randAngle);
+                V6 rotatedScatterer = new V6(DMC_Pick[ii].Coordinates, new Vector3(rnx, 0, rnz)); 
+                DMC_Pick[ii] = rotatedScatterer;
+                //===================================
+                // Rotating normals of DMC scatterers
+                //===================================
+                
                 ActiveV6_DMC_NativeList.Add(DMC_Pick[ii]); // DMCs only
                 ActiveV6_MPC_NativeList.Add(DMC_Pick[ii]); // all MPCs
                 // MPC perpendicular directions
@@ -603,7 +578,7 @@ public class Correcting_polygons_Native : MonoBehaviour
                     //Destroy(cleared_sphere.GetComponent<SphereCollider>()); // remove collider
                     //cleared_sphere.name = "DMC #" + (inclusion_num4 - 1);
 
-                    //Debug.DrawLine(DMC_Pick[ii].Coordinates, DMC_Pick[ii].Coordinates + 5*DMC_Pick[ii].Normal, Color.red, 30f);
+                    Debug.DrawLine(DMC_Pick[ii].Coordinates, DMC_Pick[ii].Coordinates + 5*DMC_Pick[ii].Normal, Color.red, 30f);
                 }
             }
         }
@@ -623,7 +598,10 @@ public class Correcting_polygons_Native : MonoBehaviour
                 Active_MPC_Perpendiculars.Add(MPC1_Pick_perp[ii]);
 
                 if (MPC_visualizer_ECS == true)
-                { GameObject MPC1_clone = Instantiate(MPC1_Prefab, MPC1_Native[ii].Coordinates, Quaternion.identity); }
+                { 
+                    GameObject MPC1_clone = Instantiate(MPC1_Prefab, MPC1_Native[ii].Coordinates, Quaternion.identity); 
+                    Debug.DrawLine(MPC1_Pick[ii].Coordinates, MPC1_Pick[ii].Coordinates + 5*MPC1_Pick[ii].Normal, Color.red, 30f);
+                }
             }
         }
 
@@ -644,7 +622,7 @@ public class Correcting_polygons_Native : MonoBehaviour
                 { 
                     GameObject MPC2_clone = Instantiate(MPC2_Prefab, MPC2_Native[ii].Coordinates, Quaternion.identity);
                     MPC2_clone.name = "MPC2 # " + inclusion_num2;
-                    //Debug.DrawLine(MPC2_Pick[ii].Coordinates, MPC2_Pick[ii].Coordinates + 5 * MPC2_Pick[ii].Normal, Color.cyan, 10f);
+                    Debug.DrawLine(MPC2_Pick[ii].Coordinates, MPC2_Pick[ii].Coordinates + 5 * MPC2_Pick[ii].Normal, Color.green, 10f);
                     //Debug.DrawLine(MPC2_Pick[ii].Coordinates, MPC2_Pick[ii].Coordinates + 5 * MPC2_Pick_perp[ii], Color.yellow, 10f);
                 }
                 inclusion_num2 += 1;
@@ -666,7 +644,7 @@ public class Correcting_polygons_Native : MonoBehaviour
                 { 
                     GameObject MPC3_clone = Instantiate(MPC3_Prefab, MPC3_Native[ii].Coordinates, Quaternion.identity);
                     MPC3_clone.name = "MPC3 # " + inclusion_num3;
-                    //Debug.DrawLine(MPC3_Pick[ii].Coordinates, MPC3_Pick[ii].Coordinates + 5 * MPC3_Pick[ii].Normal, Color.cyan, 10f);
+                    Debug.DrawLine(MPC3_Pick[ii].Coordinates, MPC3_Pick[ii].Coordinates + 5 * MPC3_Pick[ii].Normal, Color.cyan, 10f);
                     //Debug.DrawLine(MPC3_Pick[ii].Coordinates, MPC3_Pick[ii].Coordinates + 5 * MPC3_Pick_perp[ii], Color.yellow, 10f);
                 }
                 inclusion_num3 += 1;
@@ -686,10 +664,11 @@ public class Correcting_polygons_Native : MonoBehaviour
         int MPC_length = ActiveV6_DMC_NativeList.Length + ActiveV6_MPC1_NativeList.Length + ActiveV6_MPC2_NativeList.Length + ActiveV6_MPC3_NativeList.Length;
         ActiveV6_MPC_Power = new NativeArray<float>(MPC_length, Allocator.Persistent);
         //int clbrcoef = 10;
-        Vector2 DMCPower = new Vector2(-80, -68);  // + new Vector2(1,1) * clbrcoef; // (Mathf.Pow(10, (-80/20)), Mathf.Pow(10, (-68/20))); // (-80, -68)[dB] % Diffuse 1st)
-        Vector2 MPC1Power = new Vector2(-65, -48); // (Mathf.Pow(10, (-65/20)), Mathf.Pow(10, (-48/20))); // (-65, -48)[dB] % 1st
-        Vector2 MPC2Power = new Vector2(-70, -59); // (Mathf.Pow(10, (-70/20)), Mathf.Pow(10, (-59/20))); // (-70, -59)[dB] % 2nd
-        Vector2 MPC3Power = new Vector2(-75, -65); // (Mathf.Pow(10, (-75/20)), Mathf.Pow(10, (-65/20))); // (-75, -65)[dB] % 3rd
+        
+        Vector2 MPC1Power = new Vector2(-65, -48); //new Vector2(-65, -48); // (Mathf.Pow(10, (-65/20)), Mathf.Pow(10, (-48/20))); // (-65, -48)[dB] % 1st
+        Vector2 MPC2Power = new Vector2(-70, -59); //new Vector2(-70, -59); // (Mathf.Pow(10, (-70/20)), Mathf.Pow(10, (-59/20))); // (-70, -59)[dB] % 2nd
+        Vector2 MPC3Power = new Vector2(-90, -80); //new Vector2(-75, -65); // (Mathf.Pow(10, (-75/20)), Mathf.Pow(10, (-65/20))); // (-75, -65)[dB] % 3rd
+        Vector2 DMCPower = new Vector2(-80, -68); //new Vector2(-80, -68);  // + new Vector2(1,1) * clbrcoef; // (Mathf.Pow(10, (-80/20)), Mathf.Pow(10, (-68/20))); // (-80, -68)[dB] % Diffuse 1st)
         
         // this solution comes from https://forum.unity.com/threads/mathematics-random-with-in-ijobprocesscomponentdata.598192/#post-4009273
         NativeArray<Unity.Mathematics.Random> rngs = new NativeArray<Unity.Mathematics.Random>(JobsUtility.MaxJobThreadCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
@@ -697,7 +676,7 @@ public class Correcting_polygons_Native : MonoBehaviour
         { 
             rngs[i] = new Unity.Mathematics.Random((uint)UnityEngine.Random.Range(int.MinValue, int.MaxValue)); 
         }
-
+        // DMC Power
         MPCPowerGeneration dmcPowerGeneration = new MPCPowerGeneration
         {
             rngs = rngs,
@@ -708,9 +687,10 @@ public class Correcting_polygons_Native : MonoBehaviour
         power0.Complete();
         for (int i = 0; i < ActiveV6_DMC_Power.Length; i++)
         {
+            //ActiveV6_MPC_Power[i] = Mathf.Pow(10, -75.0f/ 20);//ActiveV6_DMC_Power[i];
             ActiveV6_MPC_Power[i] = ActiveV6_DMC_Power[i];
         }
-
+        // MPC1 Power
         MPCPowerGeneration mpc1PowerGeneration = new MPCPowerGeneration
         {
             rngs = rngs,
@@ -721,9 +701,10 @@ public class Correcting_polygons_Native : MonoBehaviour
         power1.Complete();
         for (int i = 0; i < ActiveV6_MPC1_Power.Length; i++)
         {
+            //ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length] = Mathf.Pow(10, -50.0f/ 20);//ActiveV6_MPC1_Power[i];
             ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length] = ActiveV6_MPC1_Power[i];
         }
-
+        // MPC2 Power
         MPCPowerGeneration mpc2PowerGeneration = new MPCPowerGeneration
         {
             rngs = rngs,
@@ -734,17 +715,17 @@ public class Correcting_polygons_Native : MonoBehaviour
         power2.Complete();
         for (int i = 0; i < ActiveV6_MPC2_Power.Length; i++)
         {
-            
-            
-            ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length + ActiveV6_MPC1_Power.Length] = Mathf.Pow( ActiveV6_MPC2_Power[i], 0.5f ); // It seems that Carl uses only one multiplication to the coefficient
-            ActiveV6_MPC2_Power[i] = Mathf.Pow(ActiveV6_MPC2_Power[i], 0.5f);
+            //ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length + ActiveV6_MPC1_Power.Length] = Mathf.Pow(10, -60.0f/ 20);//ActiveV6_MPC2_Power[i]; 
+            ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length + ActiveV6_MPC1_Power.Length] = ActiveV6_MPC2_Power[i];
+                //Mathf.Pow( ActiveV6_MPC2_Power[i], 0.5f ); // It seems that Carl uses only one multiplication to the coefficient
+                //ActiveV6_MPC2_Power[i] = ActiveV6_MPC2_Power[i]; //Mathf.Pow(ActiveV6_MPC2_Power[i], 0.5f);
 
-            float asd = ActiveV6_MPC2_Power[i];
-            float zxc = Mathf.Pow(asd, 0.5f);
-            //float qwe = 1.0f;
+                //float asd = ActiveV6_MPC2_Power[i];
+                //float zxc = Mathf.Pow(asd, 0.5f);
+                //float qwe = 1.0f;
         }
 
-
+        // MPC3 Power
         MPCPowerGeneration mpc3PowerGeneration = new MPCPowerGeneration
         {
             rngs = rngs,
@@ -755,10 +736,9 @@ public class Correcting_polygons_Native : MonoBehaviour
         power3.Complete();
         for (int i = 0; i < ActiveV6_MPC3_Power.Length; i++)
         {
-            float asd = ActiveV6_MPC3_Power[i];
-            float zxc = Mathf.Pow(ActiveV6_MPC3_Power[i], 0.3333f);
-            ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length + ActiveV6_MPC1_Power.Length + ActiveV6_MPC2_Power.Length] = Mathf.Pow( ActiveV6_MPC3_Power[i], 0.3333f ); // It seems that Carl uses only one multiplication to the coefficient
-            ActiveV6_MPC3_Power[i] = Mathf.Pow(ActiveV6_MPC3_Power[i], 0.3333f);
+            //ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length + ActiveV6_MPC1_Power.Length + ActiveV6_MPC2_Power.Length] = Mathf.Pow(10, -70.0f/ 20);//ActiveV6_MPC3_Power[i]; //Mathf.Pow( ActiveV6_MPC3_Power[i], 0.3333f ); // It seems that Carl uses only one multiplication to the coefficient
+            ActiveV6_MPC_Power[i + ActiveV6_DMC_Power.Length + ActiveV6_MPC1_Power.Length + ActiveV6_MPC2_Power.Length] = ActiveV6_MPC3_Power[i]; //Mathf.Pow( ActiveV6_MPC3_Power[i], 0.3333f ); // It seems that Carl uses only one multiplication to the coefficient
+            //ActiveV6_MPC3_Power[i] = ActiveV6_MPC3_Power[i];//Mathf.Pow(ActiveV6_MPC3_Power[i], 0.3333f);
         }
         #endregion
 
@@ -804,7 +784,7 @@ public struct MPCPowerGeneration : IJobParallelFor
     public void Execute(int index)
     {
         var rng = rngs[threadId];
-        float PowerAdjustingShift = 32.0f;
+        float PowerAdjustingShift = 0.0f;
         float MPC_power = rng.NextFloat(MinMax.x + PowerAdjustingShift, MinMax.y + PowerAdjustingShift);
         
         rngs[threadId] = rng;

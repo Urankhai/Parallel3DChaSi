@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657892, g: 0.4964128, b: 0.5748173, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -904,7 +904,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1646981259178978, guid: 2dc42346e5313b34c93d598a61994629, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4870167790249810, guid: 2dc42346e5313b34c93d598a61994629, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1566,7 +1566,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 2
-  m_Speed: 10
+  m_Speed: 9.05
   m_Acceleration: 20
   avoidancePriority: 2
   m_AngularSpeed: 120
@@ -3303,13 +3303,13 @@ MonoBehaviour:
   CarrierFrequency: 5.2e+9
   fsubcarriers: 1000000
   OmniAntenna: 1
-  filename: H_freq4002.csv
+  filename: H_freq2011.csv
   tfTime: {fileID: 1144777040}
   tfFreq: {fileID: 956427315}
   DrawingOverlaps: 0
-  DrawingPath1: 0
+  DrawingPath1: 1
   DrawingPath2: 1
-  DrawingPath3: 0
+  DrawingPath3: 1
   SubframePower: 0
 --- !u!4 &604064072
 Transform:
@@ -3341,7 +3341,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 2
-  m_Speed: 11.16
+  m_Speed: 11.05
   m_Acceleration: 20
   avoidancePriority: 1
   m_AngularSpeed: 120
@@ -7103,7 +7103,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 6e-45, z: 9e-44, w: -0.0000000061409864}
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 4.387e-42, w: 5.9e-44}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -7231,9 +7231,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6abfee8b4f3f734586481635bfb5a3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bottom_left_corner: {x: -141, y: 0, z: -145}
-  area_height: 300
-  area_width: 300
+  bottom_left_corner: {x: -90, y: 0, z: -125}
+  area_height: 240
+  area_width: 240
   chiW1: 0.044
   chiW2: 0.066
   chiW3: 0.088
@@ -10623,11 +10623,9 @@ MonoBehaviour:
   carsArray:
   - {fileID: 297854053}
   - {fileID: 642061109}
-  - {fileID: 1812961305}
   destinations:
   - {fileID: 219923700}
   - {fileID: 915961327}
-  - {fileID: 219923700}
 --- !u!4 &1931987587
 Transform:
   m_ObjectHideFlags: 0
@@ -34565,7 +34563,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &2678803868949480485
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -34598,7 +34596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &2678803868949480487
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -35885,7 +35883,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &2678803868949480565
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -36545,7 +36543,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &2678803868949480605
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -36578,7 +36576,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &2678803868949480607
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -36908,7 +36906,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &2678803868949480627
 MeshCollider:
   m_ObjectHideFlags: 0

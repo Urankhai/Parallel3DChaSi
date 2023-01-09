@@ -24,14 +24,16 @@ public struct ParallelPath2Search : IJobParallelFor
             float temp_dist = commands[index].distance;
             if (temp_dist < maxDistance)
             {
-                //Vector3 c1 = MPC_Array[ID[index].x].Coordinates;
+                
                 Vector3 n1 = MPC_Array[ID[index].x].Normal;
                 Vector3 p1 = MPC_Perpendiculars[ID[index].x];
-                //Vector3 c2 = MPC_Array[ID[index].y].Coordinates;
+                
                 Vector3 n2 = MPC_Array[ID[index].y].Normal;
                 Vector3 p2 = MPC_Perpendiculars[ID[index].y];
-
-                //Vector3 temp_direction = (c2 - c1).normalized;
+                
+                Vector3 c1 = MPC_Array[ID[index].x].Coordinates;
+                Vector3 c2 = MPC_Array[ID[index].y].Coordinates;
+                Vector3 temp_direction = (c2 - c1).normalized;
 
                 Vector3 dir = commands[index].direction;
 

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Collections;
@@ -7,6 +7,7 @@ using Unity.Burst;
 using System.IO;
 using System;
 using UnityEditor;
+using Vector3 = UnityEngine.Vector3;
 
 public partial class ChannelGenManager : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public partial class ChannelGenManager : MonoBehaviour
     public float PowerInMilliWatts;
     public float SpeedofLight = 299792458.0f; // m/s
     public float CarrierFrequency = (float)(5.9 * Mathf.Pow(10, 9)); // GHz
-    public float fsubcarriers = (float)200000; // kHz
+    public float fsubcarriers = (float)0.001E9; // kHz
 
     public bool OmniAntenna = false;
     //float EdgeEffectCoeff = -100.0f;
@@ -56,19 +57,7 @@ public partial class ChannelGenManager : MonoBehaviour
     public bool DrawingPath2 = false;
     public bool DrawingPath3 = false;
 
-    // MPCs Data
-    //NativeArray<V6> DMC_Native;
-    //NativeArray<Vector3> DMC_perp;
-    //NativeArray<float> DMC_attenuation;
-    //NativeArray<V6> MPC1_Native;
-    //NativeArray<Vector3> MPC1_perp;
-    //NativeArray<float> MPC1_attenuation;
-    //NativeArray<V6> MPC2_Native;
-    //NativeArray<Vector3> MPC2_perp;
-    //NativeArray<float> MPC2_attenuation;
-    //NativeArray<V6> MPC3_Native;
-    //NativeArray<Vector3> MPC3_perp;
-    //NativeArray<float> MPC3_attenuation;
+    
     int DMC_num;
     int MPC1_num;
     int MPC2_num;
@@ -110,25 +99,7 @@ public partial class ChannelGenManager : MonoBehaviour
     NativeArray<RaycastCommand> commandsLoS;
     NativeArray<RaycastHit> resultsLoS;
     NativeArray<Vector3> CornersNormalsPerpendiculars;
-    //DMC
-    /*
-    NativeArray<float> SoA0;
-    NativeArray<int> Seen0; // either 0 or 1
-    NativeArray<RaycastCommand> commands0; // for DMCs
-    NativeArray<RaycastHit> results0; // for DMCs
-    NativeArray<float> SoA1;
-    NativeArray<int> Seen1; // either 0 or 1
-    NativeArray<RaycastCommand> commands1;  // for MPC1s
-    NativeArray<RaycastHit> results1;  // for MPC1s
-    NativeArray<float> SoA2;
-    NativeArray<int> Seen2; // either 0 or 1
-    NativeArray<RaycastCommand> commands2;  // for MPC2s
-    NativeArray<RaycastHit> results2;  // for MPC2s
-    NativeArray<float> SoA3;
-    NativeArray<int> Seen3; // either 0 or 1
-    NativeArray<RaycastCommand> commands3;  // for MPC3s
-    NativeArray<RaycastHit> results3;  // for MPC3s
-    */
+    
 
     NativeArray<float> SoA;
     NativeArray<int> Seen; // either 0 or 1
@@ -168,8 +139,9 @@ public partial class ChannelGenManager : MonoBehaviour
 
         List<float> listA = new List<float>();
         List<float> listB = new List<float>();
-
-        using (var reader = new StreamReader(@"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\EADF\HelixV2VEADF.csv"))
+        
+        //using (var reader = new StreamReader(@"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\EADF\HelixV2VEADF.csv"))
+        using (var reader = new StreamReader(@"/home/aleksei/Parallel3DChaSi/GSCM1_InTimeDomain/Assets/EADF/HelixV2VEADF.csv"))
         {
             while (!reader.EndOfStream)
             {
@@ -189,26 +161,7 @@ public partial class ChannelGenManager : MonoBehaviour
             Pattern[i] = new Vector2(listA[i], listB[i]);
         }
 
-        //Pattern[0] = new Vector2(0.0068f, -0.0004f);
-        //Pattern[1] = new Vector2(-0.0024f, 0.0024f);
-        //Pattern[2] = new Vector2(-0.0751f, 0.0071f);
-        //Pattern[3] = new Vector2(0.0051f, -0.0603f);
 
-        //Pattern[4] = new Vector2(0.2522f, 0.0103f);
-        //Pattern[5] = new Vector2(-0.0464f, 0.3858f);
-        //Pattern[6] = new Vector2(-0.8632f, -0.0495f);
-        //Pattern[7] = new Vector2(0.0175f, -1.2042f);
-
-        //Pattern[8] = new Vector2(1.6836f, 0.0000f);
-        //Pattern[9] = new Vector2(0.0175f, 1.2042f);
-        //Pattern[10] = new Vector2(-0.8632f, 0.0495f);
-        //Pattern[11] = new Vector2(-0.0464f, 0.3858f);
-
-        //Pattern[12] = new Vector2(0.2522f, -0.0103f);
-        //Pattern[13] = new Vector2(0.0051f, 0.0603f);
-        //Pattern[14] = new Vector2(-0.0751f, 0.0071f);
-        //Pattern[15] = new Vector2(-0.0024f, -0.0024f);
-        //Pattern[16] = new Vector2(0.0068f, 0.0004f);
     }
 
     private void OnDestroy()
@@ -223,27 +176,7 @@ public partial class ChannelGenManager : MonoBehaviour
 
         commandsLoS.Dispose();
         resultsLoS.Dispose();
-        /*
-        SoA0.Dispose();
-        Seen0.Dispose();
-        commands0.Dispose();
-        results0.Dispose();
-
-        SoA1.Dispose();
-        Seen1.Dispose();
-        commands1.Dispose();
-        results1.Dispose();
-
-        SoA2.Dispose();
-        Seen2.Dispose();
-        commands2.Dispose();
-        results2.Dispose();
-
-        SoA3.Dispose();
-        Seen3.Dispose();
-        commands3.Dispose();
-        results3.Dispose();
-        */
+        
         SoA.Dispose();
         Seen.Dispose();
         commands.Dispose();
@@ -252,56 +185,11 @@ public partial class ChannelGenManager : MonoBehaviour
         Subcarriers.Dispose();
         InverseWavelengths.Dispose();
         H_LoS.Dispose();
-        /*
-        H0.Dispose();
-        H1.Dispose();
-        H2.Dispose();
-        H3.Dispose();
-        */
+        
         H_NLoS.Dispose();
     }
 
-    /*
-    private void OnDisable()
-    {
-        string path = @"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\";
-        string path1 = path + "h_time1.csv";//Application.persistentDataPath + "/h_time1.csv";
-
-        using (var file = File.CreateText(path1))
-        {
-            foreach (var arr in h_save)
-            {
-                //if (String.IsNullOrEmpty(arr)) continue;
-                file.Write(arr[0]);
-                for (int i = 1; i < arr.Count; i++)
-                {
-                    file.Write(',');
-                    file.Write(arr[i]);
-                }
-                file.WriteLine();
-            }
-        }
-
-        string path2 = path + filename;// Application.persistentDataPath + "/H_freq1.csv";
-
-        using (var file = File.CreateText(path2))
-        {
-            foreach (var arr in H_save)
-            {
-                //if (String.IsNullOrEmpty(arr)) continue;
-                file.Write(arr[0]);
-                for (int i = 1; i < arr.Count; i++)
-                {
-                    file.Write(',');
-                    file.Write(arr[i]);
-                }
-                file.WriteLine();
-            }
-        }
-
-        Debug.Log("The lenght of the list<list> structure " + h_save.Count);
-    }
-    */
+    
 
     void Start()
     {
@@ -325,20 +213,7 @@ public partial class ChannelGenManager : MonoBehaviour
 
 
         CornersNormalsPerpendiculars = MPC_Native_Script.Active_CornersNormalsPerpendiculars;
-        //DMC_Native = MPC_Native_Script.ActiveV6_DMC_NativeList;
-        //MPC1_Native = MPC_Native_Script.ActiveV6_MPC1_NativeList;
-        //MPC2_Native = MPC_Native_Script.ActiveV6_MPC2_NativeList;
-        //MPC3_Native = MPC_Native_Script.ActiveV6_MPC3_NativeList;
-
-        //DMC_attenuation = MPC_Native_Script.ActiveV6_DMC_Power;
-        //MPC1_attenuation = MPC_Native_Script.ActiveV6_MPC1_Power;
-        //MPC2_attenuation = MPC_Native_Script.ActiveV6_MPC2_Power;
-        //MPC3_attenuation = MPC_Native_Script.ActiveV6_MPC3_Power;
-
-        //DMC_perp = MPC_Native_Script.Active_DMC_Perpendiculars;
-        //MPC1_perp = MPC_Native_Script.Active_MPC1_Perpendiculars;
-        //MPC2_perp = MPC_Native_Script.Active_MPC2_Perpendiculars;
-        //MPC3_perp = MPC_Native_Script.Active_MPC3_Perpendiculars;
+        
         
         // for all MPCs
         MPC_num = MPC_Native_Script.ActiveV6_MPC_NativeList.Length;
@@ -389,28 +264,7 @@ public partial class ChannelGenManager : MonoBehaviour
         commandsLoS = new NativeArray<RaycastCommand>(2*link_num, Allocator.Persistent);
         resultsLoS = new NativeArray<RaycastHit>(2*link_num, Allocator.Persistent);
         
-        /*
-        // DMC
-        SoA0 = new NativeArray<float>(DMC_num * car_num, Allocator.Persistent);
-        Seen0 = new NativeArray<int>(DMC_num * car_num, Allocator.Persistent);
-        commands0 = new NativeArray<RaycastCommand>(DMC_num * car_num, Allocator.Persistent);
-        results0 = new NativeArray<RaycastHit>(DMC_num * car_num, Allocator.Persistent);
-        // MPC1
-        SoA1 = new NativeArray<float>(MPC1_num * car_num, Allocator.Persistent);
-        Seen1 = new NativeArray<int>(MPC1_num * car_num, Allocator.Persistent);
-        commands1 = new NativeArray<RaycastCommand>(MPC1_num * car_num, Allocator.Persistent);
-        results1 = new NativeArray<RaycastHit>(MPC1_num * car_num, Allocator.Persistent);
-        // MPC2
-        SoA2 = new NativeArray<float>(MPC2_num * car_num, Allocator.Persistent);
-        Seen2 = new NativeArray<int>(MPC2_num * car_num, Allocator.Persistent);
-        commands2 = new NativeArray<RaycastCommand>(MPC2_num * car_num, Allocator.Persistent);
-        results2 = new NativeArray<RaycastHit>(MPC2_num * car_num, Allocator.Persistent);
-        // MPC3
-        SoA3 = new NativeArray<float>(MPC3_num * car_num, Allocator.Persistent);
-        Seen3 = new NativeArray<int>(MPC3_num * car_num, Allocator.Persistent);
-        commands3 = new NativeArray<RaycastCommand>(MPC3_num * car_num, Allocator.Persistent);
-        results3 = new NativeArray<RaycastHit>(MPC3_num * car_num, Allocator.Persistent);
-        */
+        
 
         // MPCs
         SoA = new NativeArray<float>( (DMC_num + MPC1_num + MPC2_num + MPC3_num) * car_num, Allocator.Persistent);
@@ -430,10 +284,6 @@ public partial class ChannelGenManager : MonoBehaviour
 
         // Channels for all links
         H_LoS = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
-        //H0 = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
-        //H1 = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
-        //H2 = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
-        //H3 = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
         H_NLoS = new NativeArray<System.Numerics.Complex>(FFTNum * link_num, Allocator.Persistent);
 
 
@@ -447,7 +297,7 @@ public partial class ChannelGenManager : MonoBehaviour
         
         
 
-        if (Mathf.Abs(-18.0f - CarCoordinates[1].z) < 1.0f)
+        if (Mathf.Abs(-10.0f - CarCoordinates[1].z) < 1.0f)
         {
             Debug.Log("Frame number = " + FrameCounter);
             NeigbouringCount++;
@@ -455,7 +305,7 @@ public partial class ChannelGenManager : MonoBehaviour
             {
                 Debug.Log("Frame number = " + FrameCounter);
                 
-                string path = @"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\";
+                string path = @"/home/aleksei/Parallel3DChaSi/GSCM1_InTimeDomain/Assets/Measurements/";
                 string path2 = path + filename;// Application.persistentDataPath + "/H_freq1.csv";
 
                 using (var file = File.CreateText(path2))
@@ -559,12 +409,6 @@ public partial class ChannelGenManager : MonoBehaviour
         JobHandle rayCastJobLoS = RaycastCommand.ScheduleBatch(commandsLoS, resultsLoS, 1, default);
         rayCastJobLoS.Complete();
 
-        /*if (FrameCounter >= 200)
-        {
-            float buildingthinkness = (resultsLoS[0].point - resultsLoS[3].point).magnitude;
-            Debug.Log("Car 1 = [" + CarCoordinates[0] + "]; Car 2 = [" + CarCoordinates[1] + "]");
-            Debug.Log("The ray goes through buildings and covers = " + buildingthinkness + "m");
-        }*/
 
         
 
@@ -586,166 +430,9 @@ public partial class ChannelGenManager : MonoBehaviour
         LoSChannelHandle.Complete();
         #endregion
 
-        //Debug.Log("Car 1 hight " + CarCoordinates[0].y + "; Car 2 hight " + CarCoordinates[1].y);
-        //if (H_LoS[0] != 0)
-        //{
-
-        //}
-
-        Vector3 car1 = CarCoordinates[0];
-        Vector3 corner1 = new Vector3(CornersNormalsPerpendiculars[3].x, car1.y, CornersNormalsPerpendiculars[3].z);
-        Vector3 normal1 = CornersNormalsPerpendiculars[4]; // since we consider only two cars
-
-        Vector3 car2 = CarCoordinates[1];
-        Vector3 corner2 = new Vector3(CornersNormalsPerpendiculars[0].x, car2.y, CornersNormalsPerpendiculars[0].z); // we elevate the corner to the hight of the car
-        Vector3 normal2 = CornersNormalsPerpendiculars[1];
-
-        //
-        // Knife edge effect calculating function (from Carl's paper with slight modification in angle calculation)
-        Vector3 virtual_corner = (corner1 + corner2) / 2.0f;
-        Vector3 virtual_normal = (normal1 + normal2) / 2.0f;
-        Vector3 car1_corner = virtual_corner - car1;
-        Vector3 car2_corner = virtual_corner - car2;
-
-        //Vector3 heruistic_corner = new Vector3(53.9f, car1.y, -26.468f);
-        // (53.64f, 0.0f, -26.89f)
-        Vector3 heruistic_corner = new Vector3(CornersNormalsPerpendiculars[6].x, car1.y, CornersNormalsPerpendiculars[6].z);
-
-        int corner_indicator = 1;
-        if (corner_indicator == 1)
-        {
-            car1_corner = heruistic_corner - car1;
-            car2_corner = heruistic_corner - car2;
-        }
-        
-
-        float dist1 = (car1_corner).magnitude;
-        float dist2 = (car2_corner).magnitude;
-
-        Vector3 direction1 = car1_corner.normalized;
-        Vector3 direction2 = car2_corner.normalized;
-
-        // angles from Carl's matlab code
-        // float phi = Mathf.Acos(Vector3.Dot(direction1, -direction2));
-        float alpha1 = Mathf.PI / 2.0f - Mathf.Acos(Vector3.Dot(direction1, virtual_normal));
-        float alpha2 = Mathf.PI / 2.0f - Mathf.Acos(Vector3.Dot(direction2, virtual_normal));
-        float phi = alpha1 + alpha2;
-
-        //float theta = Mathf.Acos(Vector3.Dot(direction1, -direction2));
-
-        float nu = phi * Mathf.Sqrt(2.0f * (InverseWavelengths[1023]) / (1.0f / dist1 + 1.0f / dist2));
-
-        float diff_K = 2.2131f; // it's 10^(6.9/20)
-        float DiffractionCoefficient = 1.0f;
-        if (nu > -0.78)
-        {
-            DiffractionCoefficient =  diff_K * (nu - 0.1f + Mathf.Sqrt((nu - 0.1f) * (nu - 0.1f) + 1.0f)); // the main formula for diffraction
-        }
-        //
-        Debug.Log("phi = " + phi + "; nu = " + nu + "; Diffraction coefficient = " + 1 / DiffractionCoefficient);
-        //Debug.Log("Diffraction coefficient = " + 1/DiffractionCoefficient + "; Ny = " + nu); 
-
-
-        #region DMC and MPC1 Channel Parameters
-        /*
-        float t_upd = Time.realtimeSinceStartup;
-        // Raycasting DMC
-        ParallelRayCastingDataCars RayCastingData0 = new ParallelRayCastingDataCars
-        {
-            CastingDistance = maxdistance,
-            Cars_Positions = CarCoordinates,
-            MPC_Array = DMC_Native,
-            MPC_Perpendiculars = DMC_perp,
-
-            SoA = SoA0,
-            SeenIndicator = Seen0,
-            commands = commands0,
-        };
-        JobHandle jobHandle_RayCastingData0 = RayCastingData0.Schedule(DMC_num * car_num, 16);
-        //jobHandle_RayCastingData0.Complete();
-
-        // parallel raycasting
-        JobHandle rayCastJob0 = RaycastCommand.ScheduleBatch(commands0, results0, 16, jobHandle_RayCastingData0);
-        //rayCastJob0.Complete();
-
-
-        // Channel parameters for DMCs
-        NativeArray<Path> DMC_Paths = new NativeArray<Path>(link_num*DMC_num, Allocator.TempJob);
-        NativeArray<Vector3Int> DMC_test = new NativeArray<Vector3Int>(link_num * DMC_num, Allocator.TempJob);
-        ParallelChannelParameters1 dmc_channel_parameters = new ParallelChannelParameters1
-        {
-            MPC_attenuation = DMC_attenuation,
-            MPC_array = DMC_Native,
-            Links = Links,
-            CarsPositions = CarCoordinates,
-            CarsFwd = CarForwardVect,
-
-            commands = commands0,
-            raycastresults = results0,
-            VisibilityIndicator = Seen0,
-
-            TestArray = DMC_test,
-            OutArray = DMC_Paths,
-        };
-        JobHandle dmc_channel_parameters_handle = dmc_channel_parameters.Schedule(DMC_Paths.Length, 5, rayCastJob0);
-        //dmc_channel_parameters_handle.Complete();
 
         
-        
-
-        // Channel parameters for MPC1s (DMC and MPC1 parameters calculated similarly)
-        // Raycasting DMC
-        ParallelRayCastingDataCars RayCastingData1 = new ParallelRayCastingDataCars
-        {
-            CastingDistance = maxdistance,
-            Cars_Positions = CarCoordinates,
-            MPC_Array = MPC1_Native,
-            MPC_Perpendiculars = MPC1_perp,
-
-            SoA = SoA1,
-            SeenIndicator = Seen1,
-            commands = commands1,
-        };
-        JobHandle jobHandle_RayCastingData1 = RayCastingData1.Schedule(MPC1_num * car_num, 16, dmc_channel_parameters_handle);
-        //jobHandle_RayCastingData1.Complete();
-
-        // parallel raycasting
-        JobHandle rayCastJob1 = RaycastCommand.ScheduleBatch(commands1, results1, 16, jobHandle_RayCastingData1);
-        //rayCastJob1.Complete();
-
-        NativeArray<Path> MPC1_Paths = new NativeArray<Path>(link_num * MPC1_num, Allocator.TempJob);
-        NativeArray<Vector3Int> MPC1_test = new NativeArray<Vector3Int>(link_num * MPC1_num, Allocator.TempJob);
-        ParallelChannelParameters1 mpc1_channel_parameters = new ParallelChannelParameters1
-        {
-            // general information for all
-            Links = Links,
-            CarsPositions = CarCoordinates,
-            CarsFwd = CarForwardVect,
-
-            // MPC1 related information
-            MPC_attenuation = MPC1_attenuation,
-            MPC_array = MPC1_Native,
-            commands = commands1,
-            raycastresults = results1,
-            VisibilityIndicator = Seen1,
-
-            // Output
-            TestArray = MPC1_test,
-            OutArray = MPC1_Paths,
-        };
-        JobHandle mpc1_channel_parameters_handle = mpc1_channel_parameters.Schedule(MPC1_Paths.Length, 5, rayCastJob1);
-        mpc1_channel_parameters_handle.Complete();
-        
-        Debug.Log("Time spent for Raycasting: " + ((Time.realtimeSinceStartup - t_upd) * 1000f) + " ms");
-        */
-
-        #endregion
-
-
-
-
-
-        float t_all = Time.realtimeSinceStartup;
+        //float t_all = Time.realtimeSinceStartup;
 
         ParallelRayCastingDataCars RayCastingData = new ParallelRayCastingDataCars
         {
@@ -765,7 +452,7 @@ public partial class ChannelGenManager : MonoBehaviour
         JobHandle rayCastJob = RaycastCommand.ScheduleBatch(commands, results, 16, jobHandle_RayCastingData);
         rayCastJob.Complete();
 
-        var map = new NativeMultiHashMap<int, Path_and_IDs>(50000, Allocator.TempJob);
+        var map = new NativeMultiHashMap<int, Path_and_IDs>(1000000, Allocator.TempJob);
         var idarray = new NativeArray<int>(MPC_num*link_num, Allocator.TempJob);
         ChannelParametersAll channelParameters = new ChannelParametersAll
         {
@@ -892,11 +579,11 @@ public partial class ChannelGenManager : MonoBehaviour
 
         #region FFT operation
         //float t_fft = Time.realtimeSinceStartup;
-        System.Numerics.Complex[] outputSignal_Freq = FastFourierTransform.FFT(H, false);
+        System.Numerics.Complex[] outputSignal_Freq = FastFourierTransform.FFT(H, true);
         double RSS = 0;
         
         for (int i = 0; i < H.Length; i++)
-        { H[i] = H_LoS[i] / DiffractionCoefficient + H_NLoS[i]; }
+        { H[i] = H_LoS[i] + H_NLoS[i]; }
 
         Y_output = new double[H.Length];
         H_output = new double[H.Length];
@@ -1038,22 +725,31 @@ public struct ParallelChannel : IJobParallelFor
                 {
                     float HNLoS_dist = path.PathParameters.Distance;
 
+                    Vector3 vectorBetweenCars = new Vector3(CarsPositions[0].x - CarsPositions[1].x, CarsPositions[0].y - CarsPositions[1].y, CarsPositions[0].z - CarsPositions[1].z);
+                    float distanceBetweenCars = vectorBetweenCars.magnitude;
+
+                    
+
                     //float frequence = 299792458.0f * InverseLambdas[i_sub];
                     //float inverse_lambda = InverseLambdas[i_sub];
                     //float test_pi = Mathf.PI;
                     
 
-                    float HNLoS_dist_gain = 1.0f / (InverseLambdas[i_sub] * 4 * Mathf.PI * HNLoS_dist); // Free space loss
+                    //float HNLoS_dist_gain = 1.0f / (InverseLambdas[i_sub] * 4 * Mathf.PI * HNLoS_dist); // Free space loss
+                    float HNLoS_dist_gain = 1.0f / (HNLoS_dist); // Removed the wavelength similar to Carl's Matlab script
+                    // powWi = repmat(env.g02Wi,1,length(T)) - 20*log10(d_Wi);
                     float HNLoS_attnuation = path.PathParameters.Attenuation;
 
                     //float test_arg = 2.0f * Mathf.PI * InverseLambdas[i_sub] * HNLoS_dist;
 
                     double ReExpNLoS = Mathf.Cos(2.0f * Mathf.PI * InverseLambdas[i_sub] * HNLoS_dist);
-                    double ImExpNLoS = Mathf.Sin(2.0f * Mathf.PI * InverseLambdas[i_sub] * HNLoS_dist);
+                    double ImExpNLoS = -Mathf.Sin(2.0f * Mathf.PI * InverseLambdas[i_sub] * HNLoS_dist);
                     // defining exponent
                     System.Numerics.Complex ExpNLoS = new System.Numerics.Complex(ReExpNLoS, ImExpNLoS);
 
-                    temp_HNLoS += HNLoS_attnuation * HNLoS_dist_gain * ExpNLoS;                    
+                    temp_HNLoS += HNLoS_attnuation * HNLoS_dist_gain * ExpNLoS;
+
+                    //float test_stop = 1.0f;
 
                 }
                 while (HashMap.TryGetNextValue(out path, ref nativeMultiHashMapIterator));

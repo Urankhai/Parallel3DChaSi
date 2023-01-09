@@ -57,4 +57,9 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
-
+GSCM1_InTimeDomain/Assets/Measurements
+GSCM1_InTimeDomain/.idea
+GSCM1_InTimeDomain/Library
+*.asv
+*.m~
+*.meta

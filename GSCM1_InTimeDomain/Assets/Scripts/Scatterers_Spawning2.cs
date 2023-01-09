@@ -157,75 +157,7 @@ public class Scatterers_Spawning2 : MonoBehaviour
         NativeArray<RaycastCommand> CommandsNativeArray_DMC = new NativeArray<RaycastCommand>(num_DMC * num_OBS, Allocator.TempJob);
         NativeArray<RaycastHit> ResultsNativeArray_DMC = new NativeArray<RaycastHit>(num_DMC * num_OBS, Allocator.TempJob);
 
-        //float startTime_upd_all = Time.realtimeSinceStartup;
-        /*
-        ParallelMPCSpawnerAll parallelMPC1SpawnerAll = new ParallelMPCSpawnerAll
-        {
-            Corner_bottom_left = bottom_left_corner,
-            Width = area_width,
-            Height = area_height,
-            
-            MPC1_quantity = num_MPC1,
-            MPC2_quantity = num_MPC2,
-            MPC3_quantity = num_MPC3,
-            DMC_quantity = num_DMC,
-            // taken from the website look above
-            rngs = _rngs,
-            Array = MPC_possiblepositionNativeArray,
-        };
-
-        JobHandle jobHandle_MPCSpawner = parallelMPC1SpawnerAll.Schedule(all_MPC, 64);
-        list_of_jobs_all.Add(jobHandle_MPCSpawner);
-
-        ParallelRayCastingV5 parallelRayCastingV5_MPC = new ParallelRayCastingV5
-        {
-            MPC_Array = MPC_possiblepositionNativeArray,
-            OBS_Array = Observation_Points_NativeArray,
-
-            commands = CommandsNativeArray_MPC,
-        };
-        JobHandle jobHandle_RayCastingV5_MPC = parallelRayCastingV5_MPC.Schedule(all_MPC * Observation_Points_NativeArray.Length, 64, jobHandle_MPCSpawner);
-        list_of_jobs_all.Add(jobHandle_RayCastingV5_MPC);
-        JobHandle.CompleteAll(list_of_jobs_all);
-
-        JobHandle RayCastJobMPC = RaycastCommand.ScheduleBatch(CommandsNativeArray_MPC, ResultsNativeArray_MPC, 5, default);
-        RayCastJobMPC.Complete();
-
-
         
-        int mpc1count = 0;
-        int mpc2count = 0;
-        int mpc3count = 0;
-        int dmccount = 0;
-        
-        for (int i = 0; i < all_MPC; i++)
-        {
-            int temp_inclusion = 0;
-            for (int j = 0; j < num_OBS; j++)
-            {
-                if (ResultsNativeArray_MPC[j * all_MPC + i].collider == null)
-                { temp_inclusion = 1; }
-            }
-            if (temp_inclusion == 1)
-            {
-                MPC_possiblepositionNativeList.Add(MPC_possiblepositionNativeArray[i]);
-                
-                if (MPC_possiblepositionNativeArray[i].MPC_order == 1)
-                { GameObject MPC11_clone = Instantiate(MPC1_Prefab, MPC_possiblepositionNativeArray[i].Coordinates, Quaternion.identity); mpc1count += 1; }
-                else if (MPC_possiblepositionNativeArray[i].MPC_order == 2)
-                { GameObject MPC22_clone = Instantiate(MPC2_Prefab, MPC_possiblepositionNativeArray[i].Coordinates, Quaternion.identity); mpc2count += 1; }
-                else if (MPC_possiblepositionNativeArray[i].MPC_order == 3)
-                { GameObject MPC33_clone = Instantiate(MPC3_Prefab, MPC_possiblepositionNativeArray[i].Coordinates, Quaternion.identity); mpc3count += 1; }
-                else
-                { GameObject DMC_clone = Instantiate(DMC_Prefab, MPC_possiblepositionNativeArray[i].Coordinates, Quaternion.identity); dmccount += 1; }
-                
-            }
-        }
-        //Debug.Log("MPC1 " + mpc1count + "; MPC2 " + mpc2count + "; MPC3 " + mpc3count + "; DMC " + dmccount);
-
-        //Debug.Log("Check Time Upd All: " + ((Time.realtimeSinceStartup - startTime_upd_all) * 1000f) + " ms");
-        */
-
 
         //float startTime_upd = Time.realtimeSinceStartup;
         // MPC1
@@ -350,8 +282,23 @@ public class Scatterers_Spawning2 : MonoBehaviour
         list_of_jobs_RayCast.Add(RayCastJobMPC3);
         list_of_jobs_RayCast.Add(RayCastJobDMC);
         JobHandle.CompleteAll(list_of_jobs_RayCast);
-
+        
+        /*
+        // testing scenario
+        MPC1_possiblepositionNativeList.Add(new V4(new Vector3(23.7f, 1.2f, -24.9f), 0));
+         DMC_possiblepositionNativeList.Add(new V4(new Vector3(23.0f, 1.3f, -25.9f), 0));
+        
+        MPC2_possiblepositionNativeList.Add(new V4(new Vector3(22.6f, 1.2f, -37.1f), 0));
+        MPC2_possiblepositionNativeList.Add(new V4(new Vector3(62.8f, 1.2f, -6.00f), 0));
+        
+        //MPC3_possiblepositionNativeList.Add(new V4(new Vector3(67.7f, 1.2f, -6.60f), 0));
+        MPC3_possiblepositionNativeList.Add(new V4(new Vector3(94.0f, 1.2f, -8.70f), 0));
+        MPC3_possiblepositionNativeList.Add(new V4(new Vector3(87.6f, 1.2f, -27.4f), 0));
+        MPC3_possiblepositionNativeList.Add(new V4(new Vector3(22.6f, 1.2f, -33.6f), 0));
+        */
+        
         // generating MPC1 native_list
+        
         for (int i = 0; i < num_MPC1; i++)
         {
             int temp_inclusion = 0;
@@ -368,6 +315,7 @@ public class Scatterers_Spawning2 : MonoBehaviour
                 { Instantiate(MPC1_Prefab, MPC1_possiblepositionNativeArray[i].Coordinates, Quaternion.identity); }
             }
         }
+        
         // generating MPC2 native_list
         for (int i = 0; i < num_MPC2; i++)
         {
@@ -385,6 +333,8 @@ public class Scatterers_Spawning2 : MonoBehaviour
                 { Instantiate(MPC2_Prefab, MPC2_possiblepositionNativeArray[i].Coordinates, Quaternion.identity); }
             }
         }
+        //MPC2_possiblepositionNativeList.Add(new V4(new Vector3(23.6f, 1.2f, -37.1f), 0));
+        
         // generating MPC3 native_list
         for (int i = 0; i < num_MPC3; i++)
         {
@@ -402,7 +352,9 @@ public class Scatterers_Spawning2 : MonoBehaviour
                 { Instantiate(MPC3_Prefab, MPC3_possiblepositionNativeArray[i].Coordinates, Quaternion.identity); }
             }
         }
+        
         // generating DMC native_list
+        
         for (int i = 0; i < num_DMC; i++)
         {
             int temp_inclusion = 0;
@@ -419,6 +371,7 @@ public class Scatterers_Spawning2 : MonoBehaviour
                 { Instantiate(DMC_Prefab, DMC_possiblepositionNativeArray[i].Coordinates, Quaternion.identity); }
             }
         }
+        
 
         //Debug.Log("Check Time Upd: " + ((Time.realtimeSinceStartup - startTime_upd) * 1000f) + " ms");
 

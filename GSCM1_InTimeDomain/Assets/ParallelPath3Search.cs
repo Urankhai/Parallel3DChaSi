@@ -14,6 +14,7 @@ public struct ParallelPath3Search : IJobParallelFor
     [WriteOnly] public NativeArray<SeenPath3> OutArray;
     public void Execute(int index)
     {
+        float angularFilter = 1.57f;
         int i_org = Mathf.FloorToInt(index / EdgeIndexes.Length);
         int i_sub = index - i_org * EdgeIndexes.Length;
 
@@ -42,30 +43,36 @@ public struct ParallelPath3Search : IJobParallelFor
 
                 float direction_sign = Vector3.Dot(mpc_perp_vector, incoming_vector) * Vector3.Dot(mpc_perp_vector, outgoing_vector);
                 
-                if (direction_sign > -0.5f) // the angle limiting possible paths, 
+                if (direction_sign > -1.5f) // the angle limiting possible paths, 
                 {
-                    float thr = (float)0.35;// the value is hard written according to Carls paper
+                    float thr = (float)0.2;// the value is hard written according to Carls paper
 
-                    Vector3 mpc1 = MPC_array[first_level_ID].Coordinates;
-                    Vector3 mpc2 = MPC_array[second_level_ID].Coordinates;
+                    Vector3 center = new Vector3(40.8f, 1.2f, -13.8f);
+
+                    Vector3 mpc1 = MPC_array[first_level_ID].Coordinates - center;
+                    Vector3 mpc2 = MPC_array[second_level_ID].Coordinates - center;
                     Vector3 nrm2 = MPC_array[second_level_ID].Normal;
-                    Vector3 mpc3 = MPC_array[third_level_ID].Coordinates;
+                    Vector3 mpc3 = MPC_array[third_level_ID].Coordinates - center;
 
-                    Vector3 b = (mpc2 - mpc1).normalized;
-                    Vector3 a = (mpc3 - mpc2).normalized;
+                    Vector3 a = mpc1 - mpc2;
+                    Vector3 b = mpc3 - mpc2;
+                    
                     Vector3 p = new Vector3(nrm2.z, 0, -nrm2.x);
                     
-                    float Y1 = -Vector3.Dot(b, p);
-                    float X1 = Vector3.Dot(b, nrm2);
+                    float Y11 = Vector3.Dot(a, p);
+                    float X11 = Vector3.Dot(a, nrm2);
 
-                    float Y2 = Vector3.Dot(a, p);
-                    float X2 = Vector3.Dot(a, nrm2);
+                    float Y12 = Vector3.Dot(b, p);
+                    float X12 = Vector3.Dot(b, nrm2);
 
-                    float theta1 = 180.0f * Mathf.Atan2( Y1, X1) / Mathf.PI; 
-                    float theta2 = 180.0f * Mathf.Atan2( Y2, X2) / Mathf.PI;
+                    //float theta1 = 180.0f * Mathf.Atan2( Y1, X1) / Mathf.PI; 
+                    //float theta2 = 180.0f * Mathf.Atan2( Y2, X2) / Mathf.PI;
+                    float theta1 = Mathf.Atan2( Y11, X11); 
+                    float theta2 = -Mathf.Atan2( Y12, X12);
+                    float test_gain12 = AngularGainFunc(theta1, theta2, thr);
 
-                    float val1 = Y1 / X1;
-                    float val2 = Y2 / X2;
+                    float val1 = Y11 / X11;
+                    float val2 = Y12 / X12;
 
                     // extracting parameters of the first chain
                     float distance1 = InArray[i_org].Distance;
@@ -100,13 +107,15 @@ public struct ParallelPath3Search : IJobParallelFor
                     // calculating angular gain
                     if (soa1 - sod2 != 0)
                     {
-                        aod2 = -aod2;
+                        if (aoa1 < angularFilter || aod2 < angularFilter)
+                        {aod2 = -aod2;}
                     }
 
                     float gain12 = AngularGainFunc(aoa1, aod2, thr);
 
                     // calculating total path3 parameters
-                    float total_gain = gain1 * (second_level_Att * gain12) * gain2; // in the brakets: we multiply to the attenuation coefficient
+                    //float total_gain = gain1 * (second_level_Att * gain12) * gain2; // in the brakets: we multiply to the attenuation coefficient
+                    float total_gain = gain12;
                     Vector3Int path3vector = new Vector3Int(first_level_ID, second_level_ID, third_level_ID);
 
                     OutArray[index] = new SeenPath3(path3vector, distance1 + distance2, aod1, sod1, aoa2, soa2, total_gain);

@@ -51,7 +51,8 @@ public struct PickMPCParallel : IJobParallelFor
                         Vector3 new_norm = (n1 + n2).normalized;
                         MPC_V6[index] = new V6(MPC_array[index].Coordinates, new_norm);
                         MPC_perp[index] = new Vector3(-new_norm.z, 0, new_norm.x);
-                        MPC_array[index] = new V4(MPC_array[index].Coordinates, 1);
+                        //MPC_array[index] = new V4(MPC_array[index].Coordinates, 1);
+                        MPC_array[index] = new V4(MPC_array[index].Coordinates, 0); // Aleksei: 2023 testing stats: 0 to remove scatterers from corners
                     }
                 }
                 else // the polygon is not a triangle

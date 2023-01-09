@@ -44,7 +44,8 @@ public struct ChannelParametersAll : IJobParallelFor
     public NativeMultiHashMap<int, Path_and_IDs>.ParallelWriter HashMap;
     public void Execute(int index)
     {
-        float thr1 = (float)0.35;// the value is hard written according to Carls paper
+        float angularFilter = 1.57f;
+        float thr1 = (float)0.2;// the value is hard written according to Carls paper
         float thr2 = (float)1.22;// the value is hard written according to Carls paper
 
         int i_link = Mathf.FloorToInt(index / MPCNum);
@@ -52,6 +53,14 @@ public struct ChannelParametersAll : IJobParallelFor
 
         int i_car1 = ChannelLinks[i_link].x;
         int i_car2 = ChannelLinks[i_link].y;
+        
+        // Testing values for cars' coordinates
+        Vector3 globalCar1 = CarsCoordinates[i_car1];
+        Vector3 globalCar2 = CarsCoordinates[i_car2];
+        // An MPC seen from the globalCar1
+        Vector3 globalMPC1 = MPC_Array[i_mpc].Coordinates;
+        Vector3 globalNRM1 = MPC_Array[i_mpc].Normal;
+        //Vector3 globalMPC2 = new Vector3();
 
         Vector3 fwd1 = CarsForwardsDir[i_car1];
         Vector3 fwd2 = CarsForwardsDir[i_car2];
@@ -71,6 +80,8 @@ public struct ChannelParametersAll : IJobParallelFor
             if (i_mpc < DMCNum + MPC1Num)// DMC and MCP1 Channel Parameters
             {
                 int i_mpc_car2 = i_car2 * MPCNum + i_mpc;
+                //globalMPC2 = MPC_Array[i_mpc_car2].Coordinates;
+                
                 float test_dist2 = Results[i_mpc_car2].distance; // if the resulting distance is zero, then the ray hasn't hit anything
                 float comm_dist2 = Commands[i_mpc_car2].distance; // if the resulting distance is zero, then the ray hasn't hit anything
                 float SoA2 = SignOfArrival[i_mpc_car2]; // SignOfArrival = Vector3.Dot(MPC_Perpendiculars[i_mpc], car - mpc)
@@ -80,7 +91,8 @@ public struct ChannelParametersAll : IJobParallelFor
                     Vector3 dir1 = Commands[i_mpc_car1].direction; // from car1 to the MPC
                     Vector3 dir2 = Commands[i_mpc_car2].direction; // from car2 to the MPC
 
-                    
+                    //Vector3 test_dir1 = globalCar1 - globalMPC1;
+                    //Vector3 test_dir2 = globalCar2 - globalMPC1;
 
                     float antenna_gain1 = 1;
                     float antenna_gain2 = 1;
@@ -110,11 +122,16 @@ public struct ChannelParametersAll : IJobParallelFor
 
                     float AoA = Mathf.Acos(Vector3.Dot(-dir1, norm));
                     float AoD = Mathf.Acos(Vector3.Dot(-dir2, norm));
-                    float sAoD;
+                    float sAoD = AoD;
                     if (SignAoA != SignAoD)
-                    { sAoD = -AoD; }
-                    else
-                    { sAoD = AoD; }
+                    {
+                        if (AoA < angularFilter || AoD < angularFilter)
+                        {
+                            sAoD = -AoD;
+                        }
+                    }
+                    //else
+                    //{ sAoD = AoD; }
 
                     float angular_gain = AngularGainFunc(AoA, sAoD, thr1, thr2);
                     if (angular_gain > 0.000001)
@@ -141,7 +158,7 @@ public struct ChannelParametersAll : IJobParallelFor
                 Vector2Int IndexRange2 = LUTIndexRangeMPC2[i_mpc2];
                 if (IndexRange2 != new Vector2Int(-1, -1))
                 {
-                    for (int i = IndexRange2.x; i < IndexRange2.y; i++)
+                    for (int i = IndexRange2.x; i <= IndexRange2.y; i++)
                     {
                         // Data from LUT for MPC2
                         int seen_mpc2_from_i_mpc2 = LookUpTableMPC2[i].MPC_IDs.y; // the ID of the mpc within MPC2_Array (not MPC_Array)
@@ -219,7 +236,10 @@ public struct ChannelParametersAll : IJobParallelFor
                             float sign_12 = LookUpTableMPC2[i].SoD;  // Mathf.Sign(Vector3.Dot(perp1, mpc2_dir_dest_orgn));
 
                             if (sign_11 - sign_12 != 0)
-                            { AoD1 = -AoD1; }
+                            {
+                                if (AoA1 < angularFilter || AoD1 < angularFilter)
+                                {AoD1 = -AoD1;}
+                            }
 
                             float angular_gain1 = AngularGainFunc(AoA1, AoD1, thr1, thr2);
 
@@ -231,7 +251,10 @@ public struct ChannelParametersAll : IJobParallelFor
                             float sign_22 = Mathf.Sign(SoA2); //Mathf.Sign(Vector3.Dot(perp2, -dir2)); //Mathf.Sign(Vector3.Dot(perp2, mpc2_dir_car2_dest));
 
                             if (sign_21 - sign_22 != 0)
-                            { AoD2 = -AoD2; }
+                            {
+                                if (AoA2 < angularFilter || AoD2 < angularFilter)
+                                {AoD2 = -AoD2;}
+                            }
 
                             float angular_gain2 = AngularGainFunc(AoD2, AoA2, thr1, thr2);
 
@@ -241,18 +264,20 @@ public struct ChannelParametersAll : IJobParallelFor
                             //-----------------------------------------------------------------------------------
                             // testing code is here
                             // all the below test has worked out and all the data is correct. 01.03.2022
-
+                            /*
                             Vector3 car1 = CarsCoordinates[i_car1];
                             Vector3 car2 = CarsCoordinates[i_car2];
 
                             Vector3 mpc2_orgn = MPC_Array[i_mpc].Coordinates;
+                            Vector3 mpc2_norm1 = MPC_Array[i_mpc].Normal;
                             Vector3 perp1 = MPC_Perp[i_mpc];
 
                             Vector3 mpc2_dest = MPC_Array[DMCNum + MPC1Num + seen_mpc2_from_i_mpc2].Coordinates;
+                            Vector3 mpc2_norm2 = MPC_Array[DMCNum + MPC1Num + seen_mpc2_from_i_mpc2].Normal;
                             Vector3 perp2 = MPC_Perp[DMCNum + MPC1Num + seen_mpc2_from_i_mpc2];
 
-                            Vector3 mpc2_dir_orgn_car1 = (mpc2_orgn - car1).normalized;
-                            Vector3 mpc2_dir_car2_dest = (car2 - mpc2_dest).normalized;
+                            Vector3 mpc2_dir_orgn_car1 = (mpc2_orgn - car1);
+                            Vector3 mpc2_dir_car2_dest = (car2 - mpc2_dest);
 
                             float asd_sign_11 = -Mathf.Sign(SoA1); float asd1 = Mathf.Sign(Vector3.Dot(dir1, perp1)); //Mathf.Sign(Vector3.Dot(mpc2_dir_orgn_car1, perp1));
                             float ads_sign_12 = LookUpTableMPC2[i].SoD;  //Mathf.Sign(Vector3.Dot(perp1, mpc2_dir_dest_orgn));
@@ -265,7 +290,7 @@ public struct ChannelParametersAll : IJobParallelFor
                                                                   //float test_sign_22 = Mathf.Sign(Vector3.Dot(perp2, mpc2_dir_car2_dest));
                                                                   //float test_test_sign_22 = Mathf.Sign(SoA2);
 
-
+                            */
                             //float Sign_Org_to_Destination_AoD1 = LookUpTableMPC2[i].SoD;  // same as sign_12
                             //float Sign_Org_to_Destination_AoA2 = -LookUpTableMPC2[i].SoA; // same as sign_21
 
@@ -278,7 +303,8 @@ public struct ChannelParametersAll : IJobParallelFor
                             float gain12 = LookUpTableMPC2[i].AngularGain;                  // pre-calculated gain between MPC[i1] and MPC[i2]
 
                             float angular_gain = angular_gain1 * gain12 * angular_gain2;
-                            float attenuation = antenna_gain1 * antenna_gain2 * att1 * angular_gain * att2;
+                            float attenuation = antenna_gain1 * antenna_gain2 * att1 * angular_gain;// * att2; 
+                            // 27 Dec 2022: Decided to use one path gain factor for the whole chain of the path
                             if (attenuation > 0.0000001) // 10^(-7) => -140 dBm
                             {
 
@@ -315,7 +341,7 @@ public struct ChannelParametersAll : IJobParallelFor
                 Vector2Int IndexRange3 = LUTIndexRangeMPC3[i_mpc3];
                 if (IndexRange3 != new Vector2Int(-1, -1))
                 {
-                    for (int i = IndexRange3.x; i < IndexRange3.y; i++)
+                    for (int i = IndexRange3.x; i <= IndexRange3.y; i++)
                     {
                         // Data from LUT for MPC3
                         int seen_mpc3_from_i_mpc3_level2 = LookUpTableMPC3[i].MPC_IDs.y; // the ID of the mpc within MPC3_Array (not MPC_Array)
@@ -357,9 +383,17 @@ public struct ChannelParametersAll : IJobParallelFor
                                 }
 
                                 // Parameters of active MPC
+                                Vector3 MPC31 = MPC_Array[i_mpc].Coordinates;
+                                Vector3 MPC32 = MPC_Array[DMCNum + MPC1Num + MPC2Num + seen_mpc3_from_i_mpc3_level2].Coordinates;
+                                Vector3 MPC33 = MPC_Array[DMCNum + MPC1Num + MPC2Num + seen_mpc3_from_i_mpc3].Coordinates;
+                                
+                                Vector3 NRM31 = MPC_Array[i_mpc].Normal;
+                                Vector3 NRM32 = MPC_Array[DMCNum + MPC1Num + MPC2Num + seen_mpc3_from_i_mpc3_level2].Normal;
+                                Vector3 NRM33 = MPC_Array[DMCNum + MPC1Num + MPC2Num + seen_mpc3_from_i_mpc3].Normal;
+                                
                                 float att1 = MPC_Attenuation[i_mpc];
                                 Vector3 norm1 = MPC_Array[i_mpc].Normal;
-                                //Vector3 coor1 = MPC_Array[i_mpc].Coordinates;
+                                
                                 //Vector3 perp1 = MPC_Perp[i_mpc];
                                 //Vector3 car1 = CarsCoordinates[i_car1];
 
@@ -380,7 +414,8 @@ public struct ChannelParametersAll : IJobParallelFor
 
                                 if (sign_11 - sign_12 != 0)
                                 {
-                                    AoD1 = -AoD1;
+                                    if (AoA1 < angularFilter || AoD1 < angularFilter)
+                                    {AoD1 = -AoD1;}
                                 }
 
                                 float angular_gain1 = AngularGainFunc(AoA1, AoD1, thr1, thr2);  // AngularGainFunc(alpha, beta, thr1, thr2)
@@ -410,7 +445,8 @@ public struct ChannelParametersAll : IJobParallelFor
 
                                 if (sign_31 - sign_32 != 0)
                                 {
-                                    AoD3 = -AoD3;
+                                    if (AoA3 < angularFilter || AoD3 < angularFilter)
+                                    {AoD3 = -AoD3;}
                                 }
 
                                 float angular_gain3 = AngularGainFunc(AoD3, AoA3, thr1, thr2);  // AngularGainFunc(alpha, beta, thr1, thr2)
@@ -418,8 +454,9 @@ public struct ChannelParametersAll : IJobParallelFor
                                 float gain123 = LookUpTableMPC3[i].AngularGain;                 // pre-calculated gain between MPC[i1], MPC[i2], and MPC[i3]
 
                                 float angular_gain = angular_gain1 * gain123 * angular_gain3;
-                                float attenuation = antenna_gain1 * antenna_gain2 * att1 * angular_gain * att3;
-                                if (attenuation > 0.0000001) // 10^(-7) => -140 dBm
+                                float attenuation = antenna_gain1 * antenna_gain2 * att1 * angular_gain;// * att3;
+                                // 27 Dec 2022: Decided to use one path gain factor for the whole chain of the path
+                                if (attenuation > 0.0000001f) // 10^(-7) => -140 dBm
                                 {
                                     
 
@@ -483,7 +520,7 @@ public struct ChannelParametersAll : IJobParallelFor
         
 
         if (Mathf.Abs(angle1 - angle2) > threshold1)
-        { Gain0 = Mathf.Exp(-12 * (Mathf.Abs(angle1 - angle2) - threshold1)); }
+        { Gain0 = Mathf.Exp(-12.0f * (Mathf.Abs(angle1 - angle2) - threshold1)); }
 
         /*
         float Gain1 = 1; // should be commented it according to Carl's Matlab script

@@ -7,17 +7,17 @@ filt_window = 1;
 
 
 
-pathname = 'H_freq'; 
+pathname = 'Measurements/H_freq';
 colors = {'m','b','g','c','k'};
 time_step = 0.02;
-Nf = 2; % Number_of_files
+Nf = 1; % Number_of_files
 
-NumbOfSamples = 372;
+NumbOfSamples = 412;
 
 Nfft = 1000;
 dt = 1/(Nfft*1000000);
 distance2 = 3e8*(dt:dt:Nfft*dt);
-    
+
 
 
 PDPavg = zeros(NumbOfSamples,filt_window*Nfft);
@@ -34,39 +34,41 @@ view(60,30)
 hold on
 
 number_of_files = 0;
-for k = 1:Nf%2001:2003%1001:1013
+for k = 1:5%2001:2003%1001:1013
     number_of_files = number_of_files + 1;
-    
-    kk = k+4000;
+
+    kk = k+2010;
     fileAddress = [pathname, num2str(kk),'.csv'];
     Hload = csvread(fileAddress);
     Hyy = Hload(1:NumbOfSamples,1:Nfft);
     H_long(:,1:Nfft) = Hyy;
-    
-%     disp(size(Hyy,1));
-    
-    hyy=fliplr(ifft(H_long,filt_window*Nfft,2));%*sqrt(Nfft);
+
+    %     disp(size(Hyy,1));
+
+    hyy=(ifft(H_long,filt_window*Nfft,2));%*sqrt(Nfft);
+
     PDPyy = zeros(NumbOfSamples, filt_window*Nfft);
-    
-    
+%     PDPpp = PDPyy;
+
     y_axis = ones(NumbOfSamples, 1);
-    
+
     for i = 1:NumbOfSamples
         PDPyy(i,:) = abs(hyy(i,:)).^2;
+        PDPpp(i,:) = PDPyy(i,:);
         PDPyy(PDPyy<10^(plot_factor/10))=0;
         PDPyy(:,filt_window*750:end)=0;
         gyy(i,k)=sum(PDPyy(i,:));
     end
-    
+
     plot3(y_axis*k, tt2, 10*log10(gyy(:,k)))
-    PDPavg = PDPavg + PDPyy;
+    PDPavg = PDPavg + PDPpp;
     disp([' Run # ', num2str(k), '; Total power = ', num2str(10*log10(sum(gyy(:,k))))])
-    
-    
-%     figure(2)
-%     hold on
-%     plot(7.58*tt2/max(tt2),10*log10(gyy(:,k)).')
-%     grid on
+
+
+    %     figure(2)
+    %     hold on
+    %     plot(7.58*tt2/max(tt2),10*log10(gyy(:,k)).')
+    %     grid on
 end
 %%
 gsort = sort(gyy,2);
@@ -91,7 +93,7 @@ extract = findobj(data,'Type','line');
 figure
 grid on
 hold on
-ScalingTime = 7.4;%7.58;
+ScalingTime = 7.58;%7.58;
 ylim([-115 -65])
 plot(ScalingTime*tt2/max(tt2),10*log10(gyy))
 
@@ -101,7 +103,7 @@ plot(ScalingTime*tt2(6:end-5)/max(tt2),gsort1,'--k', 'linewidth',1)
 plot(ScalingTime*tt2(6:end-5)/max(tt2),gsort2,'--k', 'linewidth',1)
 
 for nn = 1:length(extract)
-    plot(extract(nn).XData, extract(nn).YData,'k','linewidth', 2); 
+    plot(extract(nn).XData, extract(nn).YData,'k','linewidth', 2);
 end
 
 
@@ -118,7 +120,7 @@ power_elevation = 5;
 % title('PDP')
 % xlabel('Delay distance (m)')
 % ylabel('Time (s)')
-% 
+%
 % figure
 % h=pcolor(3e8*tau,tav(1:end-3),10*log10(PDPnn));
 % set(h,'linestyle','none')
@@ -148,3 +150,13 @@ ylim([4 7.18])
 title('PDP from Unity3D Implementation')
 xlabel('Delay distance (m)')
 ylabel('Time (s)')
+
+figure
+subplot(2,1,2)
+surf(10*log10(PDPnn),'LineStyle','none')
+view(0,90)
+xlim([0 1000])
+subplot(2,1,1)
+surf(10*log10(PDPavg(end-time_window-time_shift+1:end-time_shift,1:filt_window:end)/number_of_files),'LineStyle','none')
+view(0,90)
+xlim([0 1000])

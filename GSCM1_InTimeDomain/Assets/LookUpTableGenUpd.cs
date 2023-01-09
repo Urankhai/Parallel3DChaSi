@@ -84,7 +84,7 @@ public class LookUpTableGenUpd : MonoBehaviour
             results = ResultsNativeArray_MPC2,
             ID = MPC2_ID,
 
-            maxDistance = MaxSeenDistance/3,
+            maxDistance = MaxSeenDistance,
             angleThreshold = (float)0.1,
 
             PossiblePath2 = allpath2,
@@ -134,14 +134,16 @@ public class LookUpTableGenUpd : MonoBehaviour
                 else
                 { break; }
             }
-
+            // Nikita and Aleksei: index_max=j was changed to index_max=j+1  
+            
+            
             // check if the MPC can see others or not
             if (flagIndex == 1)
             {
-                progressionIndex = index_max + 1;
+                progressionIndex = index_max + 1; // Nikita and Aleksei: index_max+1 was changed to index_max
                 MPC2LUTID[i] = new Vector2Int(index_min, index_max);
                 if (index_max - index_min + 1 > maxlengthMPC2)
-                { maxlengthMPC2 = index_max - index_min + 1; }
+                { maxlengthMPC2 = index_max - index_min + 1; }// Nikita and Aleksei: index_max-index_min+1 was changed to index_max-index_min
             } // in the case, it sees others 
             else
             {
@@ -163,15 +165,15 @@ public class LookUpTableGenUpd : MonoBehaviour
         Debug.Log("Time spent for parallel raycasting : " + ((Time.realtimeSinceStartup - t_V6) * 1000f) + " ms");
 
         #region drawing MPC2 connections
-        /*
+        
         for (int i = 0; i < LookUpTableMPC2.Length; i++)
         {
             int fromMPC = LookUpTableMPC2[i].MPC_IDs.x;
             int toMPC = LookUpTableMPC2[i].MPC_IDs.y;
             //Debug.DrawLine(MPC2_Native[fromMPC].Coordinates + new Vector3(0,1,0), MPC2_Native[toMPC].Coordinates + new Vector3(0, 1, 0), Color.green, 1.0f);
-            Debug.DrawLine(MPC2_Native[fromMPC].Coordinates, MPC2_Native[toMPC].Coordinates, Color.green, 1.0f);
+            //Debug.DrawLine(MPC2_Native[fromMPC].Coordinates, MPC2_Native[toMPC].Coordinates, Color.green, 1.0f);
         }
-        
+        /*
         for (int i = 0; i < allpath2.Length; i++)
         {
             if (allpath2[i].AngularGain != 0)
@@ -220,7 +222,7 @@ public class LookUpTableGenUpd : MonoBehaviour
         #endregion
 
         #region Parallel Calculation of Path3 Parameters
-        // parallel search of possiblte second order of paths
+        // parallel search of possible second order of paths
         ParallelPath2Search parallelPath3Search = new ParallelPath2Search
         {
             MPC_Array = MPC3_Native,
@@ -229,7 +231,7 @@ public class LookUpTableGenUpd : MonoBehaviour
             results = ResultsNativeArray_MPC3,
             ID = MPC3_ID,
 
-            maxDistance = MaxSeenDistance/5,
+            maxDistance = MaxSeenDistance,
             angleThreshold = (float)0.1,
 
             PossiblePath2 = allpath3_half,
@@ -376,17 +378,17 @@ public class LookUpTableGenUpd : MonoBehaviour
         #endregion
 
         #region drawing MPC3 connections
-        /*
-        //for (int i = 0; i < LookUpTableMPC3.Length; i++)
-        for (int i = 0; i < 100; i++)
+        
+        for (int i = 0; i < LookUpTableMPC3.Length; i++)
+        //for (int i = 0; i < 100; i++)
         {
             int first_MPC = LookUpTableMPC3[i].MPC_IDs.x;
             int second_MPC = LookUpTableMPC3[i].MPC_IDs.y;
             int third_MPC = LookUpTableMPC3[i].MPC_IDs.z;
             
-            Debug.DrawLine(MPC3_Native[first_MPC].Coordinates, MPC3_Native[second_MPC].Coordinates, Color.yellow, 1.0f);
-            Debug.DrawLine(MPC3_Native[second_MPC].Coordinates + new Vector3(0,1,0), MPC3_Native[third_MPC].Coordinates + new Vector3(0, 1, 0), Color.red, 1.0f);
-        }*/
+            //Debug.DrawLine(MPC3_Native[first_MPC].Coordinates, MPC3_Native[second_MPC].Coordinates, Color.yellow, 1.0f);
+            //Debug.DrawLine(MPC3_Native[second_MPC].Coordinates + new Vector3(0,1,0), MPC3_Native[third_MPC].Coordinates + new Vector3(0, 1, 0), Color.red, 1.0f);
+        }
         
         #endregion
         // End: calculation of the whole path3s
