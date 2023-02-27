@@ -141,7 +141,7 @@ public partial class ChannelGenManager : MonoBehaviour
         List<float> listB = new List<float>();
         
         //using (var reader = new StreamReader(@"C:\Users\Administrator\Desktop\Aleksei\Parallel3DChaSi\GSCM1_InTimeDomain\Assets\EADF\HelixV2VEADF.csv"))
-        using (var reader = new StreamReader(@"/home/aleksei/Parallel3DChaSi/GSCM1_InTimeDomain/Assets/EADF/HelixV2VEADF.csv"))
+        using (var reader = new StreamReader(@"Assets/EADF/HelixV2VEADF.csv"))
         {
             while (!reader.EndOfStream)
             {
