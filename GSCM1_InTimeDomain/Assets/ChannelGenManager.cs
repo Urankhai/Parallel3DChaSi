@@ -305,7 +305,7 @@ public partial class ChannelGenManager : MonoBehaviour
             {
                 Debug.Log("Frame number = " + FrameCounter);
                 
-                string path = @"/home/aleksei/Parallel3DChaSi/GSCM1_InTimeDomain/Assets/Measurements/";
+                string path = @"Assets/Measurements/";
                 string path2 = path + filename;// Application.persistentDataPath + "/H_freq1.csv";
 
                 using (var file = File.CreateText(path2))
@@ -608,15 +608,17 @@ public partial class ChannelGenManager : MonoBehaviour
             // apparently, we need to convert a complex number to a string using such a weird method QUICK FIX
             
             string H_string;
-            if (H[i].Imaginary > 0)
+            if (H_LoS[i].Imaginary >= 0)
             {
-                H_string = H[i].Real.ToString() + "+" + H[i].Imaginary.ToString() + "i";
+                //H_string = H[i].Real.ToString() + "+" + H[i].Imaginary.ToString() + "i";
+                H_string = H_LoS[i].Real.ToString() + "+" + H_LoS[i].Imaginary.ToString() + "i";
                 //double H_real = H[i].Real;
                 //double H_imag = H[i].Imaginary;
             }
             else // in case of negative imaginary part
             {
-                H_string = H[i].Real.ToString() + H[i].Imaginary.ToString() + "i";
+                //H_string = H[i].Real.ToString() + H[i].Imaginary.ToString() + "i";
+                H_string = H_LoS[i].Real.ToString() + H_LoS[i].Imaginary.ToString() + "i";
             }
             H_snapshot.Add(H_string); // channel in frequence domain
             

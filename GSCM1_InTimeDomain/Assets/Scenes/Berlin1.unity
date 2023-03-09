@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3303,7 +3303,7 @@ MonoBehaviour:
   CarrierFrequency: 5.2e+9
   fsubcarriers: 1000000
   OmniAntenna: 1
-  filename: H_freq2011.csv
+  filename: H_LoS_Ground.csv
   tfTime: {fileID: 1144777040}
   tfFreq: {fileID: 956427315}
   DrawingOverlaps: 0
