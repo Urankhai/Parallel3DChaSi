@@ -13,13 +13,13 @@ public class AllVehiclesControl : MonoBehaviour
     [HideInInspector] public NativeArray<Vector3> OldCoordinates;
     [HideInInspector] public NativeArray<Vector3> CarCoordinates;
     [HideInInspector] public NativeArray<Vector3> CarForwardVect;
-    [HideInInspector] public NativeArray<Vector3> CarsSpeed;
+    [HideInInspector] public NativeArray<float> CarsSpeed;
 
     private void OnEnable()
     {
         CarCoordinates = new NativeArray<Vector3>(carsArray.Length, Allocator.Persistent);
         OldCoordinates = new NativeArray<Vector3>(carsArray.Length, Allocator.Persistent);
-        CarsSpeed = new NativeArray<Vector3>(carsArray.Length, Allocator.Persistent);
+        CarsSpeed = new NativeArray<float>(carsArray.Length, Allocator.Persistent);
         CarForwardVect = new NativeArray<Vector3>(carsArray.Length, Allocator.Persistent);
     }
     private void OnDestroy()
@@ -50,9 +50,12 @@ public class AllVehiclesControl : MonoBehaviour
         for (int i = 0; i < carsArray.Length; i++)
         {
             // Current positions of all vehicles
+            
             CarCoordinates[i] = carsArray[i].transform.Find("Antenna").position;
             CarForwardVect[i] = carsArray[i].transform.Find("Antenna").forward;
-            CarsSpeed[i] = CarCoordinates[i] - OldCoordinates[i];
+            
+            CarsSpeed[i] = (CarCoordinates[i] - OldCoordinates[i]).magnitude/Time.deltaTime;
+            Debug.Log(Time.time + ": " + carsArray[i].name + " has speed " + CarsSpeed[i] + "m/s");
             // Updating previous positions of vehicles
             OldCoordinates[i] = CarCoordinates[i];
         }

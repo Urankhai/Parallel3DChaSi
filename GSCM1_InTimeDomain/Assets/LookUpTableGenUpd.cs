@@ -165,7 +165,7 @@ public class LookUpTableGenUpd : MonoBehaviour
         Debug.Log("Time spent for parallel raycasting : " + ((Time.realtimeSinceStartup - t_V6) * 1000f) + " ms");
 
         #region drawing MPC2 connections
-        
+        /*
         for (int i = 0; i < LookUpTableMPC2.Length; i++)
         {
             int fromMPC = LookUpTableMPC2[i].MPC_IDs.x;
@@ -173,7 +173,7 @@ public class LookUpTableGenUpd : MonoBehaviour
             //Debug.DrawLine(MPC2_Native[fromMPC].Coordinates + new Vector3(0,1,0), MPC2_Native[toMPC].Coordinates + new Vector3(0, 1, 0), Color.green, 1.0f);
             //Debug.DrawLine(MPC2_Native[fromMPC].Coordinates, MPC2_Native[toMPC].Coordinates, Color.green, 1.0f);
         }
-        /*
+        
         for (int i = 0; i < allpath2.Length; i++)
         {
             if (allpath2[i].AngularGain != 0)
@@ -378,18 +378,18 @@ public class LookUpTableGenUpd : MonoBehaviour
         #endregion
 
         #region drawing MPC3 connections
-        
-        for (int i = 0; i < LookUpTableMPC3.Length; i++)
-        //for (int i = 0; i < 100; i++)
+        //Debug.Log("Number of possible third order of paths is " + LookUpTableMPC3.Length);
+        //for (int i = 0; i < LookUpTableMPC3.Length; i++)
+        /*for (int i = 100; i < 110; i++)
         {
             int first_MPC = LookUpTableMPC3[i].MPC_IDs.x;
             int second_MPC = LookUpTableMPC3[i].MPC_IDs.y;
             int third_MPC = LookUpTableMPC3[i].MPC_IDs.z;
             
-            //Debug.DrawLine(MPC3_Native[first_MPC].Coordinates, MPC3_Native[second_MPC].Coordinates, Color.yellow, 1.0f);
-            //Debug.DrawLine(MPC3_Native[second_MPC].Coordinates + new Vector3(0,1,0), MPC3_Native[third_MPC].Coordinates + new Vector3(0, 1, 0), Color.red, 1.0f);
+            Debug.DrawLine(MPC3_Native[first_MPC].Coordinates, MPC3_Native[second_MPC].Coordinates, Color.yellow, 1.0f);
+            Debug.DrawLine(MPC3_Native[second_MPC].Coordinates + new Vector3(0,1,0), MPC3_Native[third_MPC].Coordinates + new Vector3(0, 1, 0), Color.red, 1.0f);
         }
-        
+        */
         #endregion
         // End: calculation of the whole path3s
 

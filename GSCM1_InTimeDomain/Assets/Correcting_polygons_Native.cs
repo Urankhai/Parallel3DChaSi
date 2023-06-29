@@ -9,6 +9,8 @@ using Unity.Burst;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.Jobs.LowLevel.Unsafe;
+using UnityEngine.UI;
+
 //using System;
 
 
@@ -149,8 +151,23 @@ public class Correcting_polygons_Native : MonoBehaviour
             // analyzing which buidings are seen
             for (int b = 0; b < Buildings.Length; b++)
             {
+                Vector3 translationVector = Buildings[b].transform.position;
                 Vector3[] vrtx = Buildings[b].GetComponent<MeshFilter>().mesh.vertices;
                 Vector3[] nrml = Buildings[b].GetComponent<MeshFilter>().mesh.normals;
+                for (int i = 0; i < vrtx.Length; i++)
+                {
+                    vrtx[i] = vrtx[i] + translationVector;
+                }
+                /*
+                if (MPC_visualizer_ECS == true)
+                {
+                    for (int i = 0; i < vrtx.Length; i++)
+                    {
+                        GameObject testVertices = Instantiate(CornerPrefab, vrtx[i] + translationVector, Quaternion.identity);
+                    }
+
+                }
+                */
 
                 int seen_vrtx_count = 0;
                 for (int v = 0; v < vrtx.Length; v++)
@@ -209,11 +226,14 @@ public class Correcting_polygons_Native : MonoBehaviour
             // writing MPCs into a txt file
             //string writePath;
             List<string> Obj_List = new List<string>();
-
+            Vector3 translationVector = Building_list[k].transform.position;
             Vector3[] vrtx = Building_list[k].GetComponent<MeshFilter>().mesh.vertices;
             Vector3[] nrml = Building_list[k].GetComponent<MeshFilter>().mesh.normals;
 
-            
+            for (int i = 0; i < vrtx.Length; i++)
+            {
+                vrtx[i] = vrtx[i] + translationVector;
+            }
 
             List<Vector3> floor_vrtx = new List<Vector3>();
             List<Vector3> floor_nrml = new List<Vector3>();
@@ -578,7 +598,7 @@ public class Correcting_polygons_Native : MonoBehaviour
                     //Destroy(cleared_sphere.GetComponent<SphereCollider>()); // remove collider
                     //cleared_sphere.name = "DMC #" + (inclusion_num4 - 1);
 
-                    Debug.DrawLine(DMC_Pick[ii].Coordinates, DMC_Pick[ii].Coordinates + 5*DMC_Pick[ii].Normal, Color.red, 30f);
+                    //Debug.DrawLine(DMC_Pick[ii].Coordinates, DMC_Pick[ii].Coordinates + 5*DMC_Pick[ii].Normal, Color.red, 30f);
                 }
             }
         }

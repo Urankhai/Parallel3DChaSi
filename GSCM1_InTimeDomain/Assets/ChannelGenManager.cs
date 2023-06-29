@@ -13,6 +13,8 @@ public partial class ChannelGenManager : MonoBehaviour
 {
     int FrameCounter;
     int NeigbouringCount;
+    private float Timer;
+    private float dTimter;
     
     [Space]
     [Header("PHYSICAL PARAMETERS")]
@@ -83,7 +85,7 @@ public partial class ChannelGenManager : MonoBehaviour
     NativeArray<Vector3> OldCoordinates;
     NativeArray<Vector3> CarCoordinates;
     NativeArray<Vector3> CarForwardVect;
-    NativeArray<Vector3> CarsSpeed;
+    NativeArray<float> CarsSpeed;
 
     // Creating nativearrays in this script that should be destroyed
     NativeArray<Vector2Int> Links;
@@ -195,6 +197,7 @@ public partial class ChannelGenManager : MonoBehaviour
     {
         FrameCounter = 0;
         NeigbouringCount = 0;
+        Timer = 0f;
         /// for Fourier transform
         X_inputValues = new double[H.Length];
         for (int i = 0; i < H.Length; i++)
@@ -294,6 +297,8 @@ public partial class ChannelGenManager : MonoBehaviour
     //void Update()
     {
         FrameCounter++;
+        dTimter = Time.realtimeSinceStartup - Timer;
+        Timer = Time.realtimeSinceStartup;
         
         
 
@@ -410,7 +415,10 @@ public partial class ChannelGenManager : MonoBehaviour
         rayCastJobLoS.Complete();
 
 
-        
+        if (resultsLoS[0].distance == 0)
+        {
+            Debug.DrawLine(CarCoordinates[0], CarCoordinates[1], Color.yellow);
+        }
 
         ParallelLoSChannel LoSChannel = new ParallelLoSChannel
         {
@@ -432,7 +440,7 @@ public partial class ChannelGenManager : MonoBehaviour
 
 
         
-        //float t_all = Time.realtimeSinceStartup;
+        
 
         ParallelRayCastingDataCars RayCastingData = new ParallelRayCastingDataCars
         {
@@ -591,6 +599,11 @@ public partial class ChannelGenManager : MonoBehaviour
         List<string> h_snapshot = new List<string>();
         List<string> H_snapshot = new List<string>();
 
+        string Tx = "Tx = (" + CarCoordinates[0].x.ToString() + " " + CarCoordinates[0].z.ToString() + ")";
+        string Rx = "Rx = (" + CarCoordinates[1].x.ToString() + " " + CarCoordinates[1].z.ToString() + ")";
+        H_snapshot.Add(Tx);
+        H_snapshot.Add(Rx);
+
         for (int i = 0; i < H.Length; i++)
         {
             
@@ -623,6 +636,8 @@ public partial class ChannelGenManager : MonoBehaviour
             H_snapshot.Add(H_string); // channel in frequence domain
             
         }
+        
+        //H_snapshot.Insert(0, Timer.ToString());
 
         /*
         if (RSS != 0)
@@ -634,9 +649,11 @@ public partial class ChannelGenManager : MonoBehaviour
             Debug.Log("RSS = " + 10 * Mathf.Log10((float)RSS) + " dB; distance " + test_distance + "; path gain = " + test_gain);
         }
         */
-
-        h_save.Add(h_snapshot);
-        H_save.Add(H_snapshot);
+        if (FrameCounter > 1)
+        {
+            h_save.Add(h_snapshot);
+            H_save.Add(H_snapshot);
+        }
 
         Drawing.drawChart(tfTime, X_inputValues, Y_output, "time");
         Drawing.drawChart(tfFreq, X_inputValues, H_output, "frequency");
