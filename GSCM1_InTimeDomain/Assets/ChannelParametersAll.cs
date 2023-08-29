@@ -86,7 +86,7 @@ public struct ChannelParametersAll : IJobParallelFor
                 float comm_dist2 = Commands[i_mpc_car2].distance; // if the resulting distance is zero, then the ray hasn't hit anything
                 float SoA2 = SignOfArrival[i_mpc_car2]; // SignOfArrival = Vector3.Dot(MPC_Perpendiculars[i_mpc], car - mpc)
                 float test_sign = SoA1 * SoA2;
-                if (test_dist2 == 0 && comm_dist2 !=0 && test_sign < 0.7f) // optimally, test_sign should be < 1
+                if (test_dist2 == 0 && comm_dist2 !=0 && test_sign < 1f) // optimally, test_sign should be < 1
                 {
                     Vector3 dir1 = Commands[i_mpc_car1].direction; // from car1 to the MPC
                     Vector3 dir2 = Commands[i_mpc_car2].direction; // from car2 to the MPC

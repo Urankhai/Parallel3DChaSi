@@ -108,7 +108,7 @@ public partial class ChannelGenManager : MonoBehaviour
     NativeArray<RaycastCommand> commands; // for DMCs
     NativeArray<RaycastHit> results; // for DMCs
 
-    static readonly int FFTNum = 1024;
+    static readonly int FFTNum = 311;
     public System.Numerics.Complex[] H = new System.Numerics.Complex[FFTNum]; // Half of LTE BandWidth, instead of 2048 subcarriers
 
     
@@ -302,7 +302,7 @@ public partial class ChannelGenManager : MonoBehaviour
         
         
 
-        if (Mathf.Abs(-10.0f - CarCoordinates[1].z) < 1.0f)
+        if (Mathf.Abs(122.0f - CarCoordinates[1].x) < 1.0f)
         {
             Debug.Log("Frame number = " + FrameCounter);
             NeigbouringCount++;
@@ -510,7 +510,7 @@ public partial class ChannelGenManager : MonoBehaviour
                             Vector3 car1_coor = CarCoordinates[path.ChainIDs.Car1];
                             Vector3 car2_coor = CarCoordinates[path.ChainIDs.Car2];
                             Vector3 MPC_coor1 = MPC_Native[path.ChainIDs.ID1].Coordinates;
-                            Debug.DrawLine(car1_coor, MPC_coor1, Color.white);
+                            Debug.DrawLine(car1_coor, MPC_coor1, Color.grey);
                             Debug.DrawLine(MPC_coor1, car2_coor, Color.grey);
                         }
                         else if (path.PathOrder == 2 && DrawingPath2)
@@ -519,9 +519,9 @@ public partial class ChannelGenManager : MonoBehaviour
                             Vector3 car2_coor = CarCoordinates[path.ChainIDs.Car2];
                             Vector3 MPC_coor1 = MPC_Native[path.ChainIDs.ID1].Coordinates;
                             Vector3 MPC_coor2 = MPC_Native[path.ChainIDs.ID2].Coordinates;
-                            Debug.DrawLine(car1_coor, MPC_coor1, Color.white);
-                            Debug.DrawLine(MPC_coor1, MPC_coor2, Color.white);
-                            Debug.DrawLine(MPC_coor2, car2_coor, Color.white);
+                            Debug.DrawLine(car1_coor, MPC_coor1, Color.yellow);
+                            Debug.DrawLine(MPC_coor1, MPC_coor2, Color.blue);
+                            Debug.DrawLine(MPC_coor2, car2_coor, Color.red);
                         }
                         else if (path.PathOrder == 3 && DrawingPath3)
                         {
@@ -599,10 +599,14 @@ public partial class ChannelGenManager : MonoBehaviour
         List<string> h_snapshot = new List<string>();
         List<string> H_snapshot = new List<string>();
 
-        string Tx = "Tx = (" + CarCoordinates[0].x.ToString() + " " + CarCoordinates[0].z.ToString() + ")";
-        string Rx = "Rx = (" + CarCoordinates[1].x.ToString() + " " + CarCoordinates[1].z.ToString() + ")";
-        H_snapshot.Add(Tx);
-        H_snapshot.Add(Rx);
+        string Tx_x = CarCoordinates[0].x.ToString();
+        string Tx_y = CarCoordinates[0].z.ToString();
+        string Rx_x = CarCoordinates[1].x.ToString();
+        string Rx_y = CarCoordinates[1].z.ToString();
+        H_snapshot.Add(Tx_x);
+        H_snapshot.Add(Tx_y);
+        H_snapshot.Add(Rx_x);
+        H_snapshot.Add(Rx_y);
 
         for (int i = 0; i < H.Length; i++)
         {
@@ -621,17 +625,17 @@ public partial class ChannelGenManager : MonoBehaviour
             // apparently, we need to convert a complex number to a string using such a weird method QUICK FIX
             
             string H_string;
-            if (H_LoS[i].Imaginary >= 0)
+            if (H[i].Imaginary >= 0)
             {
-                //H_string = H[i].Real.ToString() + "+" + H[i].Imaginary.ToString() + "i";
-                H_string = H_LoS[i].Real.ToString() + "+" + H_LoS[i].Imaginary.ToString() + "i";
+                H_string = H[i].Real.ToString() + "+" + H[i].Imaginary.ToString() + "i";
+                //H_string = H_LoS[i].Real.ToString() + "+" + H_LoS[i].Imaginary.ToString() + "i";
                 //double H_real = H[i].Real;
                 //double H_imag = H[i].Imaginary;
             }
             else // in case of negative imaginary part
             {
-                //H_string = H[i].Real.ToString() + H[i].Imaginary.ToString() + "i";
-                H_string = H_LoS[i].Real.ToString() + H_LoS[i].Imaginary.ToString() + "i";
+                H_string = H[i].Real.ToString() + H[i].Imaginary.ToString() + "i";
+                //H_string = H_LoS[i].Real.ToString() + H_LoS[i].Imaginary.ToString() + "i";
             }
             H_snapshot.Add(H_string); // channel in frequence domain
             

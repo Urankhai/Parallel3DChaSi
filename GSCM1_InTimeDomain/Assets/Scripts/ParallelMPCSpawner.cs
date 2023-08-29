@@ -27,7 +27,7 @@ public struct ParallelMPCSpawner : IJobParallelFor
         
         
         float x_value = Corner_bottom_left.x + rng.NextFloat(0, Width);
-        float y_value = 1.2f + rng.NextFloat(0f, 1f);
+        float y_value = 1.6f + rng.NextFloat(0f, 1f);
         float z_value = Corner_bottom_left.z + rng.NextFloat(0, Height);
 
         rngs[threadId] = rng;

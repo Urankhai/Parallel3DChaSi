@@ -52,6 +52,10 @@ public struct ParallelLoSChannel : IJobParallelFor
             // line of sight parameters
 
             float LoS_dist = LoS_dir.magnitude;
+            if (LoS_dist < 9f)
+            {
+                LoS_dist = 9;
+            }
             float LoS_gain = antenna_gain / (inverseLambdas[i_sub] * 4 * Mathf.PI * LoS_dist);
             //float LoS_gain = 1 / (inverseLambdas[i_sub] * 4 * Mathf.PI * LoS_dist);
 
