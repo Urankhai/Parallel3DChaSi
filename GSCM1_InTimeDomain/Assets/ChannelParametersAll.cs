@@ -134,7 +134,7 @@ public struct ChannelParametersAll : IJobParallelFor
                     //{ sAoD = AoD; }
 
                     float angular_gain = AngularGainFunc(AoA, sAoD, thr1, thr2);
-                    if (angular_gain > 0.000001)
+                    if (angular_gain > 0.000001 && distance < 590.0f)
                     {
                         float attenuation = antenna_gain1 * antenna_gain2 * angular_gain * MPC_Attenuation[i_mpc];
 
@@ -305,7 +305,7 @@ public struct ChannelParametersAll : IJobParallelFor
                             float angular_gain = angular_gain1 * gain12 * angular_gain2;
                             float attenuation = antenna_gain1 * antenna_gain2 * att1 * angular_gain;// * att2; 
                             // 27 Dec 2022: Decided to use one path gain factor for the whole chain of the path
-                            if (attenuation > 0.0000001) // 10^(-7) => -140 dBm
+                            if (attenuation > 0.0000001 && distance < 590.0f) // 10^(-7) => -140 dBm
                             {
 
 
@@ -456,7 +456,7 @@ public struct ChannelParametersAll : IJobParallelFor
                                 float angular_gain = angular_gain1 * gain123 * angular_gain3;
                                 float attenuation = antenna_gain1 * antenna_gain2 * att1 * angular_gain;// * att3;
                                 // 27 Dec 2022: Decided to use one path gain factor for the whole chain of the path
-                                if (attenuation > 0.0000001f) // 10^(-7) => -140 dBm
+                                if (attenuation > 0.0000001f && distance < 590.0f) // 10^(-7) => -140 dBm
                                 {
                                     
 
