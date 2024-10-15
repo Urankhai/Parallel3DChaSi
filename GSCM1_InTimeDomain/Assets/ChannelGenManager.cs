@@ -198,7 +198,7 @@ public partial class ChannelGenManager : MonoBehaviour
         FrameCounter = 0;
         NeigbouringCount = 0;
         Timer = 0f;
-        /// for Fourier transform
+        // for Fourier transform
         X_inputValues = new double[H.Length];
         for (int i = 0; i < H.Length; i++)
         { X_inputValues[i] = i; }
