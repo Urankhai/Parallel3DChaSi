@@ -505,13 +505,18 @@ public partial class ChannelGenManager : MonoBehaviour
                 {
                     do
                     {
-                        if (path.PathOrder == 1 && DrawingPath1)
+                        if (path.PathOrder == 3 && DrawingPath3)
                         {
                             Vector3 car1_coor = CarCoordinates[path.ChainIDs.Car1];
                             Vector3 car2_coor = CarCoordinates[path.ChainIDs.Car2];
                             Vector3 MPC_coor1 = MPC_Native[path.ChainIDs.ID1].Coordinates;
-                            Debug.DrawLine(car1_coor, MPC_coor1, Color.grey);
-                            Debug.DrawLine(MPC_coor1, car2_coor, Color.grey);
+                            Vector3 MPC_coor2 = MPC_Native[path.ChainIDs.ID2].Coordinates;
+                            Vector3 MPC_coor3 = MPC_Native[path.ChainIDs.ID3].Coordinates;
+                            Debug.DrawLine(car1_coor, MPC_coor1, new Color(0.0f, 0.76f, 0.0f,0.3f));
+                            Debug.DrawLine(MPC_coor1, MPC_coor2, new Color(0.0f, 0.76f, 0.0f,0.3f));
+                            Debug.DrawLine(MPC_coor2, MPC_coor3, new Color(0.0f, 0.76f, 0.0f,0.3f));
+                            Debug.DrawLine(MPC_coor3, car2_coor, new Color(0.0f, 0.76f, 0.0f,0.3f));
+                            //Debug.Log(20 * Mathf.Log10(path3.AngularGain));
                         }
                         else if (path.PathOrder == 2 && DrawingPath2)
                         {
@@ -519,22 +524,17 @@ public partial class ChannelGenManager : MonoBehaviour
                             Vector3 car2_coor = CarCoordinates[path.ChainIDs.Car2];
                             Vector3 MPC_coor1 = MPC_Native[path.ChainIDs.ID1].Coordinates;
                             Vector3 MPC_coor2 = MPC_Native[path.ChainIDs.ID2].Coordinates;
-                            Debug.DrawLine(car1_coor, MPC_coor1, Color.yellow);
-                            Debug.DrawLine(MPC_coor1, MPC_coor2, Color.blue);
-                            Debug.DrawLine(MPC_coor2, car2_coor, Color.red);
+                            Debug.DrawLine(car1_coor, MPC_coor1, new Color(0.0f, 1.0f, 1.0f, 0.3f));
+                            Debug.DrawLine(MPC_coor1, MPC_coor2, new Color(0.0f, 1.0f, 1.0f, 0.3f));
+                            Debug.DrawLine(MPC_coor2, car2_coor, new Color(0.0f, 1.0f, 1.0f, 0.3f));
                         }
-                        else if (path.PathOrder == 3 && DrawingPath3)
+                        else if (path.PathOrder == 1 && DrawingPath1)
                         {
                             Vector3 car1_coor = CarCoordinates[path.ChainIDs.Car1];
                             Vector3 car2_coor = CarCoordinates[path.ChainIDs.Car2];
                             Vector3 MPC_coor1 = MPC_Native[path.ChainIDs.ID1].Coordinates;
-                            Vector3 MPC_coor2 = MPC_Native[path.ChainIDs.ID2].Coordinates;
-                            Vector3 MPC_coor3 = MPC_Native[path.ChainIDs.ID3].Coordinates;
-                            Debug.DrawLine(car1_coor, MPC_coor1, Color.green);
-                            Debug.DrawLine(MPC_coor1, MPC_coor2, Color.green);
-                            Debug.DrawLine(MPC_coor2, MPC_coor3, Color.green);
-                            Debug.DrawLine(MPC_coor3, car2_coor, Color.green);
-                            //Debug.Log(20 * Mathf.Log10(path3.AngularGain));
+                            Debug.DrawLine(car1_coor, MPC_coor1, new Color(1.0f, 0.76f, 0.0f));
+                            Debug.DrawLine(MPC_coor1, car2_coor, new Color(1.0f, 0.76f, 0.0f));
                         }
                     }
                     while (map.TryGetNextValue(out path, ref nativeMultiHashMapIterator));

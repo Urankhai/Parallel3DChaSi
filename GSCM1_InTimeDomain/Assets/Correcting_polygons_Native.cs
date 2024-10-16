@@ -196,7 +196,7 @@ public class Correcting_polygons_Native : MonoBehaviour
         {
             if (!Building_list.Contains(Buildings[b]))
             {
-                Buildings[b].SetActive(false);
+                //Buildings[b].SetActive(false);
             }
 
         }
@@ -305,11 +305,11 @@ public class Correcting_polygons_Native : MonoBehaviour
                 }
                 normal1 = normal1.normalized;
                 perpen1 = new Vector3(-normal1.z, 0, normal1.x);
-                Debug.DrawLine(corner1, corner1 + 5 * normal1, Color.red, 30f);
+                //Debug.DrawLine(corner1, corner1 + 5 * normal1, Color.red, 30f);
 
                 normal2 = normal2.normalized;
                 perpen2 = new Vector3(-normal2.z, 0, normal2.x);
-                Debug.DrawLine(corner2, corner2 + 5 * normal2, Color.red, 30f);
+                //Debug.DrawLine(corner2, corner2 + 5 * normal2, Color.red, 30f);
 
                 
 
@@ -620,7 +620,7 @@ public class Correcting_polygons_Native : MonoBehaviour
                 if (MPC_visualizer_ECS == true)
                 { 
                     GameObject MPC1_clone = Instantiate(MPC1_Prefab, MPC1_Native[ii].Coordinates, Quaternion.identity); 
-                    Debug.DrawLine(MPC1_Pick[ii].Coordinates, MPC1_Pick[ii].Coordinates + 5*MPC1_Pick[ii].Normal, Color.red, 30f);
+                    //Debug.DrawLine(MPC1_Pick[ii].Coordinates, MPC1_Pick[ii].Coordinates + 5*MPC1_Pick[ii].Normal, Color.red, 30f);
                 }
             }
         }
@@ -642,7 +642,7 @@ public class Correcting_polygons_Native : MonoBehaviour
                 { 
                     GameObject MPC2_clone = Instantiate(MPC2_Prefab, MPC2_Native[ii].Coordinates, Quaternion.identity);
                     MPC2_clone.name = "MPC2 # " + inclusion_num2;
-                    Debug.DrawLine(MPC2_Pick[ii].Coordinates, MPC2_Pick[ii].Coordinates + 5 * MPC2_Pick[ii].Normal, Color.green, 10f);
+                    //Debug.DrawLine(MPC2_Pick[ii].Coordinates, MPC2_Pick[ii].Coordinates + 5 * MPC2_Pick[ii].Normal, Color.green, 10f);
                     //Debug.DrawLine(MPC2_Pick[ii].Coordinates, MPC2_Pick[ii].Coordinates + 5 * MPC2_Pick_perp[ii], Color.yellow, 10f);
                 }
                 inclusion_num2 += 1;
@@ -664,7 +664,7 @@ public class Correcting_polygons_Native : MonoBehaviour
                 { 
                     GameObject MPC3_clone = Instantiate(MPC3_Prefab, MPC3_Native[ii].Coordinates, Quaternion.identity);
                     MPC3_clone.name = "MPC3 # " + inclusion_num3;
-                    Debug.DrawLine(MPC3_Pick[ii].Coordinates, MPC3_Pick[ii].Coordinates + 5 * MPC3_Pick[ii].Normal, Color.cyan, 10f);
+                    //Debug.DrawLine(MPC3_Pick[ii].Coordinates, MPC3_Pick[ii].Coordinates + 5 * MPC3_Pick[ii].Normal, Color.cyan, 10f);
                     //Debug.DrawLine(MPC3_Pick[ii].Coordinates, MPC3_Pick[ii].Coordinates + 5 * MPC3_Pick_perp[ii], Color.yellow, 10f);
                 }
                 inclusion_num3 += 1;

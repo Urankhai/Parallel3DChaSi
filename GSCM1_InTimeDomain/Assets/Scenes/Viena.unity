@@ -301,7 +301,7 @@ PrefabInstance:
     - target: {fileID: 6940840749921640018, guid: cc807afec0ce64efead5ca968307daf7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -176.7
+      value: -30.3
       objectReference: {fileID: 0}
     - target: {fileID: 6940840749921640018, guid: cc807afec0ce64efead5ca968307daf7,
         type: 3}
@@ -311,7 +311,7 @@ PrefabInstance:
     - target: {fileID: 6940840749921640018, guid: cc807afec0ce64efead5ca968307daf7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 30.1
+      value: 12.7
       objectReference: {fileID: 0}
     - target: {fileID: 6940840749921640018, guid: cc807afec0ce64efead5ca968307daf7,
         type: 3}
@@ -356,17 +356,17 @@ PrefabInstance:
     - target: {fileID: 6940840749921640018, guid: cc807afec0ce64efead5ca968307daf7,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6940840749921640018, guid: cc807afec0ce64efead5ca968307daf7,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6940840749921640018, guid: cc807afec0ce64efead5ca968307daf7,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc807afec0ce64efead5ca968307daf7, type: 3}
@@ -823,17 +823,17 @@ PrefabInstance:
     - target: {fileID: 7513087416359423877, guid: 97a1a31277f554c3195458093ce2e2ba,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7513087416359423877, guid: 97a1a31277f554c3195458093ce2e2ba,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7513087416359423877, guid: 97a1a31277f554c3195458093ce2e2ba,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7517233828537380487, guid: 97a1a31277f554c3195458093ce2e2ba,
         type: 3}
@@ -1123,7 +1123,7 @@ MonoBehaviour:
   DrawingOverlaps: 0
   DrawingPath1: 1
   DrawingPath2: 1
-  DrawingPath3: 0
+  DrawingPath3: 1
   SubframePower: 0
 --- !u!4 &1421757234
 Transform:
